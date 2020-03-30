@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -11,20 +13,10 @@
 |
 */
 
-//Route::get('/', function () {
-//    return view('welcome');
-//});
+Route::get('/', function () {
+    return view('welcome');
+});
 
-//Auth::routes(['verify' => true]);
-//
-//Route::get('/', 'HomeController@index')->name('home');
-//Route::get('/help-center', 'HomeController@helpCenter')->name('help-center');
-//Route::get('/plans-pricing', 'HomeController@plansPricing')->name('help-center');
-//Route::get('/dashboard', 'CompanyController@dashboard')->name('home')->middleware('verified');
-//Route::get('/clients', 'CompanyController@clients')->name('home');
-//
-//
-//Route::get('locale/{locale}', function ($locale){
-//    Session::put('locale', $locale);
-//    return redirect()->back();
-//});
+//Auth::routes();
+
+//Route::get('/home', 'HomeController@index')->name('home');

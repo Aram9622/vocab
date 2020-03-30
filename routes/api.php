@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,6 +14,18 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+Route::middleware(['auth:api', 'verify_register'])->group(function () {
+    Route::get('user', 'Api\v1\UserController@show');
+});
+
+
+//Authentication routes
+Route::group(['namespace' => 'Api\v1\Auth'], function () {
+    Route::post('register', 'RegisterController@register');
+    Route::get('email/resend', 'VerificationController@resend')->name('verification.resend');
+    Route::get('email/verify/{id}/{hash}', 'VerificationController@verify')->name('verification.verify');
+    Route::post('login', 'LoginController@login');
+    Route::get('logout', 'LoginController@logout')->middleware('auth:api');
+    Route::post('password/email', 'ForgotPasswordController@sendResetLinkEmail');
+    Route::post('password/reset', 'ResetPasswordController@reset');
 });

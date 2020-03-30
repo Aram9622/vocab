@@ -14,26 +14,14 @@ class RouteServiceProvider extends ServiceProvider
      *
      * @var string
      */
-    protected $namespace = 'App\Http\Controllers\Frontend';
-
+    protected $namespace = 'App\Http\Controllers';
 
     /**
-     * This namespace is applied to your controller routes.
-     *
-     * In addition, it is set as the URL generator's root namespace.
+     * The path to the "home" route for your application.
      *
      * @var string
      */
-    protected $apiNamespace = 'App\Http\Controllers\Api';
-
-    /**
-     * This namespace is applied to your controller routes.
-     *
-     * In addition, it is set as the URL generator's root namespace.
-     *
-     * @var string
-     */
-    protected $adminNamespace = 'App\Http\Controllers\Backend';
+    public const HOME = '/home';
 
     /**
      * Define your route model bindings, pattern filters, etc.
@@ -70,16 +58,9 @@ class RouteServiceProvider extends ServiceProvider
      */
     protected function mapWebRoutes()
     {
-//        Route::middleware('web')
-//             ->namespace($this->namespace)
-//             ->group(base_path('routes/web.php'));
         Route::middleware('web')
-            ->namespace($this->namespace)
-            ->group(base_path('routes/frontend.php'));
-
-        Route::middleware('web')
-            ->namespace($this->adminNamespace)
-            ->group(base_path('routes/backend.php'));
+             ->namespace($this->namespace)
+             ->group(base_path('routes/web.php'));
     }
 
     /**
@@ -91,7 +72,7 @@ class RouteServiceProvider extends ServiceProvider
      */
     protected function mapApiRoutes()
     {
-        Route::prefix('api')
+        Route::prefix('api/v1')
              ->middleware('api')
              ->namespace($this->namespace)
              ->group(base_path('routes/api.php'));

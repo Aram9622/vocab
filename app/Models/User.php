@@ -2,11 +2,13 @@
 
 namespace App\Models;
 
+use App\Notifications\PasswordResetNotification;
+use Tymon\JWTAuth\Contracts\JWTSubject;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
-class User extends Authenticatable
+class User extends Authenticatable implements JWTSubject, MustVerifyEmail
 {
     use Notifiable;
 
@@ -16,7 +18,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'first_name', 'last_name', 'email', 'password'
+        'first_name', 'last_name', 'email', 'password',
     ];
 
     /**
@@ -38,28 +40,27 @@ class User extends Authenticatable
     ];
 
     /**
-     * Get the user's full name.
+     * Get the identifier that will be stored in the subject claim of the JWT.
      *
-     * @return string
+     * @return mixed
      */
-    public function getFullNameAttribute()
+    public function getJWTIdentifier()
     {
-        return "{$this->first_name} {$this->last_name}";
+        return $this->getKey();
     }
 
     /**
-     * Get the company record associated with the user.
+     * Return a key value array, containing any custom claims to be added to the JWT.
+     *
+     * @return array
      */
-    public function company()
+    public function getJWTCustomClaims()
     {
-        return $this->hasOne('App\Models\Company')->withDefault();
+        return [];
     }
 
-    /**
-     * Get the user's image.
-     */
-    public function image()
+    public function sendPasswordResetNotification($token)
     {
-        return $this->morphOne('App\Models\Image', 'imageable');
+        $this->notify(new PasswordResetNotification($token));
     }
 }
