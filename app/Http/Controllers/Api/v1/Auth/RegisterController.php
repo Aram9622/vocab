@@ -13,7 +13,7 @@ class RegisterController extends ApiController
     /**
      * Create a new user instance after a valid registration.
      *
-     * @param  array  $data
+     * @param array $data
      * @return \App\User
      */
     public function register(Request $request)
@@ -25,21 +25,26 @@ class RegisterController extends ApiController
         }
 
         $user = User::create([
-            'first_name' => $request->get('first_name'),
-            'last_name' => $request->get('last_name'),
-            'email' => $request->get('email'),
-            'password' => bcrypt($request->get('password')),
+            'first_name' => $request->input('first_name'),
+            'last_name' => $request->input('last_name'),
+            'email' => $request->input('email'),
+            'password' => bcrypt($request->input('password')),
         ]);
 
         $token = JWTAuth::fromUser($user);
 
-        return response()->json(['token' => $token]);
+        return response()->json([
+            'first_name' => $user->first_name,
+            'last_name' => $user->last_name,
+            'email' => $user->email,
+            'token' => $token
+        ]);
     }
 
     /**
      * Get a validator for an incoming registration request.
      *
-     * @param  array  $data
+     * @param array $data
      * @return \Illuminate\Contracts\Validation\Validator
      */
     protected function validator(array $data)
