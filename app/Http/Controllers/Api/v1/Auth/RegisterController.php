@@ -25,8 +25,7 @@ class RegisterController extends ApiController
         }
 
         $user = User::create([
-            'first_name' => $request->input('first_name'),
-            'last_name' => $request->input('last_name'),
+            'name' => $request->input('name'),
             'email' => $request->input('email'),
             'password' => bcrypt($request->input('password')),
         ]);
@@ -34,8 +33,7 @@ class RegisterController extends ApiController
         $token = JWTAuth::fromUser($user);
 
         return response()->json([
-            'first_name' => $user->first_name,
-            'last_name' => $user->last_name,
+            'name' => $user->name,
             'email' => $user->email,
             'token' => $token
         ]);
@@ -50,8 +48,7 @@ class RegisterController extends ApiController
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'first_name' => ['required', 'string', 'min:2', 'max:255'],
-            'last_name' => ['required', 'string', 'min:2', 'max:255'],
+            'name' => ['required', 'string', 'min:2', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'max:255', 'confirmed'],
         ]);
