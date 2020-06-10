@@ -16,7 +16,13 @@ class LoginController extends ApiController
             return response()->json(['error' => 'Incorrect email/password'], 401);
         }
 
-        return response()->json(['token' => $token]);
+        $user = auth()->user();
+
+        return response()->json([
+            'name'  => $user->name,
+            'email' => $user->email,
+            'token' => $token
+        ]);
     }
 
     /**
