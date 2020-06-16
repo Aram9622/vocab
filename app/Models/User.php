@@ -63,4 +63,12 @@ class User extends Authenticatable implements JWTSubject, MustVerifyEmail
     {
         $this->notify(new PasswordResetNotification($token));
     }
+
+    /**
+     * Get the user's image.
+     */
+    public function image()
+    {
+        return $this->morphOne('App\Models\Image', 'imageable')->withDefault();
+    }
 }
