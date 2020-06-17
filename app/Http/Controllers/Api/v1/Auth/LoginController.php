@@ -19,9 +19,10 @@ class LoginController extends ApiController
         $user = auth()->user();
 
         return response()->json([
-            'name'  => $user->name,
-            'email' => $user->email,
-            'token' => $token
+            'name'   => $user->name,
+            'email'  => $user->email,
+            'avatar' => str_replace("public","storage", $user->image->url),
+            'token'  => $token
         ]);
     }
 
