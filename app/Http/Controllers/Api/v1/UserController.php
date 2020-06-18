@@ -12,6 +12,13 @@ use Image;
 
 class UserController extends ApiController
 {
+    public function show()
+    {
+        $user = auth()->userOrFail();
+
+        return new UserResource($user);
+    }
+
     /**
      * @param UpdateUserProfile $request
      * @return UserResource|\Illuminate\Http\JsonResponse

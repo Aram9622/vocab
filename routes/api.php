@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::middleware(['auth:api'])->group(function () {
+    Route::get('user', 'Api\v1\UserController@show');
     Route::patch('user/update', 'Api\v1\UserController@update');
 });
 
