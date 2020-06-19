@@ -24,4 +24,5 @@ Route::group(['namespace' => 'Api\v1\Auth'], function () {
     Route::post('register', 'RegisterController@register');
     Route::post('login', 'LoginController@login');
     Route::get('logout', 'LoginController@logout')->middleware('auth:api');
+    Route::post('password/email', 'ForgotPasswordController@sendResetLinkEmail');
 });

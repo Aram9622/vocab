@@ -17,6 +17,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+//Password reset
+Route::get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm')->name('password.reset');
+Route::post('password/reset', 'Auth\ResetPasswordController@reset')->name('password.update');
+
 //Artisan commands
 Route::get('/storage-link', function () {
     \Illuminate\Support\Facades\Artisan::call('storage:link');

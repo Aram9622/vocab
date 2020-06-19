@@ -51,7 +51,7 @@ class UserController extends ApiController
             }
 
             Image::make($file)
-                ->resize(300, 300)
+                ->resize(400, 400)
                 ->save(storage_path('app/' . $url));
 
             $user->image()->updateOrCreate(
