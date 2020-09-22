@@ -112,18 +112,19 @@
                                         </tbody>
                                     </table>
                                 </div>
-                                <div class="pagination_div">
-                                    <div class="pagination">
-                                        <a href="#">
-                                            |<
-                                        </a>
-                                        <a href="#" class="active">1</a>
-                                        <a href="#">2</a>
-                                        <a href="#">3</a>
-                                        <a href="#">4</a>
-                                        <a href="#">5</a>
-                                        <a href="#"> >| </a>
-                                    </div>
+                                <div class="pagination_div" style="min-width: 300px;">
+{{--                                    <div class="pagination">--}}
+{{--                                        <a href="#">--}}
+{{--                                            |<--}}
+{{--                                        </a>--}}
+{{--                                        <a href="#" class="active">1</a>--}}
+{{--                                        <a href="#">2</a>--}}
+{{--                                        <a href="#">3</a>--}}
+{{--                                        <a href="#">4</a>--}}
+{{--                                        <a href="#">5</a>--}}
+{{--                                        <a href="#"> >| </a>--}}
+{{--                                    </div>--}}
+                                    {{ $news->links() }}
                                 </div>
                             </div>
                         </div>
@@ -133,6 +134,18 @@
         </div>
     </main>
 @endsection
+@section('css')
+<style>
+    .pagination {
+        display: flex;
+        flex-wrap: wrap;
+    }
+    .page-item.disabled {
+        display: none;
+    }
+</style>
+@endsection
+
 @section('js')
 <script type="text/javascript">
     $('.visible__div input').on('change', function(){
@@ -156,7 +169,7 @@
                     alert('Oops..');
                 }
             }
-        }); 
+        });
     })
 </script>
 @stop

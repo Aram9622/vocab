@@ -13,7 +13,7 @@ class NewsController extends Controller
 {
     public function index()
     {
-        $news = News::orderByDesc('id')->get();
+        $news = News::orderByDesc('id')->paginate(50);
         return view('Admin.pages.news.index', compact('news'));
     }
 
@@ -53,12 +53,6 @@ class NewsController extends Controller
 
     public function delete(News $news)
     {
-        $exisitingImage = 'uploads/news/' . $news->image;
-        $exisitingImageThumb = 'uploads/thumb/' . $news->image;
-        if (File::exists(public_path($exisitingImage))) {
-            File::delete(public_path($exisitingImage));
-            File::delete(public_path($exisitingImageThumb));
-        }
         $news->delete();
         return redirect()->back();
     }
