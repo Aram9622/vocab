@@ -11,7 +11,7 @@ use App\Models\Category;
 use App\Models\Exercise;
 use File;
 
-class MyExercisesController extends Controller
+class ExercisesController extends Controller
 {
     public function index(Category $category = null, Category $sub_category = null)
     {
@@ -67,6 +67,12 @@ class MyExercisesController extends Controller
             $data['record_es'] = $filename;
         }
 
+        $words = '';
+        if ($request->type == 2) {
+            $words = implode(',', $data['words']);
+        }
+        $data['words'] = $words;
+
         Exercise::where('id', '=', $exercise->id)->update($data);
 
         return redirect()->route('admin.new.exercises.add.item', [$exercise->category->level, $exercise->category->parent->id, $exercise->category->id]);
@@ -80,11 +86,11 @@ class MyExercisesController extends Controller
         return redirect()->back();
     }
 
-    public function addItem(Category $category, Category $sub_category)
+    public function addItem(Category $category, Category $sub_category, Exercise $exercise)
     {
-        //$exercises = Exercise::where('category_id', '=', $sub_category->id)->paginate(50);
-        $exercises = [];
-        return view('Admin.pages.exercises.add-item', compact('category', 'sub_category', 'exercises'));
+        $exercises_1 = Exercise::where('category_id', '=', $sub_category->id)->where('type', 1)->paginate(50);
+        $exercises_2 = Exercise::where('category_id', '=', $sub_category->id)->where('type', 2)->paginate(50);
+        return view('Admin.pages.exercises.add-item', compact('category', 'sub_category', 'exercise', 'exercises_1', 'exercises_2'));
     }
 
     public function storeItem(StoreExerciseRequest $request, $category_id)
@@ -110,6 +116,13 @@ class MyExercisesController extends Controller
             $music_file->move($location, $filename);
             $data['record_es'] = $filename;
         }
+
+        $words = '';
+        if ($request->type == 2) {
+            $words = implode(',', $data['words']);
+        }
+        $data['words'] = $words;
+
         Exercise::create($data);
         return redirect()->back();
     }
@@ -138,5 +151,10 @@ class MyExercisesController extends Controller
     {
         Exercise::where('id', '=', $request->item)->update(['visible' => $request->visible]);
         return response()->json(['error' => false]);
+    }
+
+    public function test()
+    {
+
     }
 }

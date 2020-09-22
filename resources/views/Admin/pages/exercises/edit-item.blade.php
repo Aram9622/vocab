@@ -192,6 +192,7 @@
                                                     <div class="col-md-3">
                                                         <div class="categ_inputs categ_btns_div">
                                                             <div class="categ_btns">
+                                                                <button type="button" class="cancel__btn">Cancel</button>
                                                                 <button type="submit" class="save__btn">Save</button>
                                                             </div>
                                                         </div>

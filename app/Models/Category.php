@@ -46,6 +46,11 @@ class Category extends Model
         return $this->hasMany(Phrase::class);
     }
 
+    public function exercises()
+    {
+        return $this->hasMany(Exercise::class);
+    }
+
     protected static function boot()
     {
         static::deleting(function ($model) {

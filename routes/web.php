@@ -78,19 +78,21 @@ Route::group(['as' => 'admin.', 'namespace' => 'Admin', 'middleware' => ['auth']
         Route::post('item-visibility', 'NewVerbsController@visibility')->name('new.verbs.visibility.item');
     });
 
-    Route::prefix('my-exercises')->group(function () {
-        Route::get('{category?}/{sub_category?}', 'MyExercisesController@index')->name('new.exercises.index')->where('level', 'beginner|intermediate|advanced');
-        Route::get('{category?}/{sub_category?}/add-exercise', 'MyExercisesController@addItem')->name('new.exercises.add.item');
+    Route::prefix('exercises')->group(function () {
+        Route::get('{category?}/{sub_category?}', 'ExercisesController@index')->name('new.exercises.index')->where('level', 'beginner|intermediate|advanced');
+        Route::get('{category?}/{sub_category?}/add-exercise', 'ExercisesController@addItem')->name('new.exercises.add.item');
 
-        Route::get('edit/{exercise}', 'MyExercisesController@edit')->name('new.exercises.edit.item');
-        Route::post('update-item/{exercise}', 'MyExercisesController@updateItem')->name('new.exercises.update.item');
+        Route::post('update-item/{exercise}', 'ExercisesController@updateItem')->name('new.exercises.update.item');
 
-        Route::post('{parent?}', 'MyExercisesController@createCategory')->name('new.exercises.create.category')->where('level', 'beginner|intermediate|advanced');
-        Route::post('store-item/{category_id}', 'MyExercisesController@storeItem')->name('new.exercises.store.item');
-        Route::get('delete-item/{exercise}', 'MyExercisesController@deleteItem')->name('new.exercises.delete.item');
+        Route::get('edit/{exercise}', 'ExercisesController@edit')->name('new.exercises.edit.item');
+        Route::get('test', 'ExercisesController@test')->name('new.exercises.test.item');
 
-        Route::post('item-visibility', 'MyExercisesController@visibility')->name('new.exercises.visibility.item');
+        Route::post('{parent?}', 'ExercisesController@createCategory')->name('new.exercises.create.category')->where('level', 'beginner|intermediate|advanced');
+        Route::post('store-item/{category_id}', 'ExercisesController@storeItem')->name('new.exercises.store.item');
+        Route::get('delete-item/{exercise}', 'ExercisesController@deleteItem')->name('new.exercises.delete.item');
     });
+
+    Route::post('my-exercises/item-visibility', 'ExercisesController@visibility')->name('new.exercises.visibility.item');
 
     Route::prefix('reading-and-listening')->group(function () {
         Route::prefix('conversations')->group(function () {
@@ -126,7 +128,6 @@ Route::group(['as' => 'admin.', 'namespace' => 'Admin', 'middleware' => ['auth']
             Route::post('delete-item/{story}', 'StoriesController@deleteItem')->name('new.stories.delete.item');
 
             Route::post('item-visibility', 'StoriesController@visibility')->name('new.stories.visibility.item');
-
         });
     });
 

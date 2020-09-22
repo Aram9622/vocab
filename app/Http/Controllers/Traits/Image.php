@@ -12,6 +12,8 @@ trait Image
         if (is_file($imagePath) && $callback) {
             $callback($imagePath);
         }
+
+        return $imagePath;
     }
 
     public function getAudioPath($lang = 'en')
@@ -65,7 +67,7 @@ trait Image
             unlink($image);
         });
 
-        $ManyToManyRelations = ['conversations', 'words', 'news', 'phrases', 'verbs'];
+        $ManyToManyRelations = ['conversations', 'words', 'news', 'phrases', 'verbs', 'exercises'];
 
         foreach ($ManyToManyRelations as $relation) {
             if (!$this->$relation || empty($this->$relation)) continue;
