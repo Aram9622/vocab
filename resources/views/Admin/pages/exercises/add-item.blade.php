@@ -77,7 +77,7 @@
                                                 <tr>
                                                     <td>
                                                         <div class="picture__div">
-                                                            <img src="{{ asset('uploads/exercises/' . $exercise->image) }}">
+                                                            <img src="{{ asset('uploads/thumb/' . $exercise->image) }}">
                                                         </div>
                                                     </td>
                                                     <td>{{ $exercise->title }}</td>
