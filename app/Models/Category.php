@@ -13,6 +13,11 @@ class Category extends Model
 
     public function parent()
     {
+        return $this->belongsTo(self::class, 'parent_id', 'id');
+    }
+
+    public function parentOne()
+    {
         return $this->hasOne(self::class, 'parent_id', 'id');
     }
 

@@ -74,7 +74,12 @@
                                 <div class="categories_box">
                                     @foreach($categories as $cat)
                                         <div class="categ_item">
-                                            <a href="{{ isset($category) ? route('admin.new.phrases.add.item', [request()->segment(2), $category->id, $cat->id]) 
+                                            <div class="float-right">
+                                                <a href="{{route('admin.category.delete', $cat)}}" style="position: relative;top: 12px;color: red;">
+                                                    <i class="fa fa-trash"></i>
+                                                </a>
+                                            </div>
+                                            <a href="{{ isset($category) ? route('admin.new.phrases.add.item', [request()->segment(2), $category->id, $cat->id])
                                               : route('admin.new.phrases.index', [request()->segment(2), $cat->id]) }}">
                                                 <img src="{{asset('uploads/categories/phrases/'.request()->segment(2).'/'.$cat->image )}}">
                                                 <h2>{{$cat->name}}</h2>

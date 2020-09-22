@@ -114,20 +114,6 @@ class NewWordsController extends Controller
 
     public function deleteItem(Word $word)
     {
-        $exisitingImage = 'uploads/words/' . $word->image;
-        $exisitingImageThumb = 'uploads/thumb/' . $word->image;
-        if (File::exists(public_path($exisitingImage))) {
-            File::delete(public_path($exisitingImage));
-            File::delete(public_path($exisitingImageThumb));
-        }
-        $exisitingRecordEn = 'uploads/audio/' . $word->record_en;
-        if (File::exists(public_path($exisitingRecordEn))) {
-            File::delete(public_path($exisitingRecordEn));
-        }
-        $exisitingRecordEs = 'uploads/audio/' . $word->record_es;
-        if (File::exists(public_path($exisitingRecordEs))) {
-            File::delete(public_path($exisitingRecordEs));
-        }
         $word->delete();
         return redirect()->back();
     }

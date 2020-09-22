@@ -209,7 +209,7 @@
                     alert('Oops..');
                 }
             }
-        }); 
+        });
     })
 </script>
 @stop

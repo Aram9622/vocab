@@ -75,8 +75,8 @@ trait Image
             }
         }
 
-        if ($model->parent) {
-            $this->deleteAllRelatedCatImages($model->parent);
+        if ($model->parentOne) {
+            $this->deleteAllRelatedCatImages($model->parentOne);
         }
     }
 }

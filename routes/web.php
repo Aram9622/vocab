@@ -31,6 +31,11 @@ Route::group(['as' => 'admin.', 'namespace' => 'Admin', 'middleware' => ['auth']
         return redirect()->route('admin.new.words.index', 'beginner');
     });
 
+    Route::get('/delete-category/{category}', function (\App\Models\Category $category) {
+        $category->delete();
+        return back();
+    })->name('category.delete');
+
     Route::prefix('new-words')->group(function () {
         Route::get('/{level}/{category?}/{sub_category?}', 'NewWordsController@index')->name('new.words.index')->where('level', 'beginner|intermediate|advanced');
         Route::get('{level}/{category}/{sub_category}/add-word', 'NewWordsController@addItem')->name('new.words.add.item');
