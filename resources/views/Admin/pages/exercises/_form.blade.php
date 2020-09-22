@@ -35,7 +35,7 @@
                         <div class="Create_new_category">
                             <div class="row">
                                 <div class="col-md-2">
-                                    <div class="upload__image_box {{ old('type', $exercise->type) == 1 ? 'show active' : '' }}" id="with-picture">
+                                    <div class="upload__image_box {{ in_array(old('type', $exercise->type), [null, 1]) ? 'show active' : '' }}" id="with-picture">
                                         <p>Add picture (max 1mb)</p>
                                         <div class="upload__image">
                                             <div id="imagePreview"></div>
