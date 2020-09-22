@@ -14,7 +14,7 @@
                     <li>
                         <label class="select_type active show" for="t1">With Picture
                             <input
-                                {{ old('type', $exercise->type) == 1 ? 'checked' : '' }}
+                                {{ in_array(old('type', $exercise->type), [null, 1]) ? 'checked' : '' }}
                                 onchange="$('#with-picture, #with-words').toggleClass('show active');"
                                 id="t1" name="type" value="1" type="radio">
                             <span class="checkmark"></span>
