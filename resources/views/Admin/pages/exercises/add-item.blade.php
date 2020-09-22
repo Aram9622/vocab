@@ -130,7 +130,7 @@
                                         {{--                                               </div>--}}
                                     </div>
 
-                                    {{ $exercises->links() }}
+                                    {{ $exercises_1->links() }}
                                 </div>
                                 <div class="tab-pane fade words_section" id="words">
                                     <div class="Vocabulary_table table-responsive">
