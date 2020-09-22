@@ -13,12 +13,12 @@ trait FileUploadTrait
      */
     public static function saveFiles(Request $request, $path = null, $w = null, $h = null)
     {
-        if($path != null){
-            $path = 'uploads/'.$path;
+        if ($path != null) {
+            $path = 'uploads/' . $path;
             if (!file_exists($path)) {
                 mkdir($path, 0777, true);
             }
-        }else {
+        } else {
             $path = 'uploads';
         }
         $newRequest = null; // Variable to hold a new request created by above array merging
@@ -27,10 +27,10 @@ trait FileUploadTrait
                 if ($request->has($key . '_w') && $request->has($key . '_h')) {
                     // Check file width
                     $filename = time() . '-' . $request->file($key)->getClientOriginalName();
-                    $file     = $request->file($key);
-                    $image    = Image::make($file);
+                    $file = $request->file($key);
+                    $image = Image::make($file);
                     Image::make($file)->resize(50, 50)->save(public_path('uploads/thumb') . '/' . $filename);
-                    $width  = $image->width();
+                    $width = $image->width();
                     $height = $image->height();
                     if ($width > $request->{$key . '_w'} && $height > $request->{$key . '_h'}) {
                         $image->resize($request->{$key . '_w'}, $request->{$key . '_h'});
@@ -48,13 +48,13 @@ trait FileUploadTrait
                     $requestDataToMerge = $newRequest == null ? $request->all() : $newRequest->all();
                     // Create new request without changing the original one (prevents removal of specific metadata which disables parsing of a second file)
                     $newRequest = new Request(array_merge($requestDataToMerge, [$key => $filename]));
-                } else if($w != null && $h != null){
+                } else if ($w != null && $h != null) {
                     // Check file width
                     $filename = time() . '-' . $request->file($key)->getClientOriginalName();
-                    $file     = $request->file($key);
-                    $image    = Image::make($file);
+                    $file = $request->file($key);
+                    $image = Image::make($file);
                     Image::make($file)->resize(50, 50)->save(public_path('uploads/thumb') . '/' . $filename);
-                    $width  = $image->width();
+                    $width = $image->width();
                     $height = $image->height();
                     if ($width > $w && $height > $h) {
                         $image->resize($w, $h);
@@ -73,15 +73,15 @@ trait FileUploadTrait
                     // Create new request without changing the original one (prevents removal of specific metadata which disables parsing of a second file)
                     $newRequest = new Request(array_merge($requestDataToMerge, [$key => $filename]));
 
-                }else{
-                    if(is_array($request->file($key))){
+                } else {
+                    if (is_array($request->file($key))) {
                         $imageNames = [];
                         foreach ($request->file($key) as $k => $imageArray) {
                             $filename = time() . '-' . $imageArray->getClientOriginalName();
                             $imageNames[] = $filename;
-                            $file     = $request->file($key)[$k];
+                            $file = $request->file($key)[$k];
                             // $imageArray->move(public_path($path), $filename);
-                            $image    = Image::make($file);
+                            $image = Image::make($file);
                             Image::make($file)->resize(50, 50)->save(public_path('uploads/thumb') . '/' . $filename);
 
                             $image->save(public_path($path) . '/' . $filename);
@@ -90,10 +90,10 @@ trait FileUploadTrait
                             // Create new request without changing the original one (prevents removal of specific metadata which disables parsing of a second file)
                             $newRequest = new Request(array_merge($requestDataToMerge, [$key => $imageNames]));
                         }
-                    }else {
+                    } else {
                         $filename = time() . '-' . $request->file($key)->getClientOriginalName();
-                        $file     = $request->file($key);
-                        $image    = Image::make($file);
+                        $file = $request->file($key);
+                        $image = Image::make($file);
                         Image::make($file)->resize(50, 50)->save(public_path('uploads/thumb') . '/' . $filename);
                         // Determine which request's data to use further
                         $image->save(public_path($path) . '/' . $filename);

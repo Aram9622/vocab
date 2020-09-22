@@ -18,7 +18,6 @@ Route::middleware(['auth:api'])->group(function () {
     Route::patch('user/update', 'Api\v1\UserController@update');
 });
 
-
 //Authentication routes
 Route::group(['namespace' => 'Api\v1\Auth'], function () {
     Route::post('register', 'RegisterController@register');
