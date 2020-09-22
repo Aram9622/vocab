@@ -28,7 +28,7 @@ class UpdateExerciseRequest extends FormRequest
         if ($this->type == 2) {
             $rules = [
                 'words' => 'required|array',
-                'words.*' => 'required|string|max:255',
+                'words.*' => 'nullable|string|max:255',
             ];
         }
 

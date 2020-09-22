@@ -12,6 +12,11 @@ class Exercise extends Model
         'category_id', 'type', 'words', 'image', 'title', 'record_en', 'record_es', 'exercise_en', 'exercise_es', 'visible'
     ];
 
+    public function category()
+    {
+        return $this->belongsTo(Category::class, 'category_id', 'id')->with('parent');
+    }
+
     protected static function boot()
     {
         static::deleting(function ($model) {

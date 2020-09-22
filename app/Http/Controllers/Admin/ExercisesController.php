@@ -26,6 +26,10 @@ class ExercisesController extends Controller
 
     public function edit(Exercise $exercise)
     {
+        if ($exercise->words) {
+            $exercise->words = explode(',', $exercise->words);
+        }
+
         return view('Admin.pages.exercises.edit-item', compact('exercise'));
     }
 
@@ -68,14 +72,20 @@ class ExercisesController extends Controller
         }
 
         $words = '';
-        if ($request->type == 2) {
+        if ($request->type == 2 && isset($data['words']) && is_array($data['words'])) {
+            array_walk($data['words'], function ($value, $key) use ($data) {
+                if (!trim($value)) {
+                    unset($data['words'][$key]);
+                }
+            });
             $words = implode(',', $data['words']);
         }
         $data['words'] = $words;
 
         Exercise::where('id', '=', $exercise->id)->update($data);
 
-        return redirect()->route('admin.new.exercises.add.item', [$exercise->category->level, $exercise->category->parent->id, $exercise->category->id]);
+        return back();
+        //return redirect()->route('admin.new.exercises.add.item', [$exercise->category->level, $exercise->category->parent->id, $exercise->category->id]);
     }
 
     public function createCategory($parent_id = 0, StoreCategoryRequest $request)
@@ -118,7 +128,12 @@ class ExercisesController extends Controller
         }
 
         $words = '';
-        if ($request->type == 2) {
+        if ($request->type == 2 && isset($data['words']) && is_array($data['words'])) {
+            array_walk($data['words'], function ($value, $key) use ($data) {
+                if (!trim($value)) {
+                    unset($data['words'][$key]);
+                }
+            });
             $words = implode(',', $data['words']);
         }
         $data['words'] = $words;
@@ -151,10 +166,5 @@ class ExercisesController extends Controller
     {
         Exercise::where('id', '=', $request->item)->update(['visible' => $request->visible]);
         return response()->json(['error' => false]);
-    }
-
-    public function test()
-    {
-
     }
 }

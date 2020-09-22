@@ -82,17 +82,16 @@ Route::group(['as' => 'admin.', 'namespace' => 'Admin', 'middleware' => ['auth']
         Route::get('{category?}/{sub_category?}', 'ExercisesController@index')->name('new.exercises.index')->where('level', 'beginner|intermediate|advanced');
         Route::get('{category?}/{sub_category?}/add-exercise', 'ExercisesController@addItem')->name('new.exercises.add.item');
 
-        Route::post('update-item/{exercise}', 'ExercisesController@updateItem')->name('new.exercises.update.item');
-
-        Route::get('edit/{exercise}', 'ExercisesController@edit')->name('new.exercises.edit.item');
-        Route::get('test', 'ExercisesController@test')->name('new.exercises.test.item');
-
         Route::post('{parent?}', 'ExercisesController@createCategory')->name('new.exercises.create.category')->where('level', 'beginner|intermediate|advanced');
         Route::post('store-item/{category_id}', 'ExercisesController@storeItem')->name('new.exercises.store.item');
         Route::get('delete-item/{exercise}', 'ExercisesController@deleteItem')->name('new.exercises.delete.item');
-    });
 
-    Route::post('my-exercises/item-visibility', 'ExercisesController@visibility')->name('new.exercises.visibility.item');
+        Route::prefix('my/exercise/actions')->group(function() {
+            Route::post('update-item/{exercise}', 'ExercisesController@updateItem')->name('new.exercises.update.item');
+            Route::get('edit/{exercise}', 'ExercisesController@edit')->name('new.exercises.edit.item');
+            Route::post('item-visibility', 'ExercisesController@visibility')->name('new.exercises.visibility.item');
+        });
+    });
 
     Route::prefix('reading-and-listening')->group(function () {
         Route::prefix('conversations')->group(function () {
