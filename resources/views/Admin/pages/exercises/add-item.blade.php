@@ -77,7 +77,7 @@
                                                 <tr>
                                                     <td>
                                                         <div class="picture__div">
-                                                            <img src="{{ $exercise->getImagePath('exercises', true) }}">
+                                                            <img src="{{ asset('uploads/exercises/' . $exercise->image) }}">
                                                         </div>
                                                     </td>
                                                     <td>{{ $exercise->title }}</td>
