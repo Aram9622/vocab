@@ -1,0 +1,163 @@
+.table-bordered thead th:last-child {
+    width: 90px;
+}
+
+.table_container .table_tabs {
+    margin-bottom: 20px;
+}
+
+.table_container .nav-pills li {
+    margin-right: 30px;
+}
+
+.table_container .nav-pills a {
+    text-align: left;
+    font-family: "Roboto-Bold";
+    font-size: 16px;
+    color: rgba(0, 0, 0, 0.5);
+    padding-bottom: 20px;
+}
+
+.table_container .nav-pills a.active {
+    color: #000000;
+}
+
+
+/* The container */
+.select_type {
+    margin-right: 30px;
+    display: block;
+    position: relative;
+    padding-left: 25px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    font-family: "Roboto-Regular";
+    font-size: 14px;
+    color: #6A717E;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+/* Hide the browser's default checkbox */
+.select_type input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+
+/* Create a custom checkbox */
+.checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 17px;
+    width: 17px;
+    border: 1px solid #6A717E;
+    border-radius: 4px;
+}
+
+/* On mouse-over, add a grey background color */
+.select_type:hover input ~ .checkmark {
+    border: 1px solid #6A717E;
+    border-radius: 4px;
+}
+
+/* When the checkbox is checked, add a blue background */
+.select_type input:checked ~ .checkmark {
+    border: 1px solid #6A717E;
+    border-radius: 4px;
+}
+
+/* Create the checkmark/indicator (hidden when not checked) */
+.checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+
+/* Show the checkmark when checked */
+.select_type input:checked ~ .checkmark:after {
+    display: block;
+}
+
+/* Style the checkmark/indicator */
+.select_type .checkmark:after {
+    left: 5px;
+    top: 1px;
+    width: 5px;
+    height: 10px;
+    border: solid #6A717E;
+    border-width: 0 1px 1px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+}
+
+.select_type_div > p {
+    margin-bottom: 12px;
+    font-family: "Roboto-Regular";
+    font-size: 14px;
+    color: rgba(47, 63, 80, 0.5);
+}
+
+.add_words_div {
+    margin-top: 10px;
+    margin-bottom: 30px;
+}
+
+.add_words_div > p {
+    display: block;
+    margin-bottom: 4px;
+    font-family: "Roboto-Regular";
+    font-size: 14px;
+    color: rgba(47, 63, 80, 0.5);
+}
+
+.upload__word_box {
+    display: flex;
+    align-items: center;
+}
+
+.upload__word_box button {
+    box-shadow: none;
+    width: 48px;
+    height: 48px;
+    border: 1px solid #BABAC7;
+    border-radius: 4px;
+    background-color: transparent;
+    color: #BABAC7;
+    font-family: "Roboto-Regular";
+    font-size: 16px;
+    margin-right: 40px;
+}
+
+.upload__word_box > p {
+    padding: 10px 15px;
+    max-width: 160px;
+    width: 100%;
+    height: 48px;
+    border: 1px solid #BABAC7;
+    border-radius: 4px;
+    font-family: "Roboto-Regular";
+    font-size: 16px;
+    color: #000000;
+    margin-right: 40px;
+}
+
+@media (max-width: 1200px) {
+    .upload__word_box > p {
+        margin-right: 20px;
+    }
+}
+
+@media (max-width: 992px) {
+    .upload__word_box {
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+    }
+}
