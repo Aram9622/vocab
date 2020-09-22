@@ -129,6 +129,8 @@
                                         {{--                                                   <a href="#"> >| </a>--}}
                                         {{--                                               </div>--}}
                                     </div>
+
+                                    {{ $exercises->links() }}
                                 </div>
                                 <div class="tab-pane fade words_section" id="words">
                                     <div class="Vocabulary_table table-responsive">
@@ -198,6 +200,8 @@
                                         {{--                                                   <a href="#"> >| </a>--}}
                                         {{--                                               </div>--}}
                                     </div>
+
+                                    {{ $exercises_2->links() }}
                                 </div>
                             </div>
                         </div>
