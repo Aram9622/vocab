@@ -7,10 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 class Phrase extends Model
 {
     protected $fillable = [
-    	'category_id', 'phrase_en', 'record_en', 'phrase_es', 'record_es', 'image', 'eg_link','visible'
+        'category_id', 'phrase_en', 'record_en', 'phrase_es', 'record_es', 'image', 'eg_link', 'visible'
     ];
 
-    public function category(){
-    	return $this->belongsTo('App\Models\Category', 'category_id', 'id')->with('parent');
+    public function category()
+    {
+        return $this->belongsTo('App\Models\Category', 'category_id', 'id')->with('parent');
     }
 }
