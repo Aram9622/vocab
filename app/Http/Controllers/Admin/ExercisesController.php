@@ -13,10 +13,10 @@ use File;
 
 class ExercisesController extends Controller
 {
-    public function index(Category $category = null, Category $sub_category = null)
+    public function index($level, Category $category = null, Category $sub_category = null)
     {
         if (!$category) {
-            $categories = Category::where(['type' => 'exercises', 'parent_id' => null])->get();
+            $categories = Category::where(['type' => 'exercises', 'level' => $level, 'parent_id' => null])->get();
         } else {
             $categories = Category::where('parent_id', '=', $category->id)->get();
         }
@@ -88,15 +88,14 @@ class ExercisesController extends Controller
         //return redirect()->route('admin.new.exercises.add.item', [$exercise->category->level, $exercise->category->parent->id, $exercise->category->id]);
     }
 
-    public function createCategory($parent_id = 0, StoreCategoryRequest $request)
+    public function createCategory($level, $parent_id = 0, StoreCategoryRequest $request)
     {
-        $level = null;
         $type = 'exercises';
         Category::createItem($type, $level, $parent_id, $request);
         return redirect()->back();
     }
 
-    public function addItem(Category $category, Category $sub_category, Exercise $exercise)
+    public function addItem($level, Category $category, Category $sub_category, Exercise $exercise)
     {
         $exercises_1 = Exercise::where('category_id', '=', $sub_category->id)->where('type', 1)->paginate(50);
         $exercises_2 = Exercise::where('category_id', '=', $sub_category->id)->where('type', 2)->paginate(50);

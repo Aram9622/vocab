@@ -8,7 +8,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}" />
     <title>
         @if(isset($title))
-            Dashboard – {{ $title }} 
+            Dashboard – {{ $title }}
         @else
             Dashboard
         @endif
@@ -22,6 +22,11 @@
     <!-- Main CSS -->
     <link href="{{asset('css/style.css')}}" rel="stylesheet">
     @yield('css')
+    <style>
+        .upload__image #imagePreview {
+            background-size: cover;
+        }
+    </style>
 </head>
 
 <body>

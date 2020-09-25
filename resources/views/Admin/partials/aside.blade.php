@@ -43,8 +43,14 @@
                     </li>
                 </ul>
             </li>
-            <li><a href="{{ route('admin.new.exercises.index') }}" class="{{ request()->segment(1) == 'my-exercises' ? 'active_page active' : '' }}">My exercises</a></li>
-            <li><a href="{{ route('admin.news.index') }}" class="{{ request()->is('news') ? 'active_page active' : '' }}">News</a></li>
+            <li class="dropdown"><a class="{{ request()->is('exercises') || request()->is('exercises/*') ? 'active_page' : '' }}" href="#" data-toggle="collapse">My exercises</a>
+                <ul class="sub__menu dropdown_menu {{ request()->is('/') || request()->is('new-words') || request()->is('exercises/*') ? 'active_menu' : '' }}">
+                    <li><a class="{{ request()->is('/') || request()->is('exercises/beginner') || request()->is('exercises/beginner/*') ? 'active' : '' }}" href="{{route('admin.new.exercises.index', 'beginner')}}">Beginner</a></li>
+                    <li><a class="{{ request()->is('/') || request()->is('exercises/intermediate') || request()->is('exercises/intermediate/*') ? 'active' : '' }}" href="{{route('admin.new.exercises.index', 'intermediate')}}">Intermediate</a></li>
+                    <li><a class="{{ request()->is('/') || request()->is('exercises/advanced') || request()->is('exercises/advanced/*') ? 'active' : '' }}" href="{{route('admin.new.exercises.index', 'advanced')}}">Advanced</a></li>
+                </ul>
+            </li>
+            <li></li>
             <li>
                 <form method="post" action="{{route('logout')}}">
                     @csrf

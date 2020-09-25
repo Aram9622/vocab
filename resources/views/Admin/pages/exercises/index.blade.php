@@ -78,9 +78,9 @@
                                                     <i class="fa fa-trash"></i>
                                                 </a>
                                             </div>
-                                            <a href="{{ isset($category) ? route('admin.new.exercises.add.item', [$category->id, $cat->id])
-                                              : route('admin.new.exercises.index', [$cat->id]) }}">
-                                                <img src="{{asset('uploads/categories/exercises/'.$cat->image )}}">
+                                            <a href="{{ isset($category) ? route('admin.new.exercises.add.item', [request()->segment(2), $category->id, $cat->id])
+                                              : route('admin.new.exercises.index', [request()->segment(2), $cat->id]) }}">
+                                                <img src="{{asset('uploads/categories/exercises/'.request()->segment(2).'/'.$cat->image )}}">
                                                 <h2>{{$cat->name}}</h2>
                                             </a>
                                         </div>

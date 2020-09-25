@@ -79,10 +79,10 @@ Route::group(['as' => 'admin.', 'namespace' => 'Admin', 'middleware' => ['auth']
     });
 
     Route::prefix('exercises')->group(function () {
-        Route::get('{category?}/{sub_category?}', 'ExercisesController@index')->name('new.exercises.index')->where('level', 'beginner|intermediate|advanced');
-        Route::get('{category?}/{sub_category?}/add-exercise', 'ExercisesController@addItem')->name('new.exercises.add.item');
+        Route::get('/{level}/{category?}/{sub_category?}', 'ExercisesController@index')->name('new.exercises.index')->where('level', 'beginner|intermediate|advanced');
+        Route::get('/{level}/{category}/{sub_category}/add-exercise', 'ExercisesController@addItem')->name('new.exercises.add.item');
 
-        Route::post('{parent?}', 'ExercisesController@createCategory')->name('new.exercises.create.category')->where('level', 'beginner|intermediate|advanced');
+        Route::post('/{level}/{parent?}', 'ExercisesController@createCategory')->name('new.exercises.create.category')->where('level', 'beginner|intermediate|advanced');
         Route::post('store-item/{category_id}', 'ExercisesController@storeItem')->name('new.exercises.store.item');
         Route::get('delete-item/{exercise}', 'ExercisesController@deleteItem')->name('new.exercises.delete.item');
 
