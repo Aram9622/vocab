@@ -201,7 +201,7 @@
                                     <div class="categ_inputs categ_btns_div">
                                         <div class="categ_btns">
                                             @if($exercise->category)
-                                                <button type="button" onclick="location.href='{{ route('admin.new.exercises.add.item', [$exercise->category->parent->id, $exercise->category_id]) }}'" class="cancel__btn">Cancel</>
+                                                <button type="button" onclick="location.href='{{ route('admin.new.exercises.add.item', [$exercise->category->level, $exercise->category_id, $exercise->category->parentOne->id]) }}'" class="cancel__btn">Cancel</>
                                             @endif
                                             <button type="submit" class="save__btn">Save</button>
                                         </div>
