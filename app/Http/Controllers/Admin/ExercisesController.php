@@ -97,8 +97,8 @@ class ExercisesController extends Controller
 
     public function addItem($level, Category $category, Category $sub_category, Exercise $exercise)
     {
-        $exercises_1 = Exercise::where('category_id', '=', $sub_category->id)->where('type', 1)->paginate(50);
-        $exercises_2 = Exercise::where('category_id', '=', $sub_category->id)->where('type', 2)->paginate(50);
+        $exercises_1 = Exercise::where('category_id', '=', $category->id)->where('type', 1)->paginate(50);
+        $exercises_2 = Exercise::where('category_id', '=', $category->id)->where('type', 2)->paginate(50);
         return view('Admin.pages.exercises.add-item', compact('category', 'sub_category', 'exercise', 'exercises_1', 'exercises_2'));
     }
 
