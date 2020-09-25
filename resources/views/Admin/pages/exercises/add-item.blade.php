@@ -1,28 +1,4 @@
 @extends('layouts.master')
-@section('css')
-    <link rel="stylesheet" type="text/css" href="{{asset('css/exercises.css')}}">
-    <style>
-        .upload__word_box > input {
-            padding: 10px 15px;
-            max-width: 160px;
-            width: 100%;
-            height: 48px;
-            border: 1px solid #BABAC7;
-            border-radius: 4px;
-            font-family: "Roboto-Regular";
-            font-size: 16px;
-            color: #000000;
-            margin-right: 40px;
-        }
-        #with-words, #with-picture {
-            display: none;
-        }
-
-        #with-words.show, #with-picture.show {
-            display: block;
-        }
-    </style>
-@stop
 
 @section('content')
     <main class="main-content">
@@ -40,11 +16,16 @@
                     </ul>
                 </div>
                 @if($errors->all() && !empty($errors->all()))
-                    <ul class="alert alert-danger">
+                    <ul class="alert alert-warning" style="font-size: 12px;list-style: none;text-align: center;">
                         @foreach($errors->all() as $error)
                             <li>{{ $error }}</li>
                         @endforeach
                     </ul>
+                @endif
+                @if(session()->has('success'))
+                    <div class="alert alert-success">
+                        <h1 class="text-center">Form data successfully saved</h1>
+                    </div>
                 @endif
                 <div class="dashboard_box">
                     @include('Admin.pages.exercises._form', ['route' => route('admin.new.exercises.store.item', request()->segment(3))])
@@ -90,8 +71,12 @@
                                                         <div class="audio_player_div">
                                                             <div class="audio_icon">
                                                                 <audio controls>
-                                                                    <source src="{{ asset('uploads/audio/'.$exercise->record_en) }}" type="audio/ogg">
-                                                                    <source src="{{ asset('uploads/audio/'.$exercise->record_en) }}" type="audio/mpeg">
+                                                                    <source
+                                                                        src="{{ asset('uploads/audio/'.$exercise->record_en) }}"
+                                                                        type="audio/ogg">
+                                                                    <source
+                                                                        src="{{ asset('uploads/audio/'.$exercise->record_en) }}"
+                                                                        type="audio/mpeg">
                                                                     Your browser does not support the audio element.
                                                                 </audio>
                                                             </div>
@@ -100,15 +85,21 @@
                                                     <td>
                                                         <div class="visible__div">
                                                             <label class="switch">
-                                                                <input type="checkbox"  data-id="{{$exercise->id}}" @if($exercise->visible == 1) checked="checked" @endif>
+                                                                <input type="checkbox" data-id="{{$exercise->id}}"
+                                                                       @if($exercise->visible == 1) checked="checked" @endif>
                                                                 <span class="slider round"></span>
                                                             </label>
                                                         </div>
                                                     </td>
                                                     <td>
                                                         <div class="edit__div">
-                                                            <a class="edit__btn" href="{{ route('admin.new.exercises.edit.item', $exercise->id) }}"><img src="{{asset('images/edit.svg')}}"></a>
-                                                            <a class="delete__btn" href="{{route('admin.new.exercises.delete.item', $exercise->id)}}" onclick="return confirm('Are you sure you want to delete?')"><img src="{{asset('images/delete.svg')}}"></a>
+                                                            <a class="edit__btn"
+                                                               href="{{ route('admin.new.exercises.edit.item', $exercise->id) }}"><img
+                                                                    src="{{asset('images/edit.svg')}}"></a>
+                                                            <a class="delete__btn"
+                                                               href="{{route('admin.new.exercises.delete.item', $exercise->id)}}"
+                                                               onclick="return confirm('Are you sure you want to delete?')"><img
+                                                                    src="{{asset('images/delete.svg')}}"></a>
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -161,8 +152,12 @@
                                                         <div class="audio_player_div">
                                                             <div class="audio_icon">
                                                                 <audio controls>
-                                                                    <source src="{{ asset('uploads/audio/'.$exercise->record_en) }}" type="audio/ogg">
-                                                                    <source src="{{ asset('uploads/audio/'.$exercise->record_en) }}" type="audio/mpeg">
+                                                                    <source
+                                                                        src="{{ asset('uploads/audio/'.$exercise->record_en) }}"
+                                                                        type="audio/ogg">
+                                                                    <source
+                                                                        src="{{ asset('uploads/audio/'.$exercise->record_en) }}"
+                                                                        type="audio/mpeg">
                                                                     Your browser does not support the audio element.
                                                                 </audio>
                                                             </div>
@@ -171,15 +166,21 @@
                                                     <td>
                                                         <div class="visible__div">
                                                             <label class="switch">
-                                                                <input type="checkbox"  data-id="{{$exercise->id}}" @if($exercise->visible == 1) checked="checked" @endif>
+                                                                <input type="checkbox" data-id="{{$exercise->id}}"
+                                                                       @if($exercise->visible == 1) checked="checked" @endif>
                                                                 <span class="slider round"></span>
                                                             </label>
                                                         </div>
                                                     </td>
                                                     <td>
                                                         <div class="edit__div">
-                                                            <a class="edit__btn" href="{{ route('admin.new.exercises.edit.item', $exercise->id) }}"><img src="{{asset('images/edit.svg')}}"></a>
-                                                            <a class="delete__btn" href="{{route('admin.new.exercises.delete.item', $exercise->id)}}" onclick="return confirm('Are you sure you want to delete?')"><img src="{{asset('images/delete.svg')}}"></a>
+                                                            <a class="edit__btn"
+                                                               href="{{ route('admin.new.exercises.edit.item', $exercise->id) }}"><img
+                                                                    src="{{asset('images/edit.svg')}}"></a>
+                                                            <a class="delete__btn"
+                                                               href="{{route('admin.new.exercises.delete.item', $exercise->id)}}"
+                                                               onclick="return confirm('Are you sure you want to delete?')"><img
+                                                                    src="{{asset('images/delete.svg')}}"></a>
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -214,31 +215,3 @@
         </div>
     </main>
 @endsection
-@section('js')
-    <script type="text/javascript">
-        $('.visible__div input').on('change', function () {
-            if ($(this).is(':checked')) {
-                var visible = 1;
-            } else {
-                var visible = 0;
-            }
-
-            $.ajax({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-                url: "{{route('admin.new.exercises.visibility.item')}}",
-                data: {
-                    item: $(this).data('id'),
-                    visible: visible,
-                },
-                type: 'POST',
-                success: function (response) {
-                    if (response.error != false) {
-                        alert('Oops..');
-                    }
-                }
-            });
-        })
-    </script>
-@stop

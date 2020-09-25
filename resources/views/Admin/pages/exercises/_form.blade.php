@@ -1,3 +1,56 @@
+@section('css')
+    <link rel="stylesheet" type="text/css" href="{{asset('css/exercises.css')}}">
+    <style>
+        .upload__word_box > * {
+            margin-bottom: 20px;
+        }
+
+        .upload__word_box {
+            flex-wrap: wrap;
+        }
+
+        .upload__word_box > section input {
+            height: 99%;
+            padding: 0;
+            margin: 0;
+            width: 90%;
+            margin-left: 3px;
+            border: aliceblue;
+        }
+
+        .upload__word_box > section i {
+            cursor: pointer;
+            position: absolute;
+            right: 3px;
+            top: 13px;
+            color: blue;
+        }
+
+        .upload__word_box > section {
+            position: relative;
+            padding: 10px 15px;
+            max-width: 160px;
+            width: 100%;
+            height: 48px;
+            border: 1px solid #BABAC7;
+            border-radius: 4px;
+            font-family: "Roboto-Regular";
+            font-size: 16px;
+            color: #000000;
+            margin-right: 40px;
+        }
+
+        #with-words, #with-picture {
+            display: none;
+        }
+
+        #with-words.show, #with-picture.show {
+            display: block;
+        }
+    </style>
+@stop
+
+
 <form action="{{ $route }}" method="post" enctype="multipart/form-data" class="row">
     @csrf
     <div class="col-md-12 col-sm-12 col-xs-12">
@@ -47,18 +100,22 @@
                                         <p>Words to choose (delete input value to delete word)</p>
                                         <div class="upload__word_box">
                                             <div class="upload__word_btn">
-                                                <button
-                                                    type="button"
-                                                    onclick="$('.upload__word_box').append('<input name=words[]>'); return false;">
+                                                <button id="new-words" type="button">
                                                     +
                                                 </button>
                                             </div>
                                             @if(is_array(old('words', $exercise->words)))
                                                 @foreach(old('words', $exercise->words) as $word)
-                                                    <input name="words[]" value="{{ $word }}">
+                                                    <section>
+                                                        <input name="words[]" value="{{ $word }}">
+                                                        <i class="fa fa-trash"></i>
+                                                    </section>
                                                 @endforeach
                                             @else
-                                                <input name="words[]">
+                                                <section>
+                                                    <input name="words[]">
+                                                    <i class="fa fa-trash"></i>
+                                                </section>
                                             @endif
                                         </div>
                                     </div>
@@ -158,3 +215,40 @@
         </div>
     </div>
 </form>
+
+@section('js')
+    <script type="text/javascript">
+        $('.visible__div input').on('change', function () {
+            if ($(this).is(':checked')) {
+                var visible = 1;
+            } else {
+                var visible = 0;
+            }
+
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                url: "{{route('admin.new.exercises.visibility.item')}}",
+                data: {
+                    item: $(this).data('id'),
+                    visible: visible,
+                },
+                type: 'POST',
+                success: function (response) {
+                    if (response.error != false) {
+                        alert('Oops..');
+                    }
+                }
+            });
+        });
+
+        $('#new-words').on('click', function () {
+            $('.upload__word_box').append('<section> <input name="words[]"><i class="fa fa-trash"></i></section>');
+        });
+
+        $(document).delegate('.upload__word_box i', 'click', function () {
+            $(this).closest('section').remove();
+        });
+    </script>
+@stop

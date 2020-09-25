@@ -84,7 +84,7 @@ class ExercisesController extends Controller
 
         Exercise::where('id', '=', $exercise->id)->update($data);
 
-        return back();
+        return back()->with('success', 'Form data successfully saved');
         //return redirect()->route('admin.new.exercises.add.item', [$exercise->category->level, $exercise->category->parent->id, $exercise->category->id]);
     }
 
@@ -139,7 +139,8 @@ class ExercisesController extends Controller
         $data['words'] = $words;
 
         Exercise::create($data);
-        return redirect()->back();
+
+        return back()->with('success', 'Form data successfully saved');
     }
 
     public function deleteItem(Exercise $exercise)
