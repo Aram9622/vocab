@@ -339,8 +339,6 @@ class Builder
     protected function parseSub($query)
     {
         if ($query instanceof self || $query instanceof EloquentBuilder || $query instanceof Relation) {
-            $query = $this->prependDatabaseNameIfCrossDatabaseQuery($query);
-
             return [$query->toSql(), $query->getBindings()];
         } elseif (is_string($query)) {
             return [$query, []];
@@ -349,26 +347,6 @@ class Builder
                 'A subquery must be a query builder instance, a Closure, or a string.'
             );
         }
-    }
-
-    /**
-     * Prepend the database name if the given query is on another database.
-     *
-     * @param  mixed  $query
-     * @return mixed
-     */
-    protected function prependDatabaseNameIfCrossDatabaseQuery($query)
-    {
-        if ($query->getConnection()->getDatabaseName() !==
-            $this->getConnection()->getDatabaseName()) {
-            $databaseName = $query->getConnection()->getDatabaseName();
-
-            if (strpos($query->from, $databaseName) !== 0 && strpos($query->from, '.') === false) {
-                $query->from($databaseName.'.'.$query->from);
-            }
-        }
-
-        return $query;
     }
 
     /**
@@ -1088,7 +1066,7 @@ class Builder
     /**
      * Add a where between statement to the query.
      *
-     * @param  string|\Illuminate\Database\Query\Expression  $column
+     * @param  string  $column
      * @param  array  $values
      * @param  string  $boolean
      * @param  bool  $not
@@ -3097,7 +3075,7 @@ class Builder
      * @param  array  $bindings
      * @return array
      */
-    public function cleanBindings(array $bindings)
+    protected function cleanBindings(array $bindings)
     {
         return array_values(array_filter($bindings, function ($binding) {
             return ! $binding instanceof Expression;

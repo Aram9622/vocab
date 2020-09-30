@@ -6,23 +6,7 @@ After updating Passport, you should always re-publish and re-compile the Vue "qu
 
     php artisan vendor:publish --tag=passport-views --force
 
-## Upgrading To 10.0 From 9.x
-
-### Minimum PHP Version
-
-PHP 7.3 is now the minimum required version.
-
-### Minimum Laravel Version
-
-Laravel 8.0 is now the minimum required version.
-
-### Old Static Personal Client Methods Removed
-
-PR: https://github.com/laravel/passport/pull/1325
-
-The personal client configuration methods have been removed from the `Passport` class since they are no longer necessary. You should remove calls to these methods from your `AuthServiceProvider`.
-
-## Upgrading To 9.0 From 8.x
+## Upgrading To 9.0 From 8.0
 
 ### Support For Multiple Guards
 
@@ -83,7 +67,7 @@ PR: https://github.com/laravel/passport/pull/1235
 The deprecated `revokeOtherTokens` and `pruneRevokedTokens` methods and the `revokeOtherTokens` and `pruneRevokedTokens` properties were removed from the `Passport` object.
 
 
-## Upgrading To 8.0 From 7.x
+## Upgrading To 8.0 From 7.0
 
 ### Minimum & Upgraded Versions
 
