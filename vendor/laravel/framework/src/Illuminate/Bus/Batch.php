@@ -3,10 +3,8 @@
 namespace Illuminate\Bus;
 
 use Carbon\CarbonImmutable;
-use Closure;
 use Illuminate\Contracts\Queue\Factory as QueueFactory;
 use Illuminate\Contracts\Support\Arrayable;
-use Illuminate\Queue\CallQueuedClosure;
 use Illuminate\Queue\SerializableClosure;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
@@ -161,15 +159,9 @@ class Batch implements Arrayable, JsonSerializable
      */
     public function add($jobs)
     {
-        $jobs = Collection::wrap($jobs)->map(function ($job) {
-            if ($job instanceof Closure) {
-                $job = CallQueuedClosure::create($job);
-            }
+        $jobs = Collection::wrap($jobs);
 
-            $job->withBatchId($this->id);
-
-            return $job;
-        });
+        $jobs->each->withBatchId($this->id);
 
         $this->repository->transaction(function () use ($jobs) {
             $this->repository->incrementTotalJobs($this->id, count($jobs));

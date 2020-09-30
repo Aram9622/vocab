@@ -77,8 +77,6 @@ class CallbackEvent extends Event
             $response = is_object($this->callback)
                         ? $container->call([$this->callback, '__invoke'], $this->parameters)
                         : $container->call($this->callback, $this->parameters);
-
-            $this->exitCode = $response === false ? 1 : 0;
         } catch (Throwable $e) {
             $this->exitCode = 1;
 
@@ -88,6 +86,8 @@ class CallbackEvent extends Event
 
             parent::callAfterCallbacks($container);
         }
+
+        $this->exitCode = $response === false ? 1 : 0;
 
         return $response;
     }

@@ -790,7 +790,7 @@ class Builder
     }
 
     /**
-     * Update records in the database.
+     * Update a record in the database.
      *
      * @param  array  $values
      * @return int
@@ -862,7 +862,7 @@ class Builder
     }
 
     /**
-     * Delete records from the database.
+     * Delete a record from the database.
      *
      * @return mixed
      */

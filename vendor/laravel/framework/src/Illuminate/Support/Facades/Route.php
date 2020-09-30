@@ -36,10 +36,6 @@ namespace Illuminate\Support\Facades;
  * @method static void pattern(string $key, string $pattern)
  * @method static void resources(array $resources)
  * @method static void substituteImplicitBindings(\Illuminate\Support\Facades\Route $route)
- * @method static boolean uses(...$patterns)
- * @method static boolean is(...$patterns)
- * @method static boolean has(string $name)
- * @method static mixed input(string $key, string|null $default = null)
  *
  * @see \Illuminate\Routing\Router
  */

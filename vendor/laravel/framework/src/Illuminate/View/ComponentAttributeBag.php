@@ -166,15 +166,14 @@ class ComponentAttributeBag implements ArrayAccess, Htmlable, IteratorAggregate
      * Merge additional attributes / values into the attribute bag.
      *
      * @param  array  $attributeDefaults
-     * @param  bool  $escape
      * @return static
      */
-    public function merge(array $attributeDefaults = [], $escape = true)
+    public function merge(array $attributeDefaults = [])
     {
         $attributes = [];
 
-        $attributeDefaults = array_map(function ($value) use ($escape) {
-            if (! $escape || is_object($value) || is_null($value) || is_bool($value)) {
+        $attributeDefaults = array_map(function ($value) {
+            if (is_object($value) || is_null($value) || is_bool($value)) {
                 return $value;
             }
 
@@ -220,7 +219,7 @@ class ComponentAttributeBag implements ArrayAccess, Htmlable, IteratorAggregate
 
             unset($attributes['attributes']);
 
-            $attributes = $parentBag->merge($attributes, $escape = false)->getAttributes();
+            $attributes = $parentBag->merge($attributes)->getAttributes();
         }
 
         $this->attributes = $attributes;

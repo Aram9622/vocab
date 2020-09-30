@@ -4,7 +4,6 @@ namespace Illuminate\Support;
 
 use ArrayIterator;
 use Closure;
-use DateTimeInterface;
 use Illuminate\Support\Traits\EnumeratesValues;
 use Illuminate\Support\Traits\Macroable;
 use IteratorAggregate;
@@ -1215,21 +1214,6 @@ class LazyCollection implements Enumerable
     }
 
     /**
-     * Take items in the collection until a given point in time.
-     *
-     * @param  \DateTimeInterface  $timeout
-     * @return static
-     */
-    public function takeUntilTimeout(DateTimeInterface $timeout)
-    {
-        $timeout = $timeout->getTimestamp();
-
-        return $this->takeWhile(function () use ($timeout) {
-            return $this->now() < $timeout;
-        });
-    }
-
-    /**
      * Take items in the collection while the given condition is met.
      *
      * @param  mixed  $value
@@ -1400,15 +1384,5 @@ class LazyCollection implements Enumerable
         return new static(function () use ($method, $params) {
             yield from $this->collect()->$method(...$params);
         });
-    }
-
-    /**
-     * Get the current time.
-     *
-     * @return int
-     */
-    protected function now()
-    {
-        return time();
     }
 }
