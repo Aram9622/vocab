@@ -265,13 +265,19 @@ class Router implements BindingRegistrar, RegistrarContract
      * @param  string  $uri
      * @param  string  $view
      * @param  array  $data
+     * @param  int|array  $status
+     * @param  array  $headers
      * @return \Illuminate\Routing\Route
      */
-    public function view($uri, $view, $data = [])
+    public function view($uri, $view, $data = [], $status = 200, array $headers = [])
     {
         return $this->match(['GET', 'HEAD'], $uri, '\Illuminate\Routing\ViewController')
-                ->defaults('view', $view)
-                ->defaults('data', $data);
+                ->setDefaults([
+                    'view' => $view,
+                    'data' => $data,
+                    'status' => is_array($status) ? 200 : $status,
+                    'headers' => is_array($status) ? $status : $headers,
+                ]);
     }
 
     /**
@@ -395,11 +401,12 @@ class Router implements BindingRegistrar, RegistrarContract
      * Merge the given array with the last group stack.
      *
      * @param  array  $new
+     * @param  bool  $prependExistingPrefix
      * @return array
      */
-    public function mergeWithLastGroup($new)
+    public function mergeWithLastGroup($new, $prependExistingPrefix = true)
     {
-        return RouteGroup::merge($new, end($this->groupStack));
+        return RouteGroup::merge($new, end($this->groupStack), $prependExistingPrefix);
     }
 
     /**
@@ -543,7 +550,7 @@ class Router implements BindingRegistrar, RegistrarContract
      * @param  mixed  $action
      * @return \Illuminate\Routing\Route
      */
-    protected function newRoute($methods, $uri, $action)
+    public function newRoute($methods, $uri, $action)
     {
         return (new Route($methods, $uri, $action))
                     ->setRouter($this)
@@ -584,7 +591,10 @@ class Router implements BindingRegistrar, RegistrarContract
      */
     protected function mergeGroupAttributesIntoRoute($route)
     {
-        $route->setAction($this->mergeWithLastGroup($route->getAction()));
+        $route->setAction($this->mergeWithLastGroup(
+            $route->getAction(),
+            $prependExistingPrefix = false
+        ));
     }
 
     /**
@@ -691,9 +701,15 @@ class Router implements BindingRegistrar, RegistrarContract
      */
     public function gatherRouteMiddleware(Route $route)
     {
+        $excluded = collect($route->excludedMiddleware())->map(function ($name) {
+            return (array) MiddlewareNameResolver::resolve($name, $this->middleware, $this->middlewareGroups);
+        })->flatten()->values()->all();
+
         $middleware = collect($route->gatherMiddleware())->map(function ($name) {
             return (array) MiddlewareNameResolver::resolve($name, $this->middleware, $this->middlewareGroups);
-        })->flatten();
+        })->flatten()->reject(function ($name) use ($excluded) {
+            return in_array($name, $excluded, true);
+        })->values();
 
         return $this->sortMiddleware($middleware);
     }

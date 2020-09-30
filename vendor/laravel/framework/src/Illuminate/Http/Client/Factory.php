@@ -9,6 +9,39 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Traits\Macroable;
 use PHPUnit\Framework\Assert as PHPUnit;
 
+/**
+ * @method \Illuminate\Http\Client\PendingRequest accept(string $contentType)
+ * @method \Illuminate\Http\Client\PendingRequest acceptJson()
+ * @method \Illuminate\Http\Client\PendingRequest asForm()
+ * @method \Illuminate\Http\Client\PendingRequest asJson()
+ * @method \Illuminate\Http\Client\PendingRequest asMultipart()
+ * @method \Illuminate\Http\Client\PendingRequest attach(string $name, string $contents, string|null $filename = null, array $headers = [])
+ * @method \Illuminate\Http\Client\PendingRequest baseUrl(string $url)
+ * @method \Illuminate\Http\Client\PendingRequest beforeSending(callable $callback)
+ * @method \Illuminate\Http\Client\PendingRequest bodyFormat(string $format)
+ * @method \Illuminate\Http\Client\PendingRequest contentType(string $contentType)
+ * @method \Illuminate\Http\Client\PendingRequest retry(int $times, int $sleep = 0)
+ * @method \Illuminate\Http\Client\PendingRequest stub(callable $callback)
+ * @method \Illuminate\Http\Client\PendingRequest timeout(int $seconds)
+ * @method \Illuminate\Http\Client\PendingRequest withBasicAuth(string $username, string $password)
+ * @method \Illuminate\Http\Client\PendingRequest withBody(resource|string $content, string $contentType)
+ * @method \Illuminate\Http\Client\PendingRequest withCookies(array $cookies, string $domain)
+ * @method \Illuminate\Http\Client\PendingRequest withDigestAuth(string $username, string $password)
+ * @method \Illuminate\Http\Client\PendingRequest withHeaders(array $headers)
+ * @method \Illuminate\Http\Client\PendingRequest withOptions(array $options)
+ * @method \Illuminate\Http\Client\PendingRequest withToken(string $token, string $type = 'Bearer')
+ * @method \Illuminate\Http\Client\PendingRequest withoutRedirecting()
+ * @method \Illuminate\Http\Client\PendingRequest withoutVerifying()
+ * @method \Illuminate\Http\Client\Response delete(string $url, array $data = [])
+ * @method \Illuminate\Http\Client\Response get(string $url, array $query = [])
+ * @method \Illuminate\Http\Client\Response head(string $url, array $query = [])
+ * @method \Illuminate\Http\Client\Response patch(string $url, array $data = [])
+ * @method \Illuminate\Http\Client\Response post(string $url, array $data = [])
+ * @method \Illuminate\Http\Client\Response put(string $url, array $data = [])
+ * @method \Illuminate\Http\Client\Response send(string $method, string $url, array $options = [])
+ *
+ * @see \Illuminate\Http\Client\PendingRequest
+ */
 class Factory
 {
     use Macroable {
@@ -192,6 +225,44 @@ class Factory
     }
 
     /**
+     * Assert that a request / response pair was not recorded matching a given truth test.
+     *
+     * @param  callable  $callback
+     * @return void
+     */
+    public function assertNotSent($callback)
+    {
+        PHPUnit::assertFalse(
+            $this->recorded($callback)->count() > 0,
+            'Unexpected request was recorded.'
+        );
+    }
+
+    /**
+     * Assert that no request / response pair was recorded.
+     *
+     * @return void
+     */
+    public function assertNothingSent()
+    {
+        PHPUnit::assertEmpty(
+            $this->recorded,
+            'Requests were recorded.'
+        );
+    }
+
+    /**
+     * Assert how many requests have been recorded.
+     *
+     * @param  int  $count
+     * @return void
+     */
+    public function assertSentCount($count)
+    {
+        PHPUnit::assertCount($count, $this->recorded);
+    }
+
+    /**
      * Assert that every created response sequence is empty.
      *
      * @return void
@@ -212,7 +283,7 @@ class Factory
      * @param  callable  $callback
      * @return \Illuminate\Support\Collection
      */
-    public function recorded($callback)
+    public function recorded($callback = null)
     {
         if (empty($this->recorded)) {
             return collect();

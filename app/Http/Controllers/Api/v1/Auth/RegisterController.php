@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\v1\Auth;
 use App\Http\Controllers\Api\v1\ApiController;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Tymon\JWTAuth\Facades\JWTAuth;
 
@@ -13,8 +14,8 @@ class RegisterController extends ApiController
     /**
      * Create a new user instance after a valid registration.
      *
-     * @param array $data
-     * @return \App\User
+     * @param Request $request
+     * @return array|\Illuminate\Http\JsonResponse
      */
     public function register(Request $request)
     {
@@ -24,19 +25,16 @@ class RegisterController extends ApiController
             return response()->json($validator->errors());
         }
 
-        $user = User::create([
+        User::create([
             'name' => $request->input('name'),
             'email' => $request->input('email'),
             'password' => bcrypt($request->input('password')),
+            'token'  => Auth::user()->createToken('MyApp')->accessToken
         ]);
 
-        $token = JWTAuth::fromUser($user);
 
-        return response()->json([
-            'name' => $user->name,
-            'email' => $user->email,
-            'token' => $token
-        ]);
+
+        return $this->getUserDetails();
     }
 
     /**

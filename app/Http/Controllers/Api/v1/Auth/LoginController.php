@@ -4,26 +4,13 @@ namespace App\Http\Controllers\Api\v1\Auth;
 
 use App\Http\Controllers\Api\v1\ApiController;
 use Illuminate\Http\Request;
-use Tymon\JWTAuth\Facades\JWTAuth;
+use Illuminate\Support\Facades\Auth;
 
 class LoginController extends ApiController
 {
     public function login(Request $request)
     {
-        $creds = $request->only(['email', 'password']);
-
-        if(!$token = auth()->attempt($creds)) {
-            return response()->json(['error' => 'Incorrect email/password'], 401);
-        }
-
-        $user = auth()->user();
-
-        return response()->json([
-            'name'   => $user->name,
-            'email'  => $user->email,
-            'avatar' => str_replace("public","storage", $user->image->url),
-            'token'  => $token
-        ]);
+        return parent::login($request);
     }
 
     /**
@@ -33,6 +20,10 @@ class LoginController extends ApiController
      */
     public function logout()
     {
+        if (Auth::guest()) {
+            return response()->json(['error' => 'You are not logged in - check your access token before logging out']);
+        }
+
         auth()->logout();
 
         return response()->json(['message' => 'Successfully logged out']);

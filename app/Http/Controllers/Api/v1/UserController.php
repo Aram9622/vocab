@@ -14,9 +14,7 @@ class UserController extends ApiController
 {
     public function show()
     {
-        $user = auth()->userOrFail();
-
-        return new UserResource($user);
+        return $this->getUserDetails();
     }
 
     /**

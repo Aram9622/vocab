@@ -18,10 +18,11 @@ Route::middleware(['auth:api'])->group(function () {
     Route::patch('user/update', 'Api\v1\UserController@update');
 });
 
+Route::get('logout', 'Api\v1\Auth\LoginController@logout');
+
 //Authentication routes
 Route::group(['namespace' => 'Api\v1\Auth'], function () {
     Route::post('register', 'RegisterController@register');
     Route::post('login', 'LoginController@login');
-    Route::get('logout', 'LoginController@logout')->middleware('auth:api');
     Route::post('password/email', 'ForgotPasswordController@sendResetLinkEmail');
 });

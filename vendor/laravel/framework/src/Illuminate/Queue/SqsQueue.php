@@ -3,10 +3,12 @@
 namespace Illuminate\Queue;
 
 use Aws\Sqs\SqsClient;
+use Illuminate\Contracts\Queue\ClearableQueue;
 use Illuminate\Contracts\Queue\Queue as QueueContract;
 use Illuminate\Queue\Jobs\SqsJob;
+use Illuminate\Support\Str;
 
-class SqsQueue extends Queue implements QueueContract
+class SqsQueue extends Queue implements QueueContract, ClearableQueue
 {
     /**
      * The Amazon SQS instance.
@@ -139,6 +141,21 @@ class SqsQueue extends Queue implements QueueContract
     }
 
     /**
+     * Delete all of the jobs from the queue.
+     *
+     * @param  string  $queue
+     * @return int
+     */
+    public function clear($queue)
+    {
+        return tap($this->size($queue), function () use ($queue) {
+            $this->sqs->purgeQueue([
+                'QueueUrl' => $this->getQueue($queue),
+            ]);
+        });
+    }
+
+    /**
      * Get the queue or return the default.
      *
      * @param  string|null  $queue
@@ -149,7 +166,7 @@ class SqsQueue extends Queue implements QueueContract
         $queue = $queue ?: $this->default;
 
         return filter_var($queue, FILTER_VALIDATE_URL) === false
-            ? rtrim($this->prefix, '/').'/'.$queue.$this->suffix
+            ? rtrim($this->prefix, '/').'/'.Str::finish($queue, $this->suffix)
             : $queue;
     }
 
