@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit829a9861a56bda6d6244dea8742cfaa6
+class ComposerStaticInitb1562206bc0314a8ee9a5662e0c4c63f
 {
     public static $files = array (
         'a4a119a56e50fbb293281d9a48007e0e' => __DIR__ . '/..' . '/symfony/polyfill-php80/bootstrap.php',
@@ -619,10 +619,9 @@ class ComposerStaticInit829a9861a56bda6d6244dea8742cfaa6
         'App\\Http\\Controllers\\Admin\\NewsController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/NewsController.php',
         'App\\Http\\Controllers\\Admin\\StoriesController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/StoriesController.php',
         'App\\Http\\Controllers\\Api\\v1\\ApiController' => __DIR__ . '/../..' . '/app/Http/Controllers/Api/v1/ApiController.php',
-        'App\\Http\\Controllers\\Api\\v1\\Auth\\ForgotPasswordController' => __DIR__ . '/../..' . '/app/Http/Controllers/Api/v1/Auth/ForgotPasswordController.php',
         'App\\Http\\Controllers\\Api\\v1\\Auth\\LoginController' => __DIR__ . '/../..' . '/app/Http/Controllers/Api/v1/Auth/LoginController.php',
+        'App\\Http\\Controllers\\Api\\v1\\Auth\\PasswordResetController' => __DIR__ . '/../..' . '/app/Http/Controllers/Api/v1/Auth/PasswordResetController.php',
         'App\\Http\\Controllers\\Api\\v1\\Auth\\RegisterController' => __DIR__ . '/../..' . '/app/Http/Controllers/Api/v1/Auth/RegisterController.php',
-        'App\\Http\\Controllers\\Api\\v1\\Auth\\ResetPasswordController' => __DIR__ . '/../..' . '/app/Http/Controllers/Api/v1/Auth/ResetPasswordController.php',
         'App\\Http\\Controllers\\Api\\v1\\Auth\\VerificationController' => __DIR__ . '/../..' . '/app/Http/Controllers/Api/v1/Auth/VerificationController.php',
         'App\\Http\\Controllers\\Api\\v1\\UserController' => __DIR__ . '/../..' . '/app/Http/Controllers/Api/v1/UserController.php',
         'App\\Http\\Controllers\\Auth\\ConfirmPasswordController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/ConfirmPasswordController.php',
@@ -662,16 +661,20 @@ class ComposerStaticInit829a9861a56bda6d6244dea8742cfaa6
         'App\\Http\\Requests\\UpdateWordRequest' => __DIR__ . '/../..' . '/app/Http/Requests/UpdateWordRequest.php',
         'App\\Http\\Resources\\v1\\UserResource' => __DIR__ . '/../..' . '/app/Http/Resources/v1/UserResource.php',
         'App\\Models\\Category' => __DIR__ . '/../..' . '/app/Models/Category.php',
+        'App\\Models\\ChangePassword' => __DIR__ . '/../..' . '/app/Models/ChangePassword.php',
         'App\\Models\\Conversation' => __DIR__ . '/../..' . '/app/Models/Conversation.php',
         'App\\Models\\Exercise' => __DIR__ . '/../..' . '/app/Models/Exercise.php',
         'App\\Models\\Image' => __DIR__ . '/../..' . '/app/Models/Image.php',
         'App\\Models\\News' => __DIR__ . '/../..' . '/app/Models/News.php',
+        'App\\Models\\PasswordReset' => __DIR__ . '/../..' . '/app/Models/PasswordReset.php',
         'App\\Models\\Phrase' => __DIR__ . '/../..' . '/app/Models/Phrase.php',
         'App\\Models\\Story' => __DIR__ . '/../..' . '/app/Models/Story.php',
         'App\\Models\\User' => __DIR__ . '/../..' . '/app/Models/User.php',
         'App\\Models\\Verb' => __DIR__ . '/../..' . '/app/Models/Verb.php',
         'App\\Models\\Word' => __DIR__ . '/../..' . '/app/Models/Word.php',
         'App\\Notifications\\PasswordResetNotification' => __DIR__ . '/../..' . '/app/Notifications/PasswordResetNotification.php',
+        'App\\Notifications\\PasswordResetRequest' => __DIR__ . '/../..' . '/app/Notifications/PasswordResetRequest.php',
+        'App\\Notifications\\PasswordResetSuccess' => __DIR__ . '/../..' . '/app/Notifications/PasswordResetSuccess.php',
         'App\\Providers\\AppServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AppServiceProvider.php',
         'App\\Providers\\AuthServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AuthServiceProvider.php',
         'App\\Providers\\BroadcastServiceProvider' => __DIR__ . '/../..' . '/app/Providers/BroadcastServiceProvider.php',
@@ -5653,10 +5656,10 @@ class ComposerStaticInit829a9861a56bda6d6244dea8742cfaa6
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit829a9861a56bda6d6244dea8742cfaa6::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit829a9861a56bda6d6244dea8742cfaa6::$prefixDirsPsr4;
-            $loader->prefixesPsr0 = ComposerStaticInit829a9861a56bda6d6244dea8742cfaa6::$prefixesPsr0;
-            $loader->classMap = ComposerStaticInit829a9861a56bda6d6244dea8742cfaa6::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInitb1562206bc0314a8ee9a5662e0c4c63f::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInitb1562206bc0314a8ee9a5662e0c4c63f::$prefixDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticInitb1562206bc0314a8ee9a5662e0c4c63f::$prefixesPsr0;
+            $loader->classMap = ComposerStaticInitb1562206bc0314a8ee9a5662e0c4c63f::$classMap;
 
         }, null, ClassLoader::class);
     }
