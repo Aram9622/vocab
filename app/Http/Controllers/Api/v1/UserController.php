@@ -61,7 +61,7 @@ class UserController extends ApiController
         $data = $request->all();
 
         $validator = Validator::make($data, [
-            'avatar'    => 'nullable|image'
+            'avatar' => 'nullable|image'
         ]);
 
         if ($validator->fails()) {
@@ -70,13 +70,13 @@ class UserController extends ApiController
 
         $user = auth()->user();
 
-        if($request->hasFile('avatar')){
+        if ($request->hasFile('avatar')) {
             if (is_file($img = public_path('avatar/profiles/' . $user->avatar))) {
                 unlink($img);
             }
 
             $file = $request->file('avatar');
-            $name = uniqid().'.'.strtolower($file->getClientOriginalExtension());
+            $name = uniqid() . '.' . strtolower($file->getClientOriginalExtension());
             $url = 'avatar/profiles/' . $name;
 
             Image::make($file)
@@ -84,10 +84,6 @@ class UserController extends ApiController
                 ->save(public_path($url));
 
             $user->avatar = $name;
-        }
-
-        if (isset($request['password'])) {
-            $user->password = Hash::make($request['password']);
         }
 
         $user->save();
@@ -104,7 +100,7 @@ class UserController extends ApiController
             'password' => 'nullable|string|min:6|max:100',
             'email' => 'required|string|email|max:255|unique:users,email,' . auth()->id(),
             // 'avatar' => 'nullable|string',
-            'avatar'    => 'nullable|image'
+            'avatar' => 'nullable|image'
         ]);
 
         if ($validator->fails()) {
@@ -115,13 +111,13 @@ class UserController extends ApiController
         $user->name = $data['name'];
         $user->email = $data['email'];
 
-        if($request->hasFile('avatar')){
+        if ($request->hasFile('avatar')) {
             if (is_file($img = public_path('avatar/profiles/' . $user->avatar))) {
                 unlink($img);
             }
 
             $file = $request->file('avatar');
-            $name = uniqid().'.'.strtolower($file->getClientOriginalExtension());
+            $name = uniqid() . '.' . strtolower($file->getClientOriginalExtension());
             $url = 'avatar/profiles/' . $name;
 
             Image::make($file)
