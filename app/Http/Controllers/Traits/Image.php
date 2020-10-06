@@ -4,9 +4,16 @@ namespace App\Http\Controllers\Traits;
 
 trait Image
 {
+    protected $showAssetPath = false;
+
     public function getImagePath($dir, $thumb = false, callable $callback = null)
     {
         $dir .= $thumb ? '/thumb' : '';
+
+        if ($this->showAssetPath === true) {
+            return asset("uploads/$dir/{$this->image}");
+        }
+
         $imagePath = public_path("uploads/$dir/{$this->image}");
 
         if (is_file($imagePath) && $callback) {
