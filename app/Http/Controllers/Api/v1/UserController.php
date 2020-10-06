@@ -80,7 +80,7 @@ class UserController extends ApiController
 
         $validator = Validator::make($data, [
             'name' => 'required|string|min:2|max:100',
-            'password' => 'required|string|min:6|max:100',
+            'password' => 'nullable|string|min:6|max:100',
             'email' => 'required|string|email|max:255|unique:users,email,' . auth()->id(),
             'avatar' => 'nullable|string',
         ]);
