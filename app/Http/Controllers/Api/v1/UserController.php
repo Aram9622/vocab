@@ -100,7 +100,7 @@ class UserController extends ApiController
 //        }
 
         if($request->hasFile('avatar')){
-            if (is_file($img = public_path('avatar/profiles/' . $user->image))) {
+            if (is_file($img = public_path('avatar/profiles/' . $user->avatar))) {
                 unlink($img);
             }
 
@@ -111,6 +111,8 @@ class UserController extends ApiController
             Image::make($file)
                 ->resize(400, 400)
                 ->save(public_path($url));
+
+            $user->avatar = $name;
         }
 
         if (isset($request['password'])) {
