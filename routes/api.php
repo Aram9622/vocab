@@ -14,9 +14,14 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::middleware(['auth:api'])->group(function () {
-    Route::post('change/password', 'Api\v1\UserController@changePassword');
-    Route::get('user', 'Api\v1\UserController@show');
-    Route::patch('user/update', 'Api\v1\UserController@update');
+
+    Route::namespace('Api\v1')->group(function () {
+        Route::post('change/password', 'UserController@changePassword');
+        Route::get('user', 'UserController@show');
+        Route::post('user/update-avatar', 'UserController@updateAvatar');
+        Route::post('user/update', 'UserController@update');
+    });
+
 });
 
 Route::get('logout', 'Api\v1\Auth\LoginController@logout');

@@ -2,14 +2,10 @@
 
 namespace App\Http\Controllers\Api\v1;
 
-use App\Http\Requests\Api\v1\UpdateUserProfile;
-use App\Http\Resources\v1\UserResource;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
-use Tymon\JWTAuth\Exceptions\UserNotDefinedException;
-use Illuminate\Support\Facades\Storage;
 use Image;
+use Validator;
 
 class UserController extends ApiController
 {
@@ -55,46 +51,52 @@ class UserController extends ApiController
     }
 
     /**
-     * @param UpdateUserProfile $request
-     * @return UserResource|\Illuminate\Http\JsonResponse
+     * @param Request $request
+     * @return array|\Illuminate\Http\JsonResponse
      */
-    public function update(UpdateUserProfile $request)
+    public function updateAvatar(Request $request)
     {
-        $validated = $request->validated();
+        $data = $request->all();
 
-        try {
-            $user = auth()->userOrFail();
-        } catch (UserNotDefinedException $e) {
-            return response()->json(['error' => $e->getMessage()]);
-        }
-
-        $user->update([
-            'name' => $validated['name'],
-            'email' => $validated['email'],
+        $validator = Validator::make($data, [
+            'avatar' => 'required|string'
         ]);
 
-        if(isset($validated['password'])) {
-            $user->update(['password' => Hash::make($validated['password'])]);
+        if ($validator->fails()) {
+            return response()->json(['error' => $validator->errors()], 401);
         }
 
-        if($request->hasFile('avatar')){
-            $file = $request->file('avatar');
-            $name = uniqid().'.'.strtolower($file->getClientOriginalExtension());
-            $url = 'public/images/profiles/' . $name;
-            if($user->image()->first() && storage_path($user->image()->first()->url)) {
-                Storage::delete($user->image()->first()->url);
-            }
+        auth()->user()->update([
+            'avatar' => $data['avatar'],
+        ]);
 
-            Image::make($file)
-                ->resize(400, 400)
-                ->save(storage_path('app/' . $url));
+        return $this->getUserDetails();
+    }
 
-            $user->image()->updateOrCreate(
-                ['imageable_id' => $user->id],
-                ['url' => $url]
-            );
+    public function update(Request $request)
+    {
+        $data = $request->all();
+
+        $validator = Validator::make($data, [
+            'name' => 'required|string|min:2|max:100',
+            'email' => 'required|email',
+            'avatar' => 'nullable|string',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['error' => $validator->errors()], 401);
         }
 
-        return new UserResource($user);
+        $user = auth()->user();
+        $user->name = $data['name'];
+        $user->email = $data['email'];
+
+        if ($request['avatar']) {
+            $user->avatar = $request['avatar'];
+        }
+
+        $user->save();
+
+        return $this->getUserDetails();
     }
 }
