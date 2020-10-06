@@ -50,7 +50,7 @@
                     <li><a class="{{ request()->is('/') || request()->is('exercises/advanced') || request()->is('exercises/advanced/*') ? 'active' : '' }}" href="{{route('admin.new.exercises.index', 'advanced')}}">Advanced</a></li>
                 </ul>
             </li>
-            <li></li>
+            <li><a class="{{ request()->is('/') || request()->is('news') || request()->is('news/*') ? 'active' : '' }}" href="{{route('admin.news.index')}}">News</a></li>
             <li>
                 <form method="post" action="{{route('logout')}}">
                     @csrf
