@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\v1;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 use Image;
 use Validator;
 
@@ -82,7 +83,8 @@ class UserController extends ApiController
             'name' => 'required|string|min:2|max:100',
             'password' => 'nullable|string|min:6|max:100',
             'email' => 'required|string|email|max:255|unique:users,email,' . auth()->id(),
-            'avatar' => 'nullable|string',
+            // 'avatar' => 'nullable|string',
+            'avatar'    => 'nullable|image'
         ]);
 
         if ($validator->fails()) {
@@ -93,8 +95,22 @@ class UserController extends ApiController
         $user->name = $data['name'];
         $user->email = $data['email'];
 
-        if (isset($request['avatar'])) {
-            $user->avatar = $request['avatar'];
+//        if (isset($request['avatar'])) {
+//            $user->avatar = $request['avatar'];
+//        }
+
+        if($request->hasFile('avatar')){
+            if (is_file($img = public_path('avatar/profiles/' . $user->image))) {
+                unlink($img);
+            }
+
+            $file = $request->file('avatar');
+            $name = uniqid().'.'.strtolower($file->getClientOriginalExtension());
+            $url = 'avatar/profiles/' . $name;
+
+            Image::make($file)
+                ->resize(400, 400)
+                ->save(public_path($url));
         }
 
         if (isset($request['password'])) {

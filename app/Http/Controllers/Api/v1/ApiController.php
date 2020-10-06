@@ -15,7 +15,7 @@ abstract class ApiController extends Controller
         return [
             'name'   => Auth::user()->name,
             'email'  => Auth::user()->email,
-            'avatar' => Auth::user()->avatar,
+            'avatar' => Auth::user()->avatar ? asset('avatar/profiles/' . Auth::user()->avatar) : null,
             'token'  => Auth::user()->createToken('MyApp')->accessToken
         ];
     }
