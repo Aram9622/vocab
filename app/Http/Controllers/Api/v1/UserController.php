@@ -61,16 +61,36 @@ class UserController extends ApiController
         $data = $request->all();
 
         $validator = Validator::make($data, [
-            'avatar' => 'required|string'
+            'avatar'    => 'nullable|image'
         ]);
 
         if ($validator->fails()) {
             return response()->json(['error' => $validator->errors()], 401);
         }
 
-        auth()->user()->update([
-            'avatar' => $data['avatar'],
-        ]);
+        $user = auth()->user();
+
+        if($request->hasFile('avatar')){
+            if (is_file($img = public_path('avatar/profiles/' . $user->avatar))) {
+                unlink($img);
+            }
+
+            $file = $request->file('avatar');
+            $name = uniqid().'.'.strtolower($file->getClientOriginalExtension());
+            $url = 'avatar/profiles/' . $name;
+
+            Image::make($file)
+                ->resize(400, 400)
+                ->save(public_path($url));
+
+            $user->avatar = $name;
+        }
+
+        if (isset($request['password'])) {
+            $user->password = Hash::make($request['password']);
+        }
+
+        $user->save();
 
         return $this->getUserDetails();
     }
@@ -94,10 +114,6 @@ class UserController extends ApiController
         $user = auth()->user();
         $user->name = $data['name'];
         $user->email = $data['email'];
-
-//        if (isset($request['avatar'])) {
-//            $user->avatar = $request['avatar'];
-//        }
 
         if($request->hasFile('avatar')){
             if (is_file($img = public_path('avatar/profiles/' . $user->avatar))) {
