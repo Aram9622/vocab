@@ -25,16 +25,17 @@ class RegisterController extends ApiController
             return response()->json($validator->errors());
         }
 
-        User::create([
+        $created = User::create([
             'name' => $request->input('name'),
             'email' => $request->input('email'),
-            'password' => bcrypt($request->input('password')),
-            'token'  => Auth::user()->createToken('MyApp')->accessToken
+            'password' => bcrypt($request->input('password'))
         ]);
 
+        if ($created && Auth::attempt(['email' => request('email'), 'password' => request('password')])) {
+            return $this->getUserDetails();
+        }
 
-
-        return $this->getUserDetails();
+        return ['error' => 'Something went wrong!'];
     }
 
     /**
