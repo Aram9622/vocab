@@ -26,4 +26,9 @@ class NewsController extends ApiController
             return $model;
         });
     }
+
+    public function view($id)
+    {
+        return $this->model->findOrFail($id);
+    }
 }

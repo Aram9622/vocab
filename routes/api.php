@@ -23,11 +23,7 @@ Route::middleware(['auth:api'])->group(function () {
 
         Route::prefix('news')->group(function () {
             Route::get('/', 'NewsController@index')->name('news.index');
-//            Route::post('/store', 'NewsController@store')->name('news.store');
-//            Route::get('edit/{news}', 'NewsController@edit')->name('news.edit.item');
-//            Route::post('update-item/{news}', 'NewsController@updateItem')->name('news.update.item');
-//            Route::get('/delete/{news}', 'NewsController@delete')->name('news.delete');
-//            Route::post('item-visibility', 'NewsController@visibility')->name('news.visibility.item');
+            Route::get('view', 'NewsController@view')->name('news.view');
         });
     });
 
