@@ -20,6 +20,7 @@ class NewsController extends ApiController
     public function index()
     {
         return $this->model->all()->map(function ($model) {
+            $model->showAssetPath = true;
             $model->image = $model->getImagePath('news');
             $model->image_thumb = $model->getImagePath('news', true);
             return $model;
