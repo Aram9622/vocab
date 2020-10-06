@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Traits;
 
 trait Image
 {
-    protected $showAssetPath = false;
+    public $showAssetPath = false;
 
     public function getImagePath($dir, $thumb = false, callable $callback = null)
     {
