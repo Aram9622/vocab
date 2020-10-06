@@ -86,7 +86,7 @@ class UserController extends ApiController
         ]);
 
         if ($validator->fails()) {
-            return response()->json(['error' => $validator->errors()], 401);
+            return response()->json(['error' => $validator->errors()], 200);
         }
 
         $user = auth()->user();
