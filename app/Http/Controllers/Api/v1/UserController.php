@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\v1;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Image;
 use Validator;
 
@@ -79,6 +80,7 @@ class UserController extends ApiController
 
         $validator = Validator::make($data, [
             'name' => 'required|string|min:2|max:100',
+            'password' => 'required|string|min:6|max:100',
             'email' => 'required|string|email|max:255|unique:users,email,' . auth()->id(),
             'avatar' => 'nullable|string',
         ]);
@@ -91,8 +93,12 @@ class UserController extends ApiController
         $user->name = $data['name'];
         $user->email = $data['email'];
 
-        if ($request['avatar']) {
+        if (isset($request['avatar'])) {
             $user->avatar = $request['avatar'];
+        }
+
+        if (isset($request['password'])) {
+            $user->password = Hash::make($request['password']);
         }
 
         $user->save();
