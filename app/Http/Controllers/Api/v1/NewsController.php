@@ -22,15 +22,20 @@ class NewsController extends ApiController
     {
         $news = $this->model->all();
 
+        $notification = $this->getUserNotification($userNotification);
+
         $userNotification = $this->getUserNotification($userNotification);
         $userNotification->type = 'news';
         $userNotification->user_id = auth()->id();
         $userNotification->views_count = $news->count();
         $userNotification->save();
 
-        return $news->map(function ($model) {
-            return $this->item($model);
-        });
+        return [
+            'data' => $news->map(function ($model) {
+                return $this->item($model);
+            }),
+            'count' => $notification
+        ];
     }
 
     public function notification(UserNotification $userNotification)
