@@ -50,7 +50,7 @@ trait Image
         }
 
         if ($thumb === true) {
-            $image_path = '/thumb';
+            $image_path = '/uploads/thumb';
         }
 
         $path = $image ? $image_path . '/' . $this->image : $image_path;
