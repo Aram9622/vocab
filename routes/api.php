@@ -30,6 +30,10 @@ Route::middleware(['auth:api'])->group(function () {
         Route::prefix('new-words')->group(function () {
             Route::get('/{level}/{category?}/{sub_category?}', 'NewWordsController@index')->name('new.words.index')->where('level', 'beginner|intermediate|advanced');
         });
+
+        Route::prefix('new-phrases')->group(function () {
+            Route::get('/{level}/{category?}/{sub_category?}', 'NewPhrasesController@index')->name('new.phrases.index')->where('level', 'beginner|intermediate|advanced');
+        });
     });
 
 });
