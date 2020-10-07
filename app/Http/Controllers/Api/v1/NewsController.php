@@ -38,7 +38,7 @@ class NewsController extends ApiController
         $userNotification = $this->getUserNotification($userNotification);
 
         $allNewsCount = $this->model->all()->count();
-        $readNewsCount = $userNotification->views_count;
+        $readNewsCount = $userNotification->views_count ?: 0;
         $unreadNewsCount = $allNewsCount - $readNewsCount;
 
         return [
