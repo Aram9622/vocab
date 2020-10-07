@@ -22,7 +22,7 @@ class NewsController extends ApiController
     {
         $news = $this->model->all();
 
-        $notification = $this->getUserNotification($userNotification);
+        $notification = $this->notification($userNotification);
 
         $userNotification = $this->getUserNotification($userNotification);
         $userNotification->type = 'news';
