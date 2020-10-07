@@ -15,6 +15,14 @@ class NewPhrasesController extends ApiController
             $categories = Category::where('parent_id', '=', $category->id)->get();
         }
 
+        $categories = $categories->map(function ($model) {
+            $model->showAssetPath = true;
+            $model->image_thumb = $model->getCategoriesImagePath(true, true);
+            $model->image = $model->getCategoriesImagePath(true);
+
+            return $model;
+        });
+
         return compact('categories', 'category', 'sub_category');
     }
 }
