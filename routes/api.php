@@ -38,6 +38,18 @@ Route::middleware(['auth:api'])->group(function () {
         Route::prefix('new-verbs')->group(function () {
             Route::get('/{level}/{category?}/{sub_category?}', 'NewVerbsController@index')->name('new.verbs.index')->where('level', 'beginner|intermediate|advanced');
         });
+
+        Route::prefix('new-words-collection')->group(function () {
+            Route::get('/{category?}/{sub_category?}', 'NewWordsController@collection')->name('new.words.collection');
+        });
+
+        Route::prefix('new-phrases-collection')->group(function () {
+            Route::get('/{category?}/{sub_category?}', 'NewWordsController@collection')->name('new.words.collection');
+        });
+
+        Route::prefix('new-verbs-collection')->group(function () {
+            Route::get('/{category?}/{sub_category?}', 'NewWordsController@collection')->name('new.words.collection');
+        });
     });
 
 });
