@@ -15,6 +15,14 @@ class NewWordsController extends ApiController
             $categories = Category::where('parent_id', '=', $category->id)->get();
         }
 
+        $categories = $categories->map(function ($model) {
+            $model->showAssetPath = true;
+            $model->image_thumb = $model->getImagePath('thumb');
+            $model->image = $model->getImagePath('words');
+
+            return $model;
+        });
+
         return compact('categories', 'category', 'sub_category');
     }
 }
