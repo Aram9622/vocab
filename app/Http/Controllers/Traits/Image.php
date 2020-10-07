@@ -53,7 +53,13 @@ trait Image
             $image_path .= '/thumb';
         }
 
-        $path = public_path($image ? $image_path . '/' . $this->image : $image_path);
+        $path = $image ? $image_path . '/' . $this->image : $image_path;
+
+        if ($this->showAssetPath === true) {
+            return asset($path);
+        }
+
+        $path = public_path($path);
 
         if ($image === true && $callback && is_file($path)) {
             $callback($path);

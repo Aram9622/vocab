@@ -17,8 +17,8 @@ class NewWordsController extends ApiController
 
         $categories = $categories->map(function ($model) {
             $model->showAssetPath = true;
-            $model->image_thumb = $model->getImagePath('thumb');
-            $model->image = $model->getImagePath('categories/words/beginner');
+            $model->image_thumb = $model->getCategoriesImagePath(true, true);
+            $model->image = $model->getCategoriesImagePath(true);
 
             return $model;
         });
