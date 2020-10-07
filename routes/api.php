@@ -26,6 +26,10 @@ Route::middleware(['auth:api'])->group(function () {
             Route::get('view/{id}', 'NewsController@view')->name('news.view');
             Route::get('notification', 'NewsController@notification')->name('news.notification');
         });
+
+        Route::prefix('new-words')->group(function () {
+            Route::get('/{level}/{category?}/{sub_category?}', 'NewWordsController@index')->name('new.words.index')->where('level', 'beginner|intermediate|advanced');
+        });
     });
 
 });
