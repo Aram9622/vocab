@@ -63,6 +63,21 @@ trait Categories
         return $this->items;
     }
 
+    public function stateCollection()
+    {
+        $items = [];
+        $types = ['words', 'phrases', 'verbs', 'stories', 'conversations', 'exercises'];
+        $states = ['default', 'learning', 'learned'];
+
+        foreach ($types as $type) {
+            foreach ($states as $state) {
+                $items[$type][$state] = $this->state($type, $state);
+            }
+        }
+
+        return $items;
+    }
+
     public function stateChange($type, $id, Request $request)
     {
         if (!in_array($request->state, ['default', 'learning', 'learned'])) {
