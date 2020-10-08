@@ -27,55 +27,21 @@ Route::middleware(['auth:api'])->group(function () {
             Route::get('notification', 'NewsController@notification')->name('news.notification');
         });
 
-        Route::prefix('new-words')->group(function () {
-            Route::get('/{level}/{category?}/{sub_category?}', 'NewWordsController@index')->name('new.words.index')->where('level', 'beginner|intermediate|advanced');
-        });
-
-        Route::prefix('new-phrases')->group(function () {
-            Route::get('/{level}/{category?}/{sub_category?}', 'NewPhrasesController@index')->name('new.phrases.index')->where('level', 'beginner|intermediate|advanced');
-        });
-
-        Route::prefix('new-verbs')->group(function () {
-            Route::get('/{level}/{category?}/{sub_category?}', 'NewVerbsController@index')->name('new.verbs.index')->where('level', 'beginner|intermediate|advanced');
-        });
-
-        Route::prefix('exercises')->group(function () {
-            Route::get('/{level}/{category?}/{sub_category?}', 'ExercisesController@index')->name('new.exercises.index')->where('level', 'beginner|intermediate|advanced');
-        });
-
-        Route::prefix('conversations')->group(function () {
-            Route::get('/{level}/{category?}/{sub_category?}', 'ConversationsController@index')->name('new.conversations.index')->where('level', 'beginner|intermediate|advanced');
-        });
-
-        Route::prefix('stories')->group(function () {
-            Route::get('/{level}/{category?}/{sub_category?}', 'StoriesController@index')->name('new.stories.index')->where('level', 'beginner|intermediate|advanced');
-        });
+        Route::get('new-words/{level}/{category?}/{sub_category?}', 'NewWordsController@index')->name('new.words.index')->where('level', 'beginner|intermediate|advanced');
+        Route::get('new-phrases/{level}/{category?}/{sub_category?}', 'NewPhrasesController@index')->name('new.phrases.index')->where('level', 'beginner|intermediate|advanced');
+        Route::get('new-verbs/{level}/{category?}/{sub_category?}', 'NewVerbsController@index')->name('new.verbs.index')->where('level', 'beginner|intermediate|advanced');
+        Route::get('exercises/{level}/{category?}/{sub_category?}', 'ExercisesController@index')->name('new.exercises.index')->where('level', 'beginner|intermediate|advanced');
+        Route::get('conversations/{level}/{category?}/{sub_category?}', 'ConversationsController@index')->name('new.conversations.index')->where('level', 'beginner|intermediate|advanced');
+        Route::get('stories/{level}/{category?}/{sub_category?}', 'StoriesController@index')->name('new.stories.index')->where('level', 'beginner|intermediate|advanced');
 
         //////////////////
 
-        Route::prefix('new-words-collection')->group(function () {
-            Route::get('/{category?}/{sub_category?}', 'NewWordsController@collection')->name('new.words.collection');
-        });
-
-        Route::prefix('new-phrases-collection')->group(function () {
-            Route::get('/{category?}/{sub_category?}', 'NewPhrasesController@collection')->name('new.phrases.collection');
-        });
-
-        Route::prefix('new-verbs-collection')->group(function () {
-            Route::get('/{category?}/{sub_category?}', 'NewVerbsController@collection')->name('new.verbs.collection');
-        });
-
-        Route::prefix('exercises-collection')->group(function () {
-            Route::get('/{category?}/{sub_category?}', 'ExercisesController@collection')->name('new.exercises.collection');
-        });
-
-        Route::prefix('conversations-collection')->group(function () {
-            Route::get('/{category?}/{sub_category?}', 'ConversationsController@collection')->name('new.conversations.collection');
-        });
-
-        Route::prefix('stories-collection')->group(function () {
-            Route::get('/{category?}/{sub_category?}', 'StoriesController@collection')->name('new.stories.collection');
-        });
+        Route::get('new-words-collection/{category?}/{sub_category?}', 'NewWordsController@collection')->name('new.words.collection');
+        Route::get('new-phrases-collection/{category?}/{sub_category?}', 'NewPhrasesController@collection')->name('new.phrases.collection');
+        Route::get('new-verbs-collection/{category?}/{sub_category?}', 'NewVerbsController@collection')->name('new.verbs.collection');
+        Route::get('exercises-collection/{category?}/{sub_category?}', 'ExercisesController@collection')->name('new.exercises.collection');
+        Route::get('conversations-collection/{category?}/{sub_category?}', 'ConversationsController@collection')->name('new.conversations.collection');
+        Route::get('stories-collection/{category?}/{sub_category?}', 'StoriesController@collection')->name('new.stories.collection');
     });
 
 });
