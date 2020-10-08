@@ -3,9 +3,12 @@
 namespace App\Http\Controllers\Api\v1\Traits;
 
 use App\Models\Category;
+use App\Models\Conversation;
+use App\Models\Exercise;
 use App\Models\Phrase;
 use App\Models\Verb;
 use App\Models\Word;
+use App\Models\Story;
 
 trait Categories
 {
@@ -38,6 +41,18 @@ trait Categories
 
             if ($this->type == 'verbs') {
                 $items = Verb::where('category_id', $sub_category->id)->get()->map($map);
+            }
+
+            if ($this->type == 'stories') {
+                $items = Story::where('category_id', $sub_category->id)->get()->map($map);
+            }
+
+            if ($this->type == 'conversations') {
+                $items = Conversation::where('category_id', $sub_category->id)->get()->map($map);
+            }
+
+            if ($this->type == 'exercises') {
+                $items = Exercise::where('category_id', $sub_category->id)->get()->map($map);
             }
 
             $this->items = $items;

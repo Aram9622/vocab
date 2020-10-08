@@ -39,6 +39,20 @@ Route::middleware(['auth:api'])->group(function () {
             Route::get('/{level}/{category?}/{sub_category?}', 'NewVerbsController@index')->name('new.verbs.index')->where('level', 'beginner|intermediate|advanced');
         });
 
+        Route::prefix('exercises')->group(function () {
+            Route::get('/{level}/{category?}/{sub_category?}', 'ExercisesController@index')->name('new.exercises.index')->where('level', 'beginner|intermediate|advanced');
+        });
+
+        Route::prefix('conversations')->group(function () {
+            Route::get('/{level}/{category?}/{sub_category?}', 'ConversationsController@index')->name('new.conversations.index')->where('level', 'beginner|intermediate|advanced');
+        });
+
+        Route::prefix('stories')->group(function () {
+            Route::get('/{level}/{category?}/{sub_category?}', 'StoriesController@index')->name('new.stories.index')->where('level', 'beginner|intermediate|advanced');
+        });
+
+        //////////////////
+
         Route::prefix('new-words-collection')->group(function () {
             Route::get('/{category?}/{sub_category?}', 'NewWordsController@collection')->name('new.words.collection');
         });
@@ -49,6 +63,18 @@ Route::middleware(['auth:api'])->group(function () {
 
         Route::prefix('new-verbs-collection')->group(function () {
             Route::get('/{category?}/{sub_category?}', 'NewVerbsController@collection')->name('new.verbs.collection');
+        });
+
+        Route::prefix('exercises-collection')->group(function () {
+            Route::get('/{category?}/{sub_category?}', 'ExercisesController@collection')->name('new.exercises.collection');
+        });
+
+        Route::prefix('conversations-collection')->group(function () {
+            Route::get('/{category?}/{sub_category?}', 'ConversationsController@collection')->name('new.conversations.collection');
+        });
+
+        Route::prefix('stories-collection')->group(function () {
+            Route::get('/{category?}/{sub_category?}', 'StoriesController@collection')->name('new.stories.collection');
         });
     });
 
