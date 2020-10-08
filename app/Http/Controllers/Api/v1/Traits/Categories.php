@@ -29,24 +29,21 @@ trait Categories
             };
         }
 
-        $type = request()->segment(3);
-
         $items = null;
 
-        if ($type == 'new-words') {
-            $this->type = 'words';
+        if ($this->type == 'words') {
             $items = Word::where('category_id', $sub_category->id)->get()->map($map);
         }
 
-        if ($type == 'new-phrases') {
-            $this->type = 'phrases';
+        if ($this->type == 'phrases') {
             $items = Phrase::where('category_id', $sub_category->id)->get()->map($map);
         }
 
-        if ($type == 'new-verbs') {
-            $this->type = 'verbs';
+        if ($this->type == 'verbs') {
             $items = Verb::where('category_id', $sub_category->id)->get()->map($map);
         }
+
+        $this->items = $items;
 
         if (!$category) {
             $categories = Category::where(['type' => $this->type, 'level' => $level, 'parent_id' => null])->get();
@@ -61,8 +58,6 @@ trait Categories
 
             return $model;
         });
-
-        $this->items = $items;
 
         return compact('categories', 'category', 'sub_category', 'items');
     }
