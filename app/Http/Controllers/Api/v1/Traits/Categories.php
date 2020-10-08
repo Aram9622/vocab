@@ -9,6 +9,7 @@ use App\Models\Phrase;
 use App\Models\Verb;
 use App\Models\Word;
 use App\Models\Story;
+use Illuminate\Http\Request;
 
 trait Categories
 {
@@ -62,9 +63,19 @@ trait Categories
         return $this->items;
     }
 
-    public function stateChange($type, $id)
+    public function stateChange($type, $id, Request $request)
     {
-        $this->factory($this->type)->findOrFail($id);
+        if (!in_array($request->state, ['default', 'learning', 'learned'])) {
+            return ['error', 'The state param mast be one of these items (default, learning, learned)'];
+        }
+
+        $this->type = $type;
+
+        $model = $this->factory($this->type)->findOrFail($id);
+        $model->current_state = $request->state;
+        $model->save();
+
+        return $model;
     }
 
     /**
