@@ -46,7 +46,7 @@ trait Categories
         if (!$category) {
             $categories = Category::where(['type' => $this->type, 'level' => $level, 'parent_id' => null])->get();
         } else {
-            $categories = Category::where('parent_id', '=', $category->id)->get();
+            $categories = Category::where('parent_id', $category->id)->get();
         }
 
         $categories = $categories->map(function ($model) {

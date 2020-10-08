@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 
 class NewPhrasesController extends ApiController
 {
-    use Categories;
-
     protected $type = 'phrases';
+
+    use Categories;
 }
