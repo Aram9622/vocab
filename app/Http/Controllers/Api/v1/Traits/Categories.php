@@ -66,7 +66,7 @@ trait Categories
     public function stateChange($type, $id, Request $request)
     {
         if (!in_array($request->state, ['default', 'learning', 'learned'])) {
-            return ['error', 'The state param mast be one of these items (default, learning, learned)'];
+            return ['error' => 'The state param mast be one of these items (default, learning, learned)'];
         }
 
         $this->type = $type;

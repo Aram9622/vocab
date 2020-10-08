@@ -46,7 +46,7 @@ Route::middleware(['auth:api'])->group(function () {
         //////////////////
 
         Route::get('items-state/{type}/{current_state}', 'NewWordsController@state');
-        Route::post('items-state-change/{type}/{id}', 'NewWordsController@stateChange');
+        Route::post('item-state-change/{type}/{id}', 'NewWordsController@stateChange');
     });
 
 });
