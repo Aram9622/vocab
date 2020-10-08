@@ -44,6 +44,7 @@ trait Categories
         }
 
         if (!$category) {
+            echo $this->type; die;
             $categories = Category::where(['type' => $this->type, 'level' => $level, 'parent_id' => null])->get();
         } else {
             $categories = Category::where('parent_id', $category->id)->get();
