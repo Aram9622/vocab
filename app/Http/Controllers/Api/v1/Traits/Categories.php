@@ -13,6 +13,8 @@ trait Categories
 
     public function index($level, Category $category = null, Category $sub_category = null)
     {
+        $items = null;
+
         if ($level && $category && $sub_category) {
             $map = function ($model) {
                 $model->showAssetPath = true;
@@ -25,23 +27,21 @@ trait Categories
 
                 return $model;
             };
+
+            if ($this->type == 'words') {
+                $items = Word::where('category_id', $sub_category->id)->get()->map($map);
+            }
+
+            if ($this->type == 'phrases') {
+                $items = Phrase::where('category_id', $sub_category->id)->get()->map($map);
+            }
+
+            if ($this->type == 'verbs') {
+                $items = Verb::where('category_id', $sub_category->id)->get()->map($map);
+            }
+
+            $this->items = $items;
         }
-
-        $items = null;
-
-        if ($this->type == 'words') {
-            $items = Word::where('category_id', $sub_category->id)->get()->map($map);
-        }
-
-        if ($this->type == 'phrases') {
-            $items = Phrase::where('category_id', $sub_category->id)->get()->map($map);
-        }
-
-        if ($this->type == 'verbs') {
-            $items = Verb::where('category_id', $sub_category->id)->get()->map($map);
-        }
-
-        $this->items = $items;
 
         if (!$category) {
             $categories = Category::where(['type' => $this->type, 'level' => $level, 'parent_id' => null])->get();
