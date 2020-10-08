@@ -28,18 +28,30 @@ trait Categories
         $items = null;
 
         if ($level && $category && $sub_category) {
+            $map = function ($model) {
+                $model->showAssetPath = true;
+
+                $model->image = $model->getCategoriesImagePath(true);
+                $model->image_thumb = $model->getCategoriesImagePath(true, true);
+
+                $model->record_en = $model->getAudioPath('en');
+                $model->record_es = $model->getAudioPath('es');
+
+                return $model;
+            };
+
             $type = request()->segment(3);
 
             if ($type == 'new-words') {
-                $items = Word::where('category_id', $sub_category->id)->get();
+                $items = Word::where('category_id', $sub_category->id)->get()->map($map);
             }
 
             if ($type == 'new-phrases') {
-                $items = Phrase::where('category_id', $sub_category->id)->get();
+                $items = Phrase::where('category_id', $sub_category->id)->get()->map($map);
             }
 
             if ($type == 'new-verbs') {
-                $items = Verb::where('category_id', $sub_category->id)->get();
+                $items = Verb::where('category_id', $sub_category->id)->get()->map($map);
             }
         }
 

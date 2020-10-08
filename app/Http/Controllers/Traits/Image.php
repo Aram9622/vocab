@@ -26,7 +26,7 @@ trait Image
     public function getAudioPath($lang = 'en')
     {
         $column = "record_$lang";
-        $audioPath = public_path("uploads/audio/{$this->$column}");
+        $audioPath = $this->showAssetPath === true ? asset("uploads/audio/{$this->$column}") : public_path("uploads/audio/{$this->$column}");
         return $audioPath;
     }
 
