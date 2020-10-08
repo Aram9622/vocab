@@ -3,6 +3,9 @@
 namespace App\Http\Controllers\Api\v1\Traits;
 
 use App\Models\Category;
+use App\Models\Phrase;
+use App\Models\Verb;
+use App\Models\Word;
 
 trait Categories
 {
@@ -22,11 +25,25 @@ trait Categories
             return $model;
         });
 
+        $items = null;
+
         if ($level && $category && $sub_category) {
-            dd(request()->segment(3));
+            $type = request()->segment(3);
+
+            if ($type == 'new-words') {
+                $items = Word::where('category_id', $sub_category->id)->get();
+            }
+
+            if ($type == 'new-phrases') {
+                $items = Phrase::where('category_id', $sub_category->id)->get();
+            }
+
+            if ($type == 'new-verbs') {
+                $items = Verb::where('category_id', $sub_category->id)->get();
+            }
         }
 
-        return compact('categories', 'category', 'sub_category');
+        return compact('categories', 'category', 'sub_category', 'items');
     }
 
     public function collection(Category $category = null, Category $sub_category = null)
