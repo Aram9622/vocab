@@ -22,6 +22,10 @@ trait Categories
             return $model;
         });
 
+        if ($level && $category && $sub_category) {
+            dd(request()->segment(3));
+        }
+
         return compact('categories', 'category', 'sub_category');
     }
 
