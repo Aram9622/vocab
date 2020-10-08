@@ -66,7 +66,7 @@ trait Categories
     public function stateCollection()
     {
         $items = [];
-        $types = ['words', 'phrases', 'verbs', 'stories', 'conversations', 'exercises'];
+        $types = ['words', 'phrases', 'verbs'];
         $states = ['default', 'learning', 'learned'];
 
         foreach ($types as $type) {
