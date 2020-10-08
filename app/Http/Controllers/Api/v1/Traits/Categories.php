@@ -9,8 +9,6 @@ use App\Models\Word;
 
 trait Categories
 {
-    public $type;
-
     protected $items;
 
     public function index($level, Category $category = null, Category $sub_category = null)
