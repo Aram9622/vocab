@@ -53,9 +53,9 @@ trait Categories
 
     public function state($type, $current_state)
     {
-        $this->items = $this->factory($this->type)->with(['category' => function ($query) use ($type) {
+        $this->items = $this->factory($this->type)->whereHas('category', function ($query) use ($type) {
             $query->where('type', $type);
-        }])->where('current_state', $current_state)->get()->map($this->mapping());
+        })->where('current_state', $current_state)->get()->map($this->mapping());
 
         return $this->items;
     }
