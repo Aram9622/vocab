@@ -44,11 +44,11 @@ Route::middleware(['auth:api'])->group(function () {
         });
 
         Route::prefix('new-phrases-collection')->group(function () {
-            Route::get('/{category?}/{sub_category?}', 'NewWordsController@collection')->name('new.phrases.collection');
+            Route::get('/{category?}/{sub_category?}', 'NewPhrasesController@collection')->name('new.phrases.collection');
         });
 
         Route::prefix('new-verbs-collection')->group(function () {
-            Route::get('/{category?}/{sub_category?}', 'NewWordsController@collection')->name('new.verbs.collection');
+            Route::get('/{category?}/{sub_category?}', 'NewVerbsController@collection')->name('new.verbs.collection');
         });
     });
 
