@@ -53,7 +53,7 @@ trait Categories
 
     public function state($type, $current_state)
     {
-
+        $this->items = $this->factory($this->type)->where('type', $type)->where('current_state', $current_state)->get()->map($this->mapping());
     }
 
     /**
@@ -62,7 +62,14 @@ trait Categories
      */
     public function setItems($category_id)
     {
-        $map = function ($model) {
+        $this->items = $this->factory($this->type)->where('category_id', $category_id)->get()->map($this->mapping());
+
+        return $this->items;
+    }
+
+    public function mapping()
+    {
+        return function ($model) {
             $model->showAssetPath = true;
 
             $model->image = $model->getCategoriesImagePath(true);
@@ -73,31 +80,37 @@ trait Categories
 
             return $model;
         };
+    }
 
-        if ($this->type == 'words') {
-            $this->items = Word::where('category_id', $category_id)->get()->map($map);
+    /**
+     * @param $type
+     * @return Conversation|Exercise|Phrase|Story|Verb|Word|null
+     */
+    public function factory($type)
+    {
+        $model = null;
+
+        switch ($type) {
+            case "words":
+                $model = new Word();
+                break;
+            case "phrases":
+                $model = new Phrase();
+                break;
+            case "verbs":
+                $model = new Verb();
+                break;
+            case "stories":
+                $model = new Story();
+                break;
+            case "conversations":
+                $model = new Conversation();
+                break;
+            case "exercises":
+                $model = new Exercise();
+                break;
         }
 
-        if ($this->type == 'phrases') {
-            $this->items = Phrase::where('category_id', $category_id)->get()->map($map);
-        }
-
-        if ($this->type == 'verbs') {
-            $this->items = Verb::where('category_id', $category_id)->get()->map($map);
-        }
-
-        if ($this->type == 'stories') {
-            $this->items = Story::where('category_id', $category_id)->get()->map($map);
-        }
-
-        if ($this->type == 'conversations') {
-            $this->items = Conversation::where('category_id', $category_id)->get()->map($map);
-        }
-
-        if ($this->type == 'exercises') {
-            $this->items = Exercise::where('category_id', $category_id)->get()->map($map);
-        }
-
-        return $this->items;
+        return $model;
     }
 }

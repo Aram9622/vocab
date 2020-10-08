@@ -45,7 +45,7 @@ Route::middleware(['auth:api'])->group(function () {
 
         //////////////////
 
-        Route::get('items-state//{type}{current_state}', 'NewWordsController@state');
+        Route::get('items-state/{type}/{current_state}', 'NewWordsController@state');
     });
 
 });
