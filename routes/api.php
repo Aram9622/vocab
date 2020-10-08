@@ -42,6 +42,10 @@ Route::middleware(['auth:api'])->group(function () {
         Route::get('exercises-collection/{category?}/{sub_category?}', 'ExercisesController@collection')->name('new.exercises.collection');
         Route::get('conversations-collection/{category?}/{sub_category?}', 'ConversationsController@collection')->name('new.conversations.collection');
         Route::get('stories-collection/{category?}/{sub_category?}', 'StoriesController@collection')->name('new.stories.collection');
+
+        //////////////////
+
+        Route::get('items-state//{type}{current_state}', 'NewWordsController@state');
     });
 
 });
