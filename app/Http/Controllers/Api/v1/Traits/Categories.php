@@ -53,11 +53,18 @@ trait Categories
 
     public function state($type, $current_state)
     {
-        $this->items = $this->factory($this->type)->whereHas('category', function ($query) use ($type) {
-            $query->where('type', $type);
+        $this->type = $type;
+
+        $this->items = $this->factory($this->type)->whereHas('category', function ($query) {
+            $query->where('type', $this->type);
         })->where('current_state', $current_state)->get()->map($this->mapping());
 
         return $this->items;
+    }
+
+    public function stateChange($type, $id)
+    {
+        $this->factory($this->type)->findOrFail($id);
     }
 
     /**
