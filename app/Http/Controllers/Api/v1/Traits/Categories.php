@@ -107,16 +107,21 @@ trait Categories
     public function mapping()
     {
         return function ($model) {
-            $model->showAssetPath = true;
-
-            $model->image = $model->getCategoriesImagePath(true);
-            $model->image_thumb = $model->getCategoriesImagePath(true, true);
-
-            $model->record_en = $model->getAudioPath('en');
-            $model->record_es = $model->getAudioPath('es');
+            $this->setAssetPath($model);
 
             return $model;
         };
+    }
+
+    public function setAssetPath(&$model)
+    {
+        $model->showAssetPath = true;
+
+        $model->image = $model->getCategoriesImagePath(true);
+        $model->image_thumb = $model->getCategoriesImagePath(true, true);
+
+        $model->record_en = $model->getAudioPath('en');
+        $model->record_es = $model->getAudioPath('es');
     }
 
     /**
