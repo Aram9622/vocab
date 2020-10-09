@@ -35,6 +35,8 @@ Route::middleware(['auth:api'])->group(function () {
         Route::get('stories/{level}/{category?}/{sub_category?}', 'StoriesController@index')->name('new.stories.index')->where('level', 'beginner|intermediate|advanced');
 
         //////////////////
+        Route::post('new-words-show/{id}', 'SiteController@categoryItem');
+        //////////////////
 
         Route::get('new-words-collection/{category?}/{sub_category?}', 'NewWordsController@collection')->name('new.words.collection');
         Route::get('new-phrases-collection/{category?}/{sub_category?}', 'NewPhrasesController@collection')->name('new.phrases.collection');
