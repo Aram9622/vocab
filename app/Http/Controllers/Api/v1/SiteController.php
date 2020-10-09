@@ -18,7 +18,7 @@ class SiteController extends Controller
             return ['error' => 'The type param mast be one of these items (words, phrases, verbs, stories, conversations, exercises)'];
         }
 
-        $model = $this->factory($request->type)->findOrFail($id);
+        $model = $this->factory($request->type)->with('category')->findOrFail($id);
 
         return $model;
     }
