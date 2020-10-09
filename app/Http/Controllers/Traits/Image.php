@@ -58,7 +58,7 @@ trait Image
         if ($level == null) {
             $image_path = 'uploads/categories/' . $type;
         } else {
-            $image_path = 'uploads/categories/' . $type . '/' . $type;
+            $image_path = 'uploads/categories/' . $type . '/' . $level;
         }
 
         if ($thumb === true) {
