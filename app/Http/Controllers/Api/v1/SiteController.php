@@ -20,6 +20,14 @@ class SiteController extends Controller
 
         $model = $this->factory($request->type)->with('category')->findOrFail($id);
 
+        $model->showAssetPath = true;
+
+        $model->image = $model->getCategoriesImagePath(true);
+        $model->image_thumb = $model->getCategoriesImagePath(true, true);
+
+        $model->record_en = $model->getAudioPath('en');
+        $model->record_es = $model->getAudioPath('es');
+
         return $model;
     }
 }
