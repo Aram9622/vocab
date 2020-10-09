@@ -47,10 +47,18 @@ trait Image
 
     public function getCategoriesImagePath($image = false, $thumb = false, callable $callback = null)
     {
-        if ($this->level == null) {
-            $image_path = 'uploads/categories/' . $this->type;
+        $level = $this->level;
+        $type = $this->type;
+
+        if ($this->category_id) {
+            $level = $this->category->level;
+            $type = $this->category->type;
+        }
+
+        if ($level == null) {
+            $image_path = 'uploads/categories/' . $type;
         } else {
-            $image_path = 'uploads/categories/' . $this->type . '/' . $this->level;
+            $image_path = 'uploads/categories/' . $type . '/' . $type;
         }
 
         if ($thumb === true) {
