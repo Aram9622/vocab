@@ -117,8 +117,8 @@ trait Categories
     {
         $model->showAssetPath = true;
 
-        $model->image = $model->getCategoriesImagePath(true);
         $model->image_thumb = $model->getCategoriesImagePath(true, true);
+        $model->image = $model->getCategoriesImagePath(true);
 
         $model->record_en = $model->getAudioPath('en');
         $model->record_es = $model->getAudioPath('es');
