@@ -61,6 +61,10 @@ trait Image
             $image_path = 'uploads/categories/' . $type . '/' . $level;
         }
 
+        if (isset($this->category) && isset($this->category->parent)) {
+            $image_path = 'uploads/' . $type;
+        }
+
         if ($thumb === true) {
             $image_path = '/uploads/thumb';
         }
