@@ -51,6 +51,10 @@
                 </ul>
             </li>
             <li><a class="{{ request()->is('/') || request()->is('news') || request()->is('news/*') ? 'active' : '' }}" href="{{route('admin.news.index')}}">News</a></li>
+            <li><a class="{{ request()->is('/') || request()->is('privacy-policy.index') || request()->is('privacy-policy/*') ? 'active' : '' }}" href="{{route('admin.privacy-policy.index')}}">Privacy Policy</a></li>
+            <li><a class="{{ request()->is('/') || request()->is('terms-of-use.index') || request()->is('terms-of-use/*') ? 'active' : '' }}" href="{{route('admin.terms-of-use.index')}}">Terms Of Use</a></li>
+            <li><a class="{{ request()->is('/') || request()->is('faq.index') || request()->is('faq/*') ? 'active' : '' }}" href="{{route('admin.faq.index')}}">FAQs</a></li>
+            <li><a class="{{ request()->is('/') || request()->is('info.help') || request()->is('info/help/*') ? 'active' : '' }}" href="{{route('admin.info.help')}}">Help</a></li>
             <li>
                 <form method="post" action="{{route('logout')}}">
                     @csrf

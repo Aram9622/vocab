@@ -53,6 +53,7 @@ class ComposerStaticInitb1562206bc0314a8ee9a5662e0c4c63f
         'ed962a97bd972bc82007176b647d4e36' => __DIR__ . '/..' . '/facade/ignition/src/helpers.php',
         '6124b4c8570aa390c21fafd04a26c69f' => __DIR__ . '/..' . '/myclabs/deep-copy/src/DeepCopy/deep_copy.php',
         'b6b991a57620e2fb6b2f66f03fe9ddc2' => __DIR__ . '/..' . '/symfony/string/Resources/functions.php',
+        'f18cc91337d49233e5754e93f3ed9ec3' => __DIR__ . '/..' . '/laravelcollective/html/src/helpers.php',
     );
 
     public static $prefixLengthsPsr4 = array (
@@ -200,6 +201,7 @@ class ComposerStaticInitb1562206bc0314a8ee9a5662e0c4c63f
         'C' => 
         array (
             'Cron\\' => 5,
+            'Collective\\Html\\' => 16,
             'Carbon\\' => 7,
         ),
         'B' => 
@@ -569,6 +571,10 @@ class ComposerStaticInitb1562206bc0314a8ee9a5662e0c4c63f
         array (
             0 => __DIR__ . '/..' . '/dragonmantank/cron-expression/src/Cron',
         ),
+        'Collective\\Html\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/laravelcollective/html/src',
+        ),
         'Carbon\\' => 
         array (
             0 => __DIR__ . '/..' . '/nesbot/carbon/src/Carbon',
@@ -611,8 +617,10 @@ class ComposerStaticInitb1562206bc0314a8ee9a5662e0c4c63f
     public static $classMap = array (
         'App\\Console\\Kernel' => __DIR__ . '/../..' . '/app/Console/Kernel.php',
         'App\\Exceptions\\Handler' => __DIR__ . '/../..' . '/app/Exceptions/Handler.php',
+        'App\\Http\\Controllers\\Admin\\AdminController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/AdminController.php',
         'App\\Http\\Controllers\\Admin\\ConversationsController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/ConversationsController.php',
         'App\\Http\\Controllers\\Admin\\ExercisesController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/ExercisesController.php',
+        'App\\Http\\Controllers\\Admin\\FaqController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/FaqController.php',
         'App\\Http\\Controllers\\Admin\\NewPhrasesController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/NewPhrasesController.php',
         'App\\Http\\Controllers\\Admin\\NewVerbsController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/NewVerbsController.php',
         'App\\Http\\Controllers\\Admin\\NewWordsController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/NewWordsController.php',
@@ -623,6 +631,15 @@ class ComposerStaticInitb1562206bc0314a8ee9a5662e0c4c63f
         'App\\Http\\Controllers\\Api\\v1\\Auth\\PasswordResetController' => __DIR__ . '/../..' . '/app/Http/Controllers/Api/v1/Auth/PasswordResetController.php',
         'App\\Http\\Controllers\\Api\\v1\\Auth\\RegisterController' => __DIR__ . '/../..' . '/app/Http/Controllers/Api/v1/Auth/RegisterController.php',
         'App\\Http\\Controllers\\Api\\v1\\Auth\\VerificationController' => __DIR__ . '/../..' . '/app/Http/Controllers/Api/v1/Auth/VerificationController.php',
+        'App\\Http\\Controllers\\Api\\v1\\ConversationsController' => __DIR__ . '/../..' . '/app/Http/Controllers/Api/v1/ConversationsController.php',
+        'App\\Http\\Controllers\\Api\\v1\\ExercisesController' => __DIR__ . '/../..' . '/app/Http/Controllers/Api/v1/ExercisesController.php',
+        'App\\Http\\Controllers\\Api\\v1\\NewPhrasesController' => __DIR__ . '/../..' . '/app/Http/Controllers/Api/v1/NewPhrasesController.php',
+        'App\\Http\\Controllers\\Api\\v1\\NewVerbsController' => __DIR__ . '/../..' . '/app/Http/Controllers/Api/v1/NewVerbsController.php',
+        'App\\Http\\Controllers\\Api\\v1\\NewWordsController' => __DIR__ . '/../..' . '/app/Http/Controllers/Api/v1/NewWordsController.php',
+        'App\\Http\\Controllers\\Api\\v1\\NewsController' => __DIR__ . '/../..' . '/app/Http/Controllers/Api/v1/NewsController.php',
+        'App\\Http\\Controllers\\Api\\v1\\SiteController' => __DIR__ . '/../..' . '/app/Http/Controllers/Api/v1/SiteController.php',
+        'App\\Http\\Controllers\\Api\\v1\\StoriesController' => __DIR__ . '/../..' . '/app/Http/Controllers/Api/v1/StoriesController.php',
+        'App\\Http\\Controllers\\Api\\v1\\Traits\\Categories' => __DIR__ . '/../..' . '/app/Http/Controllers/Api/v1/Traits/Categories.php',
         'App\\Http\\Controllers\\Api\\v1\\UserController' => __DIR__ . '/../..' . '/app/Http/Controllers/Api/v1/UserController.php',
         'App\\Http\\Controllers\\Auth\\ConfirmPasswordController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/ConfirmPasswordController.php',
         'App\\Http\\Controllers\\Auth\\ForgotPasswordController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/ForgotPasswordController.php',
@@ -664,8 +681,10 @@ class ComposerStaticInitb1562206bc0314a8ee9a5662e0c4c63f
         'App\\Models\\ChangePassword' => __DIR__ . '/../..' . '/app/Models/ChangePassword.php',
         'App\\Models\\Conversation' => __DIR__ . '/../..' . '/app/Models/Conversation.php',
         'App\\Models\\Exercise' => __DIR__ . '/../..' . '/app/Models/Exercise.php',
+        'App\\Models\\Faq' => __DIR__ . '/../..' . '/app/Models/Faq.php',
         'App\\Models\\Image' => __DIR__ . '/../..' . '/app/Models/Image.php',
         'App\\Models\\News' => __DIR__ . '/../..' . '/app/Models/News.php',
+        'App\\Models\\Option' => __DIR__ . '/../..' . '/app/Models/Option.php',
         'App\\Models\\PasswordReset' => __DIR__ . '/../..' . '/app/Models/PasswordReset.php',
         'App\\Models\\Phrase' => __DIR__ . '/../..' . '/app/Models/Phrase.php',
         'App\\Models\\Story' => __DIR__ . '/../..' . '/app/Models/Story.php',
@@ -680,6 +699,8 @@ class ComposerStaticInitb1562206bc0314a8ee9a5662e0c4c63f
         'App\\Providers\\BroadcastServiceProvider' => __DIR__ . '/../..' . '/app/Providers/BroadcastServiceProvider.php',
         'App\\Providers\\EventServiceProvider' => __DIR__ . '/../..' . '/app/Providers/EventServiceProvider.php',
         'App\\Providers\\RouteServiceProvider' => __DIR__ . '/../..' . '/app/Providers/RouteServiceProvider.php',
+        'App\\Traits\\View' => __DIR__ . '/../..' . '/app/Traits/View.php',
+        'App\\UserNotification' => __DIR__ . '/../..' . '/app/UserNotification.php',
         'ArithmeticError' => __DIR__ . '/..' . '/symfony/polyfill-php70/Resources/stubs/ArithmeticError.php',
         'Asm89\\Stack\\Cors' => __DIR__ . '/..' . '/asm89/stack-cors/src/Asm89/Stack/Cors.php',
         'Asm89\\Stack\\CorsService' => __DIR__ . '/..' . '/asm89/stack-cors/src/Asm89/Stack/CorsService.php',
@@ -772,6 +793,13 @@ class ComposerStaticInitb1562206bc0314a8ee9a5662e0c4c63f
         'Carbon\\Traits\\Units' => __DIR__ . '/..' . '/nesbot/carbon/src/Carbon/Traits/Units.php',
         'Carbon\\Traits\\Week' => __DIR__ . '/..' . '/nesbot/carbon/src/Carbon/Traits/Week.php',
         'Carbon\\Translator' => __DIR__ . '/..' . '/nesbot/carbon/src/Carbon/Translator.php',
+        'Collective\\Html\\Componentable' => __DIR__ . '/..' . '/laravelcollective/html/src/Componentable.php',
+        'Collective\\Html\\Eloquent\\FormAccessible' => __DIR__ . '/..' . '/laravelcollective/html/src/Eloquent/FormAccessible.php',
+        'Collective\\Html\\FormBuilder' => __DIR__ . '/..' . '/laravelcollective/html/src/FormBuilder.php',
+        'Collective\\Html\\FormFacade' => __DIR__ . '/..' . '/laravelcollective/html/src/FormFacade.php',
+        'Collective\\Html\\HtmlBuilder' => __DIR__ . '/..' . '/laravelcollective/html/src/HtmlBuilder.php',
+        'Collective\\Html\\HtmlFacade' => __DIR__ . '/..' . '/laravelcollective/html/src/HtmlFacade.php',
+        'Collective\\Html\\HtmlServiceProvider' => __DIR__ . '/..' . '/laravelcollective/html/src/HtmlServiceProvider.php',
         'Cron\\AbstractField' => __DIR__ . '/..' . '/dragonmantank/cron-expression/src/Cron/AbstractField.php',
         'Cron\\CronExpression' => __DIR__ . '/..' . '/dragonmantank/cron-expression/src/Cron/CronExpression.php',
         'Cron\\DayOfMonthField' => __DIR__ . '/..' . '/dragonmantank/cron-expression/src/Cron/DayOfMonthField.php',

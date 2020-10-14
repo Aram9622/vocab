@@ -26,6 +26,9 @@
         .upload__image #imagePreview {
             background-size: cover;
         }
+        #editor + .ck .ck-editor__editable_inline {
+            min-height: 500px;
+        }
     </style>
 </head>
 

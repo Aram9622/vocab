@@ -138,6 +138,35 @@ Route::group(['as' => 'admin.', 'namespace' => 'Admin', 'middleware' => ['auth']
         Route::get('/delete/{news}', 'NewsController@delete')->name('news.delete');
         Route::post('item-visibility', 'NewsController@visibility')->name('news.visibility.item');
     });
+
+    Route::prefix('info')->group(function () {
+        Route::get('/help', 'AdminController@help')->name('info.help');
+        Route::post('/store', 'AdminController@store')->name('info.store');
+    });
+
+    Route::group(['prefix' => 'faq'], function () {
+        Route::get('/', 'FaqController@index')->name('faq.index');
+        Route::get('/create', 'FaqController@create')->name('faq.create');
+        Route::get('/update/{id}', 'FaqController@update')->name('faq.update');
+        Route::get('/remove/{id}', 'FaqController@remove')->name('faq.remove');
+        Route::post('/save/{id?}', 'FaqController@save')->name('faq.save');
+    });
+
+    Route::group(['prefix' => 'terms-of-use'], function () {
+        Route::get('/', 'TermsOfUseController@index')->name('terms-of-use.index');
+        Route::get('/create', 'TermsOfUseController@create')->name('terms-of-use.create');
+        Route::get('/update/{id}', 'TermsOfUseController@update')->name('terms-of-use.update');
+        Route::get('/remove/{id}', 'TermsOfUseController@remove')->name('terms-of-use.remove');
+        Route::post('/save/{id?}', 'TermsOfUseController@save')->name('terms-of-use.save');
+    });
+
+    Route::group(['prefix' => 'privacy-policy'], function () {
+        Route::get('/', 'PrivacyPolicyController@index')->name('privacy-policy.index');
+        Route::get('/create', 'PrivacyPolicyController@create')->name('privacy-policy.create');
+        Route::get('/update/{id}', 'PrivacyPolicyController@update')->name('privacy-policy.update');
+        Route::get('/remove/{id}', 'PrivacyPolicyController@remove')->name('privacy-policy.remove');
+        Route::post('/save/{id?}', 'PrivacyPolicyController@save')->name('privacy-policy.save');
+    });
 });
 
 ///////////////////////// END ADMIN PANEL /////////////////////////
