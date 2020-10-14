@@ -25,8 +25,8 @@ class AdminController extends Controller
 
     public function store(Request $request)
     {
-        if ($request->faq) {
-            Option::setItem('faq', $request->faq);
+        if ($request->help) {
+            Option::setItem('help', $request->help);
         }
 
         return back();
