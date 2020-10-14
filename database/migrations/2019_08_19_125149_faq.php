@@ -18,7 +18,7 @@ class Faq extends Migration
 
             $table->string('type')->default('faq');
 
-            $table->string('question', 255);
+            $table->string('question');
             $table->longText('answer');
             $table->timestamps();
 
