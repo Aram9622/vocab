@@ -12,9 +12,15 @@ class SiteController extends Controller
 {
     use Categories;
 
-    public function general()
+    public function general(Request $request)
     {
-        $extraPages = Faq::all();
+        $query = Faq::query();
+
+        if (in_array($request->type, ['faq', 'terms-of-use', 'privacy-policy'])) {
+            $query = $query->where('type', $request->type);
+        }
+
+        $extraPages = $query->get();
 
         $helpPage = Option::item('help');
 
