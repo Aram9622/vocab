@@ -4,11 +4,22 @@ namespace App\Http\Controllers\Api\v1;
 
 use App\Http\Controllers\Api\v1\Traits\Categories;
 use App\Http\Controllers\Controller;
+use App\Models\Faq;
+use App\Models\Option;
 use Illuminate\Http\Request;
 
 class SiteController extends Controller
 {
     use Categories;
+
+    public function general()
+    {
+        $extraPages = Faq::all();
+
+        $helpPage = Option::item('help');
+
+        return compact('extraPages', 'helpPage');
+    }
 
     public function categoryItem($id, Request $request)
     {
