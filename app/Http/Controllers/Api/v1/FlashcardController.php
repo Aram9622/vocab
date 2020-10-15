@@ -69,9 +69,9 @@ class FlashcardController extends ApiController
         return $model;
     }
 
-    public function delete(Request $request, $id = null)
+    public function delete($id)
     {
-        $success = $this->flashcardGroup->with('group')->findOrFail($id)->delete();
+        $success = $this->flashcard->findOrFail($id)->delete();
 
         return compact('success');
     }
@@ -106,7 +106,7 @@ class FlashcardController extends ApiController
 
     public function groupDelete($id)
     {
-        $success = $this->flashcardGroup->with('subs', 'parent')->findOrFail($id)->delete();
+        $success = $this->flashcardGroup->findOrFail($id)->delete();
 
         return compact('success');
     }
