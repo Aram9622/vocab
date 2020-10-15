@@ -54,7 +54,9 @@ class StudiedController extends Controller
             return ['error' => 'No data found by this id'];
         }
 
-        ($model = $this->model)->fill($request->all())->save();
+        $model = $this->model->where(['type' => $request->type, 'studied_id' => $request->studied_id])->first() ?: $this->model;
+
+        $model->fill($request->all())->save();
 
         return $model;
     }
