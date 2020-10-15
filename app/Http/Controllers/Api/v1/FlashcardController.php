@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Api\v1;
 
-use App\Flashcard;
+use App\FlashcardGroup;
 use Illuminate\Http\Request;
 use Validator;
 
@@ -10,7 +10,7 @@ class FlashcardController extends ApiController
 {
     protected $model;
 
-    public function __construct(Flashcard $model)
+    public function __construct(FlashcardGroup $model)
     {
         $this->model = $model;
     }
