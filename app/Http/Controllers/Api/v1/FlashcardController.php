@@ -12,7 +12,7 @@ class FlashcardController extends ApiController
 
     public function __construct(FlashcardGroup $model)
     {
-        $this->model = $model;
+        $this->model = $model->with('parent');
     }
 
     public function groups()
