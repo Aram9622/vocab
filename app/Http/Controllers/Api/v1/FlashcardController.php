@@ -33,11 +33,13 @@ class FlashcardController extends ApiController
     {
         $data = $request->all();
 
+        $validType = $id ? 'required' : 'nullable';
+
         $validator = Validator::make($data, [
-            'word_en' => 'required|string|min:2',
-            'word_es' => 'required|string|min:2',
-            'group_id' => 'required|exists:flashcard_groups,id',
-            'image' => ($id ? 'required' : 'nullable') . '|image',
+            'word_en' => "$validType|string|min:2",
+            'word_es' => "$validType|string|min:2",
+            'group_id' => "$validType|exists:flashcard_groups,id",
+            'image' => "$validType|image",
         ]);
 
         if ($validator->fails()) {
