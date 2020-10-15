@@ -17,7 +17,7 @@ class FlashcardController extends ApiController
 
     public function groups()
     {
-        return $this->model->all();
+        return $this->model->get();
     }
 
     public function groupView($id)
