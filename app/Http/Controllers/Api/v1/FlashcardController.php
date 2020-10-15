@@ -22,7 +22,7 @@ class FlashcardController extends ApiController
 
     public function groupView($id)
     {
-        return $this->model->with('subs')->find($id);
+        return $this->model->with('subs', 'parent')->find($id);
     }
 
     public function groupStore(Request $request, $id = null)
