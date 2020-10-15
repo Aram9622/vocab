@@ -33,6 +33,16 @@ Route::middleware(['auth:api'])->group(function () {
             Route::post('/store', 'StudiedController@store')->name('studied.store');
         });
 
+        Route::prefix('flashcard')->group(function () {
+            Route::prefix('group')->group(function () {
+                Route::get('/', 'FlashcardController@groups')->name('flashcard.group.index');
+                Route::get('/view/{id}', 'FlashcardController@groupView')->name('flashcard.group.view');
+                Route::post('/create', 'FlashcardController@groupStore')->name('flashcard.group.create');
+                Route::post('/edit/{id}', 'FlashcardController@groupStore')->name('flashcard.group.edit');
+                Route::delete('/delete/{id}', 'FlashcardController@groupDelete')->name('flashcard.group.delete');
+            });
+        });
+
         Route::get('new-words/{level}/{category?}/{sub_category?}', 'NewWordsController@index')->name('new.words.index')->where('level', 'beginner|intermediate|advanced');
         Route::get('new-phrases/{level}/{category?}/{sub_category?}', 'NewPhrasesController@index')->name('new.phrases.index')->where('level', 'beginner|intermediate|advanced');
         Route::get('new-verbs/{level}/{category?}/{sub_category?}', 'NewVerbsController@index')->name('new.verbs.index')->where('level', 'beginner|intermediate|advanced');

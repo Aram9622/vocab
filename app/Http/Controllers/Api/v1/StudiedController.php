@@ -3,11 +3,10 @@
 namespace App\Http\Controllers\Api\v1;
 
 use App\Http\Controllers\Api\v1\Traits\Categories;
-use App\Http\Controllers\Controller;
 use App\Studied;
 use Illuminate\Http\Request;
 
-class StudiedController extends Controller
+class StudiedController extends ApiController
 {
     use Categories;
 

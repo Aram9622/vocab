@@ -3,12 +3,11 @@
 namespace App\Http\Controllers\Api\v1;
 
 use App\Http\Controllers\Api\v1\Traits\Categories;
-use App\Http\Controllers\Controller;
 use App\Models\Faq;
 use App\Models\Option;
 use Illuminate\Http\Request;
 
-class SiteController extends Controller
+class SiteController extends ApiController
 {
     use Categories;
 
