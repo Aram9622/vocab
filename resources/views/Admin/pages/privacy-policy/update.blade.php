@@ -12,7 +12,7 @@
                 <div class="container-fluid">
                     <div class="content_topMenu">
                         <ul>
-                            <li><a href="">FAQs</a></li>
+                            <li><a href="">Privacy Policy</a></li>
                         </ul>
                     </div>
                     <div class="dashboard_box">
