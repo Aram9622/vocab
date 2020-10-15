@@ -12,4 +12,9 @@ class FlashcardGroup extends Model
     {
         return $this->hasOne(self::class, 'id', 'parent_id');
     }
+
+    public function subs()
+    {
+        return $this->hasOne(self::class, 'parent_id', 'id');
+    }
 }
