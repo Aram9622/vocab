@@ -41,6 +41,12 @@ Route::middleware(['auth:api'])->group(function () {
                 Route::post('/update/{id}', 'FlashcardController@groupStore')->name('flashcard.group.update');
                 Route::delete('/delete/{id}', 'FlashcardController@groupDelete')->name('flashcard.group.delete');
             });
+
+            Route::get('/', 'FlashcardController@index')->name('flashcard.index');
+            Route::get('/view/{id}', 'FlashcardController@view')->name('flashcard.view');
+            Route::post('/create', 'FlashcardController@store')->name('flashcard.create');
+            Route::post('/update/{id}', 'FlashcardController@store')->name('flashcard.update');
+            Route::delete('/delete/{id}', 'FlashcardController@delete')->name('flashcard.delete');
         });
 
         Route::get('new-words/{level}/{category?}/{sub_category?}', 'NewWordsController@index')->name('new.words.index')->where('level', 'beginner|intermediate|advanced');
