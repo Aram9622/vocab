@@ -12,17 +12,17 @@ class FlashcardController extends ApiController
 
     public function __construct(FlashcardGroup $model)
     {
-        $this->model = $model->with('parent');
+        $this->model = $model;
     }
 
     public function groups()
     {
-        return $this->model->get();
+        return $this->model->with('parent')->all();
     }
 
     public function groupView($id)
     {
-        return $this->model->find($id);
+        return $this->model->with('parent')->find($id);
     }
 
     public function groupStore(Request $request, $id = null)
@@ -36,7 +36,7 @@ class FlashcardController extends ApiController
             return response()->json(['error' => $validator->errors()], 401);
         }
 
-        $model = $this->model->find($id) ?: $this->model;
+        $model = $this->model->with('parent')->find($id) ?: $this->model;
 
         $model->fill($request->all())->save();
 
@@ -45,7 +45,7 @@ class FlashcardController extends ApiController
 
     public function groupDelete($id)
     {
-        $success = $this->model->findOrFail($id)->delete();
+        $success = $this->model->with('parent')->findOrFail($id)->delete();
 
         return compact('success');
     }
