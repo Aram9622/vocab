@@ -15,6 +15,6 @@ class FlashcardGroup extends Model
 
     public function subs()
     {
-        return $this->hasOne(self::class, 'parent_id', 'id');
+        return $this->hasMany(self::class, 'parent_id', 'id');
     }
 }
