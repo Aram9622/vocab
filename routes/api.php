@@ -38,7 +38,7 @@ Route::middleware(['auth:api'])->group(function () {
                 Route::get('/', 'FlashcardController@groups')->name('flashcard.group.index');
                 Route::get('/view/{id}', 'FlashcardController@groupView')->name('flashcard.group.view');
                 Route::post('/create', 'FlashcardController@groupStore')->name('flashcard.group.create');
-                Route::post('/edit/{id}', 'FlashcardController@groupStore')->name('flashcard.group.edit');
+                Route::post('/update/{id}', 'FlashcardController@groupStore')->name('flashcard.group.update');
                 Route::delete('/delete/{id}', 'FlashcardController@groupDelete')->name('flashcard.group.delete');
             });
         });

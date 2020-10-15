@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\v1;
 
 use App\Flashcard;
 use Illuminate\Http\Request;
+use Validator;
 
 class FlashcardController extends ApiController
 {
@@ -26,6 +27,15 @@ class FlashcardController extends ApiController
 
     public function groupStore(Request $request, $id = null)
     {
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string|min:2',
+            'parent_id' => 'nullable|exists:flashcard_groups,id',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['error' => $validator->errors()], 401);
+        }
+
         $model = $this->model->find($id) ?: $this->model;
 
         $model->fill($request->all())->save();
