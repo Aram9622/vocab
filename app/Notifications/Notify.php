@@ -20,6 +20,7 @@ class Notify extends Notification implements ShouldQueue
      */
     public function __construct(...$message)
     {
+        $this->message[] = 'Unread Message From ' . auth()->user()->name;
         $this->message = $message;
     }
 
