@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\v1;
 use App\Http\Controllers\Api\v1\Traits\Categories;
 use App\Models\Faq;
 use App\Models\Option;
+use App\Models\User;
 use App\Notifications\Notify;
 use Illuminate\Http\Request;
 
@@ -56,10 +57,10 @@ class SiteController extends ApiController
             return ['error', 'the message field is required.'];
         }
 
-        $user = auth()->user();
+        $user = User::where('id', 1)->firstOrFail();
 
-        $success = auth()->user()->notify(new Notify($request->message));
+        $success = $user->notify(new Notify($request->message));
 
-        return ['success' => $success, 'sent_to' => $user];
+        return ['success' => $success];
     }
 }
