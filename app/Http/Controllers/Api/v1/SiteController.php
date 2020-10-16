@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\v1;
 use App\Http\Controllers\Api\v1\Traits\Categories;
 use App\Models\Faq;
 use App\Models\Option;
+use App\Notifications\Notify;
 use Illuminate\Http\Request;
 
 class SiteController extends ApiController
@@ -47,5 +48,18 @@ class SiteController extends ApiController
         }
 
         return $model;
+    }
+
+    public function mail(Request $request)
+    {
+        if (!$request->message) {
+            return ['error', 'the message field is required.'];
+        }
+
+        $user = auth()->user();
+
+        $success = auth()->user()->notify(new Notify($request->message));
+
+        return ['success' => $success, 'sent_to' => $user];
     }
 }

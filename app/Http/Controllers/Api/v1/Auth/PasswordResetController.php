@@ -133,7 +133,7 @@ class PasswordResetController extends ApiController
 
         PasswordReset::where($where)->delete();
 
-        $user->notify(new PasswordResetSuccess($passwordReset));
+        $user->notify(new PasswordResetSuccess());
 
         return response()->json([
             'success' => true,
