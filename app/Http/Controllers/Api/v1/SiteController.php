@@ -54,7 +54,7 @@ class SiteController extends ApiController
     public function mail(Request $request)
     {
         if (!$request->message) {
-            return ['error', 'the message field is required.'];
+            return ['error' => 'the message field is required.'];
         }
 
         $user = User::where('id', 1)->firstOrFail();
