@@ -59,7 +59,12 @@ class SiteController extends ApiController
 
         $user = User::where('id', 1)->firstOrFail();
 
-        $success = $user->notify(new Notify($request->message));
+        try {
+            $success = true;
+            $user->notify(new Notify($request->message));
+        } catch (\Exception $e) {
+            $success = false;
+        }
 
         return ['success' => $success];
     }
