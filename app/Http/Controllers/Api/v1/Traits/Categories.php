@@ -102,6 +102,8 @@ trait Categories
 
         DB::beginTransaction();
 
+        $updatedModels = [];
+
         try {
             foreach ($models as $model) {
                 $result = $this->stateChange($type, $model->id, $request);
@@ -109,6 +111,7 @@ trait Categories
                     DB::rollBack();
                     return $result['error'];
                 }
+                $updatedModels[] = $result;
             }
         } catch (\Exception $exception) {
             DB::rollBack();
@@ -120,7 +123,7 @@ trait Categories
 
         DB::commit();
 
-        return $models;
+        return $updatedModels;
     }
 
     /**
