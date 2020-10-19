@@ -10,6 +10,7 @@ use App\Models\Verb;
 use App\Models\Word;
 use App\Models\Story;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 trait Categories
 {
@@ -91,6 +92,34 @@ trait Categories
         $model->save();
 
         return $model;
+    }
+
+    public function stateChangeByCat($type, $category_id, Request $request)
+    {
+        $this->type = $type;
+
+        $models = $this->factory($this->type)->findOrFail($category_id)->where('category_id', $category_id)->get();
+
+        DB::beginTransaction();
+
+        try {
+            dd($models);
+            foreach ($models as $model) {
+                $result = $this->stateChange($type, $model->id, $request);
+                if (isset($result['error'])) {
+                    DB::rollBack();
+                    return $result['error'];
+                }
+            }
+        } catch (\Exception $exception) {
+            DB::rollBack();
+            return [
+                'error' => 'There is some problem with your sent data, check the POST data before send',
+                'POST' => $request->all()
+            ];
+        }
+
+        DB::commit();
     }
 
     /**
