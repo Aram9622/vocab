@@ -80,7 +80,10 @@ trait Categories
 
         foreach ($states as $state) {
             foreach ($types as $type) {
-                $items[$state][] = $this->state($type, $state);
+                $array = $this->state($type, $state);
+                if (!empty($array)) {
+                    $items[$state][] = $array;
+                }
             }
         }
 
