@@ -103,7 +103,7 @@ trait Categories
         DB::beginTransaction();
 
         try {
-            dd($models);
+            return $models;
             foreach ($models as $model) {
                 $result = $this->stateChange($type, $model->id, $request);
                 if (isset($result['error'])) {
