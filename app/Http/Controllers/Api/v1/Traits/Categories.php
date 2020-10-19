@@ -70,9 +70,17 @@ trait Categories
         $types = ['words', 'phrases', 'verbs'];
         $states = ['default', 'learning', 'learned'];
 
+        /*
         foreach ($types as $type) {
             foreach ($states as $state) {
                 $items[$type][$state] = $this->state($type, $state);
+            }
+        }
+        */
+
+        foreach ($states as $state) {
+            foreach ($types as $type) {
+                $items[$state][] = $this->state($type, $state);
             }
         }
 
