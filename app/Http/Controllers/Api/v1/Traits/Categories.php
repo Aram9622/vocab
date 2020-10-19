@@ -103,7 +103,6 @@ trait Categories
         DB::beginTransaction();
 
         try {
-            return $models;
             foreach ($models as $model) {
                 $result = $this->stateChange($type, $model->id, $request);
                 if (isset($result['error'])) {
@@ -120,6 +119,8 @@ trait Categories
         }
 
         DB::commit();
+
+        return $models;
     }
 
     /**
