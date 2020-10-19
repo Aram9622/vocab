@@ -98,7 +98,7 @@ trait Categories
     {
         $this->type = $type;
 
-        $models = $this->factory($this->type)->findOrFail($category_id)->where('category_id', $category_id)->get();
+        $models = $this->factory($this->type)->where('category_id', $category_id)->get();
 
         DB::beginTransaction();
 
