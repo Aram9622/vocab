@@ -81,7 +81,7 @@ trait Categories
         foreach ($states as $state) {
             foreach ($types as $type) {
                 $array = $this->state($type, $state);
-                if (!empty($array)) {
+                if ($array->count()) {
                     $items[$state][] = $array;
                 }
             }
