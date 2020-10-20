@@ -82,7 +82,10 @@ trait Categories
             foreach ($types as $type) {
                 $array = $this->state($type, $state);
                 if ($array->count()) {
-                    $items[$state][] = $array;
+                    if (empty($items[$state])) {
+                        $items[$state] = [];
+                    }
+                    $items[$state] = array_merge($items[$state], $array);
                 }
             }
         }
