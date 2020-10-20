@@ -87,7 +87,7 @@ trait Categories
                 $array = $this->state($type, $state);
                 if ($array->count()) {
                     $array->map(function ($model) use (&$items, $state) {
-                        $items[$state][$model->id] = $items[$state];
+                        $items[$state][] = $model;
                     });
                 }
             }
