@@ -85,7 +85,7 @@ trait Categories
                     if (empty($items[$state])) {
                         $items[$state] = [];
                     }
-                    $items[$state] = array_merge($items[$state], $array);
+                    $items[$state] = array_merge($items[$state], $array->getAttrinutes());
                 }
             }
         }
