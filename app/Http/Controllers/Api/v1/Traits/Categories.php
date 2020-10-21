@@ -98,13 +98,13 @@ trait Categories
             foreach ($types as $type) {
                 $array = $this->state($type, $state, $interval);
                 if ($array['all']->count()) {
-                    $array->map(function ($model) use (&$items, $state) {
+                    $array['all']->map(function ($model) use (&$items, $state) {
                         $items[$state]['all'][] = $model;
                     });
                 }
 
                 if ($array['items']->count()) {
-                    $array->map(function ($model) use (&$items, $state) {
+                    $array['items']->map(function ($model) use (&$items, $state) {
                         $items[$state]['items'][] = $model;
                     });
                 }
