@@ -63,7 +63,7 @@ trait Categories
         })->where('current_state', $current_state);
 
         if ($interval = intval($interval)) {
-            $query = $query->whereDate('created_at', '<=', Carbon::now()->addDays("-$interval"));
+            $query = $query->whereDate('updated_at', '>=', Carbon::now()->addDays("-$interval"));
         }
 
         $this->items = $query->get()->map($this->mapping());
