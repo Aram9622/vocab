@@ -9,6 +9,7 @@ use App\Models\Phrase;
 use App\Models\Verb;
 use App\Models\Word;
 use App\Models\Story;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -53,18 +54,24 @@ trait Categories
         return compact('beginner', 'intermediate', 'advanced');
     }
 
-    public function state($type, $current_state)
+    public function state($type, $current_state, $interval = 0)
     {
         $this->type = $type;
 
-        $this->items = $this->factory($this->type)->whereHas('category', function ($query) {
+        $query = $this->factory($this->type)->whereHas('category', function ($query) {
             $query->where('type', $this->type);
-        })->where('current_state', $current_state)->get()->map($this->mapping());
+        })->where('current_state', $current_state);
+
+        if ($interval = intval($interval)) {
+            $query = $query->whereDate('created_at', '<=', Carbon::now()->addDays("-$interval"));
+        }
+
+        $this->items = $query->get()->map($this->mapping());
 
         return $this->items;
     }
 
-    public function stateCollection()
+    public function stateCollection($interval = 0)
     {
         $items = [];
         $types = ['words', 'phrases', 'verbs'];
@@ -84,7 +91,7 @@ trait Categories
             }
 
             foreach ($types as $type) {
-                $array = $this->state($type, $state);
+                $array = $this->state($type, $state, $interval);
                 if ($array->count()) {
                     $array->map(function ($model) use (&$items, $state) {
                         $items[$state][] = $model;
