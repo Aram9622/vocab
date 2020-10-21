@@ -62,13 +62,18 @@ trait Categories
             $query->where('type', $this->type);
         })->where('current_state', $current_state);
 
+        $all = $query->get()->map($this->mapping());
+
         if ($interval = intval($interval)) {
             $query = $query->whereDate('updated_at', '>=', Carbon::now()->addDays("-$interval"));
         }
 
         $this->items = $query->get()->map($this->mapping());
 
-        return $this->items;
+        return [
+            'all' => $all,
+            'items' => $this->items,
+        ];
     }
 
     public function stateCollection($interval = 0)
