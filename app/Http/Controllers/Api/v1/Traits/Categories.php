@@ -92,7 +92,7 @@ trait Categories
 
         foreach ($states as $state) {
             if (empty($items[$state])) {
-                $items[$state] = [];
+                $items[$state] = ['all' => [], 'items' => []];
             }
 
             foreach ($types as $type) {
