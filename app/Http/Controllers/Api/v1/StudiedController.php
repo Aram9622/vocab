@@ -52,6 +52,9 @@ class StudiedController extends ApiController
         if ($request->percent == 100) {
             $request->state = 'learned';
             return $this->stateChange($request->type, $request->studied_id, $request);
+        } else {
+            $request->state = 'default';
+            $this->stateChange($request->type, $request->studied_id, $request);
         }
 
         $studiedModel = $this->factory($request->type)->where('id', $request->studied_id)->first();
