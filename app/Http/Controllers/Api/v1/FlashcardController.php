@@ -35,7 +35,7 @@ class FlashcardController extends ApiController
     {
         $data = $request->all();
 
-        $validType = $id ? 'required' : 'nullable';
+        $validType = is_null($id) ? 'required' : 'nullable';
 
         $validator = Validator::make($data, [
             'word_en' => "$validType|string|min:2",
@@ -92,11 +92,7 @@ class FlashcardController extends ApiController
 
     public function groupStore(Request $request, $id = null)
     {
-        $validType = $id ? 'required' : 'nullable';
-
-        var_dump($id);
-
-        die($validType);
+        $validType = is_null($id) ? 'required' : 'nullable';
 
         $data = $request->all();
 
