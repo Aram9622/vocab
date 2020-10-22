@@ -49,9 +49,17 @@ class StudiedController extends ApiController
             return ['error' => 'The type param mast be one of these items (words, phrases, verbs, stories, conversations, exercises)'];
         }
 
+        $model = $this->model->where(['type' => $request->type, 'studied_id' => $request->studied_id])->first() ?: $this->model;
+
         if ($request->percent == 100) {
             $request->state = 'learned';
-            return $this->stateChange($request->type, $request->studied_id, $request);
+            $response = $this->stateChange($request->type, $request->studied_id, $request);
+
+            if (empty($response['error']) && $model->id) {
+                $model->delete();
+            }
+
+            return $response;
         } else {
             $request->state = 'default';
             $this->stateChange($request->type, $request->studied_id, $request);
@@ -62,8 +70,6 @@ class StudiedController extends ApiController
         if (!$studiedModel) {
             return ['error' => 'No data found by this id'];
         }
-
-        $model = $this->model->where(['type' => $request->type, 'studied_id' => $request->studied_id])->first() ?: $this->model;
 
         $model->fill($request->all())->save();
 
