@@ -90,8 +90,10 @@ class FlashcardController extends ApiController
     {
         $validType = $id ? 'required' : 'nullable';
 
-        $validator = Validator::make($request->all(), [
-            'name' => "$validType|string|min:2|unique:flashcard_groups,id,$id",
+        $data = $request->all();
+
+        $validator = Validator::make($data, [
+            'name' => "$validType|string|min:2",
             'parent_id' => 'nullable|exists:flashcard_groups,id',
             'image' => "$validType|image",
         ]);
@@ -102,7 +104,23 @@ class FlashcardController extends ApiController
 
         $model = $this->flashcardGroup->with('subs', 'parent')->find($id) ?: $this->flashcardGroup;
 
-        $model->fill($request->all())->save();
+        if ($request->hasFile('image')) {
+            if (is_file($img = public_path('flashcard/' . $model->image))) {
+                unlink($img);
+            }
+
+            $file = $request->file('image');
+            $name = uniqid() . '.' . strtolower($file->getClientOriginalExtension());
+            $url = 'flashcard/' . $name;
+
+            Image::make($file)
+                ->resize(400, 400)
+                ->save(public_path($url));
+
+            $model->image = $data['image'] = $name;
+        }
+
+        $model->fill($data)->save();
 
         return $model;
     }
