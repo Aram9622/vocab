@@ -49,10 +49,10 @@ class StudiedController extends ApiController
             return ['error' => 'The type param mast be one of these items (words, phrases, verbs, stories, conversations, exercises)'];
         }
 
-        if (!$request->percent || $request->percent == 0) {
-            $request->state = 'learning';
-            return $this->stateChange($request->type, $request->studied_id, $request);
-        }
+//        if (!$request->percent || $request->percent == 0) {
+//            $request->state = 'learning';
+//            return $this->stateChange($request->type, $request->studied_id, $request);
+//        }
 
         if ($request->percent == 100) {
             $request->state = 'learned';
