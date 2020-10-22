@@ -12,6 +12,8 @@ class StudiedController extends ApiController
 
     protected $model;
 
+    protected $type;
+
     public function __construct(Studied $model)
     {
         $this->model = $model;
@@ -45,6 +47,16 @@ class StudiedController extends ApiController
 
         if (!in_array($request->type, $types)) {
             return ['error' => 'The type param mast be one of these items (words, phrases, verbs, stories, conversations, exercises)'];
+        }
+
+        if (!$request->percent || $request->percent == 0) {
+            $request->state = 'learning';
+            return $this->stateChange($request->type, $request->studied_id, $request);
+        }
+
+        if ($request->percent == 100) {
+            $request->state = 'learned';
+            return $this->stateChange($request->type, $request->studied_id, $request);
         }
 
         $studiedModel = $this->factory($request->type)->where('id', $request->studied_id)->first();
