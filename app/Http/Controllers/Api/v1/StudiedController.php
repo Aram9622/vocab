@@ -60,10 +60,6 @@ class StudiedController extends ApiController
             }
 
             return $response;
-        } else {
-//            TODO if the percent is not equal to 100 then it should ......
-//            $request->state = 'default';
-//            $this->stateChange($request->type, $request->studied_id, $request);
         }
 
         $studiedModel = $this->factory($request->type)->where('id', $request->studied_id)->first();
