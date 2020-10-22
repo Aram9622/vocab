@@ -94,6 +94,8 @@ class FlashcardController extends ApiController
     {
         $validType = $id ? 'required' : 'nullable';
 
+        die($validType);
+
         $data = $request->all();
 
         $validator = Validator::make($data, [
