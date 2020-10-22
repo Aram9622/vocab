@@ -94,6 +94,8 @@ class FlashcardController extends ApiController
     {
         $validType = $id ? 'required' : 'nullable';
 
+        var_dump($id);
+
         die($validType);
 
         $data = $request->all();
