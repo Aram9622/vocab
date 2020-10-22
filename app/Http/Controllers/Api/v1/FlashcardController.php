@@ -88,9 +88,12 @@ class FlashcardController extends ApiController
 
     public function groupStore(Request $request, $id = null)
     {
+        $validType = $id ? 'required' : 'nullable';
+
         $validator = Validator::make($request->all(), [
-            'name' => 'required|string|min:2',
+            'name' => "$validType|string|min:2|unique:flashcard_groups,id,$id",
             'parent_id' => 'nullable|exists:flashcard_groups,id',
+            'image' => "$validType|image",
         ]);
 
         if ($validator->fails()) {
