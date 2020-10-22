@@ -21,12 +21,14 @@ class FlashcardController extends ApiController
 
     public function index()
     {
-        return $this->flashcard->with('group')->get();
+        return $this->flashcard->with('group')->get()->map($this->mapping());
     }
 
     public function view($id)
     {
-        return $this->flashcard->with('group')->find($id);
+        $model = $this->flashcard->with('group')->find($id);
+
+        return $this->mapping($model);
     }
 
     public function store(Request $request, $id = null)
@@ -66,7 +68,7 @@ class FlashcardController extends ApiController
 
         $model->fill($data)->save();
 
-        return $model;
+        return $this->mapping($model);
     }
 
     public function delete($id)
@@ -78,12 +80,14 @@ class FlashcardController extends ApiController
 
     public function groups()
     {
-        return $this->flashcardGroup->with('subs', 'parent')->get();
+        return $this->flashcardGroup->with('subs', 'parent')->get()->map($this->mapping());
     }
 
     public function groupView($id)
     {
-        return $this->flashcardGroup->with('subs', 'parent')->find($id);
+        $model = $this->flashcardGroup->with('subs', 'parent')->find($id);
+
+        return $this->mapping($model);
     }
 
     public function groupStore(Request $request, $id = null)
@@ -122,7 +126,7 @@ class FlashcardController extends ApiController
 
         $model->fill($data)->save();
 
-        return $model;
+        return $this->mapping($model);
     }
 
     public function groupDelete($id)
@@ -130,5 +134,20 @@ class FlashcardController extends ApiController
         $success = $this->flashcardGroup->findOrFail($id)->delete();
 
         return compact('success');
+    }
+
+    public function mapping($_model = null)
+    {
+        $map = function ($model) {
+            $model->image = $model->image ? asset('flashcard/' . $model->image) : null;
+
+            return $model;
+        };
+
+        if ($_model) {
+            return  $map($_model);
+        }
+
+        return $map;
     }
 }
