@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Api\v1\Traits;
 
-use App\ItemState;
+use App\ItemState as ItemStateModel;
 use App\Models\Category;
 use App\Models\Conversation;
 use App\Models\Exercise;
@@ -83,7 +83,7 @@ trait Categories
 
             $model->current_state = 'default';
 
-            $itemState = ItemState::where(['type' => $model->type, 'id' => $model->id, 'user_id' => auth()->id()])->find();
+            $itemState = ItemStateModel::where(['type' => $model->type, 'id' => $model->id, 'user_id' => auth()->id()])->find();
 
             if ($itemState) {
                 $model->current_state = $itemState->current_state;
