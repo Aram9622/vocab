@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api\v1\Traits;
 
+use App\ItemState;
 use App\Models\Category;
 use App\Models\Conversation;
 use App\Models\Exercise;
@@ -78,6 +79,14 @@ trait Categories
                 $joinedModel->current_state = $model->current_state;
 
                 return $joinedModel;
+            }
+
+            $model->current_state = 'default';
+
+            $itemState = ItemState::where(['type' => $model->type, 'id' => $model->id, 'user_id' => auth()->id()])->find();
+
+            if ($itemState) {
+                $model->current_state = $itemState->current_state;
             }
 
             $this->setAssetPath($model);
