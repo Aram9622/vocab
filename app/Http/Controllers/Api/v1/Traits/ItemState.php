@@ -86,6 +86,8 @@ trait ItemState
 
         $result = $model->joinedModel();
 
+        print_r($result); die;
+
         $result->current_state = $model->current_state;
 
         return $result;
