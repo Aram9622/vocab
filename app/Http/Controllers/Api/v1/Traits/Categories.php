@@ -73,7 +73,7 @@ trait Categories
             if ($joined == true) {
                 $joinedModel = $model->joinedModel;
 
-                $joinedModel->setAssetPath($model);
+                $this->setAssetPath($joinedModel);
 
                 $joinedModel->current_state = $model->current_state;
 
