@@ -13,7 +13,7 @@ class ImageToFlashcardsTable extends Migration
      */
     public function up()
     {
-        Schema::table('flashcards', function (Blueprint $table) {
+        Schema::table('flashcard_groups', function (Blueprint $table) {
             if (Schema::hasColumn('flashcards', 'image') === false) {
                 $table->string('image');
             }
@@ -27,7 +27,7 @@ class ImageToFlashcardsTable extends Migration
      */
     public function down()
     {
-        Schema::table('flashcards', function (Blueprint $table) {
+        Schema::table('flashcard_groups', function (Blueprint $table) {
             if (Schema::hasColumn('flashcards', 'image') === true) {
                 $table->dropColumn(['image']);
             }
