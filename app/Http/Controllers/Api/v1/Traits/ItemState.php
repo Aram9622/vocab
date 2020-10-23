@@ -84,9 +84,7 @@ trait ItemState
 
         $model->fill($params)->save();
 
-        $result = $model->joinedModel();
-
-        print_r($result); die;
+        $result = $model->joinedModel;
 
         $result->current_state = $model->current_state;
 
