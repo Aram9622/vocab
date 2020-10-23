@@ -83,7 +83,7 @@ trait Categories
 
             $model->current_state = 'default';
 
-            $itemState = ItemStateModel::where(['type' => $model->type, 'id' => $model->id, 'user_id' => auth()->id()])->find();
+            $itemState = ItemStateModel::where(['type' => $model->type, 'id' => $model->id, 'user_id' => auth()->id()])->first();
 
             if ($itemState) {
                 $model->current_state = $itemState->current_state;

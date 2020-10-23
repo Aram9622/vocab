@@ -31,7 +31,7 @@ class Conversation extends Model
                 unlink($image);
             });
 
-            $studied = Studied::where(['type' => 'conversations', 'id' => $model->id])->find();
+            $studied = Studied::where(['type' => 'conversations', 'id' => $model->id])->first();
 
             if ($studied) {
                 $studied->delete();

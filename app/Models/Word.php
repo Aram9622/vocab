@@ -32,13 +32,13 @@ class Word extends Model
                 unlink($image);
             });
 
-            $studied = Studied::where(['type' => 'words', 'id' => $model->id, 'user_id' => auth()->id()])->find();
+            $studied = Studied::where(['type' => 'words', 'id' => $model->id, 'user_id' => auth()->id()])->first();
 
             if ($studied) {
                 $studied->delete();
             }
 
-            $itemState = ItemState::where(['type' => 'words', 'id' => $model->id, 'user_id' => auth()->id()])->find();
+            $itemState = ItemState::where(['type' => 'words', 'id' => $model->id, 'user_id' => auth()->id()])->first();
 
             if ($itemState) {
                 $itemState->delete();

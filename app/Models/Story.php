@@ -31,7 +31,7 @@ class Story extends Model
                 unlink($image);
             });
 
-            $studied = Studied::where(['type' => 'stories', 'id' => $model->id])->find();
+            $studied = Studied::where(['type' => 'stories', 'id' => $model->id])->first();
 
             if ($studied) {
                 $studied->delete();
