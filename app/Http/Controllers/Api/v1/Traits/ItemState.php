@@ -12,7 +12,9 @@ trait ItemState
     {
         $this->type = $type;
 
-        $query = \App\ItemState::where('user_id', auth()->id())
+        $model = new \App\ItemState(['type' => $type]);
+
+        $query = $model->where('user_id', auth()->id())
             ->where('type', $this->type)
             ->where('current_state', $current_state)
             ->whereHas('joinedModel', function ($query) {
