@@ -15,7 +15,7 @@ class ItemState extends Model
     {
         $className = get_class($this->modelFactory($this->type));
 
-        return $className;
+        echo $className; die;
 
         return $this->hasOne($className, 'id', 'item_id');
     }
