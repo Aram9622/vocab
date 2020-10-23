@@ -83,8 +83,8 @@ trait ItemState
         $params['current_state'] = $request->state;
 
         $model->fill($params)->save();
-        return $model;
         $result = $model->joinedModel();
+        return $result;
 
         $result->current_state = $model->current_state;
 
