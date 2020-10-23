@@ -80,12 +80,10 @@ trait ItemState
 
         $model = \App\ItemState::where($params)->first() ?: new \App\ItemState();
 
-        return $model;
-
         $params['current_state'] = $request->state;
 
         $model->fill($params)->save();
-
+        return $model;
         $result = $model->joinedModel();
 
         $result->current_state = $model->current_state;
