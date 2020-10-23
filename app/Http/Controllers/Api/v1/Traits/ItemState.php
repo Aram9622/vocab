@@ -76,6 +76,8 @@ trait ItemState
 
         $this->type = $type;
 
+        DB::beginTransaction();
+
         $params = ['user_id' => auth()->id(), 'type' => $type, 'item_id' => $id];
 
         $model = \App\ItemState::where($params)->first() ?: new \App\ItemState();
@@ -86,7 +88,12 @@ trait ItemState
 
         $result = $model->joinedModel;
 
-        print_r($result); die;
+        if (empty($model->joinedModel)) {
+            DB::rollBack();
+            return ['error' => "There is no $type by id $id"];
+        }
+
+        DB::commit();
 
         $result->current_state = $model->current_state;
 
