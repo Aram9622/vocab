@@ -21,7 +21,7 @@ class FlashcardController extends ApiController
 
     public function index()
     {
-        return $this->flashcard->with('group')->get()->map($this->mapping());
+        return $this->flashcard->with('group')->where('user_id', auth()->id())->get()->map($this->mapping());
     }
 
     public function view($id)
@@ -66,6 +66,8 @@ class FlashcardController extends ApiController
             $model->image = $data['image'] = $name;
         }
 
+        $data['user_id'] = auth()->id();
+
         $model->fill($data)->save();
 
         return $this->mapping($model);
@@ -73,19 +75,19 @@ class FlashcardController extends ApiController
 
     public function delete($id)
     {
-        $success = $this->flashcard->findOrFail($id)->delete();
+        $success = $this->flashcard->where('id', $id)->where('user_id', auth()->id())->firstOrFail()->delete();
 
         return compact('success');
     }
 
     public function groups()
     {
-        return $this->flashcardGroup->with('subs', 'parent')->get()->map($this->mapping());
+        return $this->flashcardGroup->with('subs', 'parent')->where('user_id', auth()->id())->get()->map($this->mapping());
     }
 
     public function groupView($id)
     {
-        $model = $this->flashcardGroup->with('subs', 'parent')->find($id);
+        $model = $this->flashcardGroup->with('subs', 'parent')->where('id', $id)->where('user_id', auth()->id())->firstOrFail();
 
         return $this->mapping($model);
     }
@@ -124,6 +126,8 @@ class FlashcardController extends ApiController
             $model->image = $data['image'] = $name;
         }
 
+        $data['user_id'] = auth()->id();
+
         $model->fill($data)->save();
 
         return $this->mapping($model);
@@ -131,7 +135,7 @@ class FlashcardController extends ApiController
 
     public function groupDelete($id)
     {
-        $success = $this->flashcardGroup->findOrFail($id)->delete();
+        $success = $this->flashcardGroup->where('id', $id)->where('user_id', auth()->id())->firstOrFail()->delete();
 
         return compact('success');
     }

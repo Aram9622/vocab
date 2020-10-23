@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddCurrentStateToStudiedTable extends Migration
+class AddUserIdToFlashcardGroupsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class AddCurrentStateToStudiedTable extends Migration
      */
     public function up()
     {
-        Schema::table('studied', function (Blueprint $table) {
+        Schema::table('flashcard_groups', function (Blueprint $table) {
             $table->unsignedBigInteger('user_id')->nullable()->after('id');
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
@@ -27,7 +27,7 @@ class AddCurrentStateToStudiedTable extends Migration
      */
     public function down()
     {
-        Schema::table('studied', function (Blueprint $table) {
+        Schema::table('flashcard_groups', function (Blueprint $table) {
             $table->unsignedBigInteger('user_id')->nullable();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');

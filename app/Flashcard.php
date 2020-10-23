@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Flashcard extends Model
 {
-    protected $fillable = ['group_id', 'word_en', 'word_es', 'image'];
+    protected $fillable = ['group_id', 'user_id', 'word_en', 'word_es', 'image'];
 
     public function group()
     {

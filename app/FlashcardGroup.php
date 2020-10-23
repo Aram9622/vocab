@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class FlashcardGroup extends Model
 {
-    protected $fillable = ['parent_id', 'name'];
+    protected $fillable = ['user_id', 'parent_id', 'name'];
 
     public function parent()
     {
