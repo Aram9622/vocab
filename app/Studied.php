@@ -8,5 +8,5 @@ class Studied extends Model
 {
     protected $table = 'studied';
 
-    protected $fillable = ['studied_id', 'type', 'percent'];
+    protected $fillable = ['user_id', 'studied_id', 'type', 'percent'];
 }

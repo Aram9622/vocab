@@ -9,10 +9,13 @@ use App\Models\Phrase;
 use App\Models\Verb;
 use App\Models\Word;
 use App\Models\Story;
+use App\Traits\ModelFactory;
 
 trait Categories
 {
-    use ItemState;
+    use ItemState, ModelFactory {
+        modelFactory as public factory;
+    }
 
     /**
      * @var Word[]|Phrase[]|Verb[]|Story[]|Conversation[]|Exercise[]|null
@@ -82,37 +85,5 @@ trait Categories
 
         $model->record_en = $model->getAudioPath('en');
         $model->record_es = $model->getAudioPath('es');
-    }
-
-    /**
-     * @param $type
-     * @return Conversation|Exercise|Phrase|Story|Verb|Word|null
-     */
-    public function factory($type)
-    {
-        $model = null;
-
-        switch ($type) {
-            case "words":
-                $model = new Word();
-                break;
-            case "phrases":
-                $model = new Phrase();
-                break;
-            case "verbs":
-                $model = new Verb();
-                break;
-            case "stories":
-                $model = new Story();
-                break;
-            case "conversations":
-                $model = new Conversation();
-                break;
-            case "exercises":
-                $model = new Exercise();
-                break;
-        }
-
-        return $model;
     }
 }

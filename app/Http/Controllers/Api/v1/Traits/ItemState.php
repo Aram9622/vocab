@@ -12,9 +12,15 @@ trait ItemState
     {
         $this->type = $type;
 
-        $query = $this->factory($this->type)->whereHas('category', function ($query) {
-            $query->where('type', $this->type);
-        })->where('current_state', $current_state);
+        $query = \App\ItemState::where('user_id', auth()->id())
+            ->where('type', $this->type)
+            ->where('current_state', $current_state)
+            ->whereHas('joinedModel', function ($query) {
+                $query->whereHas('category', function ($query) {
+                    $query->where('type', $this->type);
+                });
+            })
+            ->where('current_state', $current_state);
 
         $all = $query->get()->map($this->mapping());
 
@@ -35,14 +41,6 @@ trait ItemState
         $items = [];
         $types = ['words', 'phrases', 'verbs'];
         $states = ['default', 'learning', 'learned'];
-
-        /*
-        foreach ($types as $type) {
-            foreach ($states as $state) {
-                $items[$type][$state] = $this->state($type, $state);
-            }
-        }
-        */
 
         foreach ($states as $state) {
             if (empty($items[$state])) {
@@ -76,11 +74,19 @@ trait ItemState
 
         $this->type = $type;
 
-        $model = $this->factory($this->type)->findOrFail($id);
-        $model->current_state = $request->state;
-        $model->save();
+        $params = ['user_id' => auth()->id(), 'type' => $type, 'item_id' => $id];
 
-        return $model;
+        $model = \App\ItemState::where($params)->first() ?: new \App\ItemState();
+
+        $params['current_state'] = $request->state;
+
+        $model->fill($params)->save();
+
+        $result = $model->joinedModel();
+
+        $result->current_state = $model->current_state;
+
+        return $result;
     }
 
     public function stateChangeByCat($type, $category_id, Request $request)

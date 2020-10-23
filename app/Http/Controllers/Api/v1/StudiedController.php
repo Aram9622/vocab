@@ -27,7 +27,7 @@ class StudiedController extends ApiController
             return ['error' => 'The type param mast be one of these items (words, phrases, verbs, stories, conversations, exercises)'];
         }
 
-        return $this->model->where('type', $request->type)->get();
+        return $this->model->where('type', $request->type)->where('user_id', auth()->id())->get();
     }
 
     public function view(Request $request, $id)
@@ -38,7 +38,7 @@ class StudiedController extends ApiController
             return ['error' => 'The type param mast be one of these items (words, phrases, verbs, stories, conversations, exercises)'];
         }
 
-        return $this->model->where('id', $id)->where('type', $request->type)->first();
+        return $this->model->where('id', $id)->where('type', $request->type)->where('user_id', auth()->id())->first();
     }
 
     public function store(Request $request)
@@ -49,7 +49,7 @@ class StudiedController extends ApiController
             return ['error' => 'The type param mast be one of these items (words, phrases, verbs, stories, conversations, exercises)'];
         }
 
-        $model = $this->model->where(['type' => $request->type, 'studied_id' => $request->studied_id])->first() ?: $this->model;
+        $model = $this->model->where(['user_id' => auth()->id(), 'type' => $request->type, 'studied_id' => $request->studied_id])->first() ?: $this->model;
 
         if ($request->percent == 100) {
             $request->state = 'learned';

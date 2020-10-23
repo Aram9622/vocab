@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\ItemState;
 use App\Studied;
 use Illuminate\Database\Eloquent\Model;
 
@@ -31,10 +32,16 @@ class Word extends Model
                 unlink($image);
             });
 
-            $studied = Studied::where(['type' => 'words', 'id' => $model->id])->find();
+            $studied = Studied::where(['type' => 'words', 'id' => $model->id, 'user_id' => auth()->id()])->find();
 
             if ($studied) {
                 $studied->delete();
+            }
+
+            $itemState = ItemState::where(['type' => 'words', 'id' => $model->id, 'user_id' => auth()->id()])->find();
+
+            if ($itemState) {
+                $itemState->delete();
             }
         });
 
