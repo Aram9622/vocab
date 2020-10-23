@@ -90,7 +90,7 @@ trait ItemState
 
         if (empty($model->joinedModel)) {
             DB::rollBack();
-            return ['error' => "There is no $type by id $id"];
+            return ['error' => "There is no '$type' by id $id"];
         }
 
         DB::commit();
