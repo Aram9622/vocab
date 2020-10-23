@@ -67,9 +67,19 @@ trait Categories
         return $this->items;
     }
 
-    public function mapping()
+    public function mapping($joined = false)
     {
-        return function ($model) {
+        return function ($model) use ($joined) {
+            if ($joined == true) {
+                $joinedModel = $model->joinedModel;
+
+                $joinedModel->setAssetPath($model);
+
+                $joinedModel->current_state = $model->current_state;
+
+                return $joinedModel;
+            }
+
             $this->setAssetPath($model);
 
             return $model;

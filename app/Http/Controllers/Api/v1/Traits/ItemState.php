@@ -24,13 +24,13 @@ trait ItemState
             })
             ->where('current_state', $current_state);
 
-        $all = $query->get()->map($this->mapping());
+        $all = $query->get()->map($this->mapping(true));
 
         if ($interval = intval($interval)) {
             $query = $query->whereDate('updated_at', '>=', Carbon::now()->addDays("-$interval"));
         }
 
-        $this->items = $query->get()->map($this->mapping());
+        $this->items = $query->get()->map($this->mapping(true));
 
         return [
             'all' => $all,
