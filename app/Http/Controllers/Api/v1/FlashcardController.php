@@ -26,9 +26,17 @@ class FlashcardController extends ApiController
 
     public function view($id)
     {
-        $model = $this->flashcard->with('group')->find($id);
+        $model = $this->flashcard->with('group')->where('id', $id)->where('user_id', auth()->id())->firstOrFail();
 
         return $this->mapping($model);
+    }
+
+
+    public function viewByGroup($id)
+    {
+        $data = $this->flashcard->with('group')->where('group_id', $id)->where('user_id', auth()->id())->get()->mapping();
+
+        return $data;
     }
 
     public function store(Request $request, $id = null)
