@@ -34,7 +34,7 @@ class FlashcardController extends ApiController
 
     public function viewByGroup($id)
     {
-        $data = $this->flashcard->with('group')->where('group_id', $id)->where('user_id', auth()->id())->get()->mapping();
+        $data = $this->flashcard->with('group')->where('group_id', $id)->where('user_id', auth()->id())->get()->map($this->mapping());
 
         return $data;
     }
