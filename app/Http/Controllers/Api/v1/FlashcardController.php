@@ -153,11 +153,15 @@ class FlashcardController extends ApiController
         $map = function ($model) {
             $model->image = $model->image ? asset('flashcard/' . $model->image) : null;
 
+            if (empty($model->image_thumb)) {
+                $model->image_thumb = $model->image;
+            }
+
             return $model;
         };
 
         if ($_model) {
-            return  $map($_model);
+            return $map($_model);
         }
 
         return $map;
