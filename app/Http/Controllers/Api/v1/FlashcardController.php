@@ -157,6 +157,10 @@ class FlashcardController extends ApiController
                 $model->image_thumb = $model->image;
             }
 
+            if ($model->subs) {
+                $model->subs->map($this->mapping());
+            }
+
             return $model;
         };
 
