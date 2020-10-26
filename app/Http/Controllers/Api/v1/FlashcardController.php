@@ -90,6 +90,8 @@ class FlashcardController extends ApiController
 
     public function groups()
     {
+        return [7878];
+
         return $this->flashcardGroup->with('subs', 'parent')->where('user_id', auth()->id())->whereNull('parent_id')->get()->map($this->mapping());
     }
 
