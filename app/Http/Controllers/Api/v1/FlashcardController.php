@@ -48,7 +48,7 @@ class FlashcardController extends ApiController
             return response()->json(['error' => $validator->errors()], 401);
         }
 
-        $model = $this->flashcard->with('group')->find($id) ?: $this->flashcardGroup;
+        $model = $this->flashcard->with('group')->find($id) ?: $this->flashcard;
 
         if ($request->hasFile('image')) {
             if (is_file($img = public_path('flashcard/' . $model->image))) {
