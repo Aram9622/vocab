@@ -62,7 +62,7 @@ class SiteController extends ApiController
             return response()->json(['error' => $validator->errors()], 401);
         }
 
-        $types = ['words', 'phrases', 'verbs', 'flashcards'];
+        $types = ['words', 'phrases', 'verbs'];
         //$types = ['words', 'phrases', 'verbs', 'stories', 'conversations', 'flashcards'];
 
         $result = [];
