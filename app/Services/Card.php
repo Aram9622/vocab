@@ -91,13 +91,14 @@ class Card
                     })->limit($limit)->get()->toArray();
 
                     if (count($beginners) < $limit) {
+                        $limit -= count($beginners);
                         $advanced = $model->newQuery()->whereHas('category', function ($query) {
                             $query->where('level', 'advanced');
                         })->limit($limit)->get()->toArray();
                     }
                 }
 
-                $items = array_merge($items, $intermediates, $advanced);///TODO
+                $items = array_merge($items, $intermediates, $advanced);
             }
         }
 
