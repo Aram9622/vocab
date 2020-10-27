@@ -31,15 +31,14 @@ class Card
 
         $query = $model->where('user_id', auth()->id())
             ->where('current_state', $current_state)
-            ->whereHas('joinedModel', function ($query) use ($type) {
-                $query->whereHas('category', function ($query) use ($type) {
-                    $query->where('type', $type);
-                });
-            })
             ->where('current_state', $current_state);
 
         if (!is_null($type)) {
-            $query = $query->where('type', $type);
+            $query = $query->whereHas('joinedModel', function ($query) use ($type) {
+                $query->whereHas('category', function ($query) use ($type) {
+                    $query->where('type', $type);
+                });
+            })->where('type', $type);
         }
 
         if ($limit) {
