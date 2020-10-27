@@ -7,6 +7,7 @@ use App\Models\Faq;
 use App\Models\Option;
 use App\Models\User;
 use App\Notifications\Notify;
+use App\Services\Card;
 use Illuminate\Http\Request;
 use Validator;
 
@@ -113,5 +114,12 @@ class SiteController extends ApiController
         }
 
         return ['success' => $success];
+    }
+
+    public function cardCollection($limit)
+    {
+        $card = new Card(intval($limit));
+
+        return $card->getItems();
     }
 }

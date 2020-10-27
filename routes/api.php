@@ -50,6 +50,10 @@ Route::middleware(['auth:api'])->group(function () {
             Route::delete('/delete/{id}', 'FlashcardController@delete')->name('flashcard.delete');
         });
 
+        Route::prefix('card')->group(function () {
+            Route::get('collection/{limit}', 'SiteController@cardCollection');
+        });
+
         Route::get('new-words/{level}/{category?}/{sub_category?}', 'NewWordsController@index')->name('new.words.index')->where('level', 'beginner|intermediate|advanced');
         Route::get('new-phrases/{level}/{category?}/{sub_category?}', 'NewPhrasesController@index')->name('new.phrases.index')->where('level', 'beginner|intermediate|advanced');
         Route::get('new-verbs/{level}/{category?}/{sub_category?}', 'NewVerbsController@index')->name('new.verbs.index')->where('level', 'beginner|intermediate|advanced');

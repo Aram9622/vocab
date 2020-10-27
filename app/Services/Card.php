@@ -3,25 +3,33 @@
 namespace App\Services;
 
 use App\ItemState;
+use App\Traits\ModelFactory;
 use Carbon\Carbon;
 
 class Card
 {
-    protected $type = 'learning';
+    use ModelFactory;
+
+    protected $state = 'learning';
+
+    protected $types = ['words', 'phrases', 'verbs'];
 
     protected $model;
 
-    public function __construct()
+    protected $limit;
+
+    public function __construct($limit = 5)
     {
         $this->model = new ItemState();
+
+        $this->limit = $limit;
     }
 
-    public static function filter($type, $current_state, $interval = 0)
+    public static function filter($type, $current_state, $interval = 0, $limit = 0)
     {
         $model = new \App\ItemState(['type' => $type]);
 
         $query = $model->where('user_id', auth()->id())
-            ->where('type', $type)
             ->where('current_state', $current_state)
             ->whereHas('joinedModel', function ($query) use ($type) {
                 $query->whereHas('category', function ($query) use ($type) {
@@ -29,6 +37,14 @@ class Card
                 });
             })
             ->where('current_state', $current_state);
+
+        if (!is_null($type)) {
+            $query = $query->where('type', $type);
+        }
+
+        if ($limit) {
+            $query = $query->limit($limit);
+        }
 
         $all = $query->get();
 
@@ -44,8 +60,42 @@ class Card
         ];
     }
 
-    public function getItems($count = 5)
+    public function getItems()
     {
-        //$items =
+        $limit = $this->limit;
+
+        $types = $this->types;
+
+        $items = self::filter(null, $this->state, 0, $this->limit)['items']->toArray();
+
+        // if count is not equal to the limit then pushing new items which have "default" types
+        if (count($items) < $limit) {
+            $limit = $limit - count($items);
+
+            foreach ($types as $type) {
+                if (count($items) == $this->limit) {
+                    break;
+                }
+
+                $model = $this->modelFactory($type);
+
+                $beginners = $model->newQuery()->has('beginner')->limit($limit)->get()->toArray();
+                $intermediates = $advanced = [];
+
+                if (count($beginners) < $limit) {
+                    $limit -= count($beginners);
+
+                    $intermediates = $model->newQuery()->has('intermediate')->limit($limit)->get()->toArray();
+
+                    if (count($beginners) < $limit) {
+                        $advanced = $model->newQuery()->has('advanced')->limit($limit)->get()->toArray();
+                    }
+                }
+
+                $items = array_merge($items, $intermediates, $advanced);///TODO
+            }
+        }
+
+        return $items;
     }
 }
