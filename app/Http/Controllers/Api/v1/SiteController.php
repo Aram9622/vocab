@@ -74,15 +74,15 @@ class SiteController extends ApiController
                 continue;
             }
 
-            $model->where($searchable[0], 'like', "%$request->search%");
+            $query = $model->where('user_id', auth()->id())->where($searchable[0], 'like', "%$request->search%");
 
             array_shift($searchable);
 
             foreach ($searchable as $item) {
-                $model->orWhere($item, 'like', "%$request->search%");
+                $query = $query->orWhere($item, 'like', "%$request->search%");
             }
 
-            $result[$type] = $model->get()->map($this->mapping());
+            $result[$type] = $query->get()->map($this->mapping());
         }
 
         return $result;
