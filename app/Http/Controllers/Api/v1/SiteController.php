@@ -89,7 +89,7 @@ class SiteController extends ApiController
                 $query = $query->orWhere($item, 'like', "%$request->search%");
             }
 
-            $result = array_merge($result, $query->get()->map($this->mapping()));
+            $result = array_merge($result, $query->get()->map($this->mapping())->toArray());
         }
 
         return $result;
