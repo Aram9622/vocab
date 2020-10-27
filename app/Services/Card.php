@@ -81,6 +81,7 @@ class Card
                 $beginners = $model->newQuery()->whereHas('category', function ($query) {
                     $query->where('level', 'beginner');
                 })->limit($limit)->get()->toArray();
+
                 $intermediates = $advanced = [];
 
                 if (count($beginners) < $limit) {
