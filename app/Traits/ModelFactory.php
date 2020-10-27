@@ -56,27 +56,27 @@ trait ModelFactory
         $type = 'words';
 
         if ($model instanceOf Phrase) {
-            $type = 'phrases';
+            $type = 'phrase';
         }
 
         if ($model instanceOf Verb) {
-            $type = 'verbs';
+            $type = 'verb';
         }
 
         if ($model instanceOf Story) {
-            $type = 'stories';
+            $type = 'story';
         }
 
         if ($model instanceOf Conversation) {
-            $type = 'conversations';
+            $type = 'conversation';
         }
 
         if ($model instanceOf Exercise) {
-            $type = 'exercises';
+            $type = 'exercise';
         }
 
         if ($model instanceOf Flashcard) {
-            $type = 'flashcards';
+            $type = 'flashcard';
         }
 
         return $type;
