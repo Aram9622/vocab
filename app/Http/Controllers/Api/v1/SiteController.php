@@ -39,8 +39,6 @@ class SiteController extends ApiController
 
         $model = $this->factory($request->type)->with('category')->findOrFail($id);
 
-        $model = $this->mapping($model);
-
         $this->setAssetPath($model);
 
         if ($model->category) {
