@@ -99,15 +99,15 @@ trait Categories
         };
     }
 
-    public function correctAttributes(&$model)
+    public function correctAttributes(&$model, $type)
     {
         try {
-            if (!in_array($this->type, ['words', 'flashcards', 'flashcard_groups']) && !$model->words_en && !$model->words_es) {
+            if (!in_array($type, ['words', 'flashcards', 'flashcard_groups']) && !$model->words_en && !$model->words_es) {
                 $model->words_en = $model->conversation_en ?: $model->exercise_en ?: $model->phrase_en ?: $model->story_en ?: $model->verb_en ?: null;
                 $model->words_es = $model->conversation_es ?: $model->exercise_es ?: $model->phrase_es ?: $model->story_es ?: $model->verb_es ?: null;
             }
         } catch (\Exception $e) {
-            dd($e);
+
         }
     }
 
