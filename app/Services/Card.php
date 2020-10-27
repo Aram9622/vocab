@@ -78,16 +78,22 @@ class Card
 
                 $model = $this->modelFactory($type);
 
-                $beginners = $model->newQuery()->has('beginner')->limit($limit)->get()->toArray();
+                $beginners = $model->newQuery()->whereHas('category', function ($query) {
+                    $query->where('level', 'beginner');
+                })->limit($limit)->get()->toArray();
                 $intermediates = $advanced = [];
 
                 if (count($beginners) < $limit) {
                     $limit -= count($beginners);
 
-                    $intermediates = $model->newQuery()->has('intermediate')->limit($limit)->get()->toArray();
+                    $intermediates = $model->newQuery()->whereHas('category', function ($query) {
+                        $query->where('level', 'intermediate');
+                    })->limit($limit)->get()->toArray();
 
                     if (count($beginners) < $limit) {
-                        $advanced = $model->newQuery()->has('advanced')->limit($limit)->get()->toArray();
+                        $advanced = $model->newQuery()->whereHas('category', function ($query) {
+                            $query->where('level', 'advanced');
+                        })->limit($limit)->get()->toArray();
                     }
                 }
 
