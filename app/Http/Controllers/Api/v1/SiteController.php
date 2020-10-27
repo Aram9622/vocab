@@ -39,7 +39,7 @@ class SiteController extends ApiController
 
         $model = $this->factory($request->type)->with('category')->findOrFail($id);
 
-        $this->setAssetPath($model);
+//        $this->setAssetPath($model);
 
         if ($model->category) {
             $this->setAssetPath($model->category);
@@ -49,7 +49,7 @@ class SiteController extends ApiController
             }
         }
 
-        return $model;
+        return $this->mapping($model);
     }
 
     public function search(Request $request)
