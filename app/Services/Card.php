@@ -69,7 +69,7 @@ class Card
 
         // if count is not equal to the limit then pushing new items which have "default" types
         if (count($items) < $limit) {
-            $limit = $limit - count($items);
+            $limit -= count($items);
 
             foreach ($types as $type) {
                 if (count($items) == $this->limit) {
@@ -93,13 +93,14 @@ class Card
 
                     if (count($beginners) < $limit) {
                         $limit -= count($beginners);
+
                         $advanced = $model->newQuery()->whereHas('category', function ($query) {
                             $query->where('level', 'advanced');
                         })->limit($limit)->get()->toArray();
                     }
                 }
 
-                $items = array_merge($items, $intermediates, $advanced);
+                $items = array_merge($items, $beginners, $intermediates, $advanced);
             }
         }
 
