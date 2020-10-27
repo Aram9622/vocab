@@ -50,4 +50,35 @@ trait ModelFactory
 
         return $model;
     }
+
+    public function getFactoryType($model)
+    {
+        $type = 'words';
+
+        if ($model instanceOf Phrase) {
+            $type = 'phrases';
+        }
+
+        if ($model instanceOf Verb) {
+            $type = 'verbs';
+        }
+
+        if ($model instanceOf Story) {
+            $type = 'stories';
+        }
+
+        if ($model instanceOf Conversation) {
+            $type = 'conversations';
+        }
+
+        if ($model instanceOf Exercise) {
+            $type = 'exercises';
+        }
+
+        if ($model instanceOf Flashcard) {
+            $type = 'flashcards';
+        }
+
+        return $type;
+    }
 }
