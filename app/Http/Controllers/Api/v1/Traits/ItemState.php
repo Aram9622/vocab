@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Api\v1\Traits;
 
-use Carbon\Carbon;
+use App\Services\Card;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -12,30 +12,13 @@ trait ItemState
     {
         $this->type = $type;
 
-        $model = new \App\ItemState(['type' => $type]);
+        $result = Card::filter($type, $current_state, $interval);
 
-        $query = $model->where('user_id', auth()->id())
-            ->where('type', $this->type)
-            ->where('current_state', $current_state)
-            ->whereHas('joinedModel', function ($query) {
-                $query->whereHas('category', function ($query) {
-                    $query->where('type', $this->type);
-                });
-            })
-            ->where('current_state', $current_state);
+        $result['all'] = $result['all']->map($this->mapping(true));
 
-        $all = $query->get()->map($this->mapping(true));
+        $this->items = $result['items'] = $result['items']->map($this->mapping(true));
 
-        if ($interval = intval($interval)) {
-            $query = $query->whereDate('updated_at', '>=', Carbon::now()->addDays("-$interval"));
-        }
-
-        $this->items = $query->get()->map($this->mapping(true));
-
-        return [
-            'all' => $all,
-            'items' => $this->items,
-        ];
+        return $result;
     }
 
     public function stateCollection($interval = 0)
