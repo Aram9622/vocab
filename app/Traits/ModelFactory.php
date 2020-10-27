@@ -2,6 +2,7 @@
 
 namespace App\Traits;
 
+use App\Flashcard;
 use App\Models\Conversation;
 use App\Models\Exercise;
 use App\Models\Phrase;
@@ -41,6 +42,9 @@ trait ModelFactory
                 break;
             case "exercises":
                 $model = new Exercise();
+                break;
+            case "flashcards":
+                $model = new Flashcard();
                 break;
         }
 

@@ -10,6 +10,8 @@ class Word extends Model
 {
     use \App\Http\Controllers\Traits\Image;
 
+    public $searchable = ['word_en', 'word_es'];
+
     protected $fillable = [
         'category_id', 'word_en', 'record_en', 'word_es', 'record_es', 'image', 'eg_link', 'visible'
     ];

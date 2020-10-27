@@ -10,6 +10,8 @@ class Verb extends Model
 {
     use \App\Http\Controllers\Traits\Image;
 
+    public $searchable = ['verb_en', 'verb_es'];
+
     protected $fillable = [
         'category_id', 'verb_en', 'record_en', 'verb_es', 'record_es', 'image', 'eg_link', 'visible'
     ];

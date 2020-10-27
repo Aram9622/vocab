@@ -10,6 +10,8 @@ class Phrase extends Model
 {
     use \App\Http\Controllers\Traits\Image;
 
+    public $searchable = ['phrase_en', 'phrase_es'];
+
     protected $fillable = [
         'category_id', 'phrase_en', 'record_en', 'phrase_es', 'record_es', 'image', 'eg_link', 'visible'
     ];

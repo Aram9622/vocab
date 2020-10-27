@@ -9,6 +9,8 @@ class Conversation extends Model
 {
     use \App\Http\Controllers\Traits\Image;
 
+    public $searchable = ['conversation_en', 'conversation_es'];
+
     protected $fillable = [
         'category_id', 'conversation_en', 'record_en', 'conversation_es', 'record_es', 'image', 'eg_link', 'visible'
     ];

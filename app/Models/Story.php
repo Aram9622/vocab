@@ -9,6 +9,8 @@ class Story extends Model
 {
     use \App\Http\Controllers\Traits\Image;
 
+    public $searchable = ['story_en', 'story_es'];
+
     protected $fillable = [
         'category_id', 'story_en', 'record_en', 'story_es', 'record_es', 'image', 'eg_link', 'visible'
     ];

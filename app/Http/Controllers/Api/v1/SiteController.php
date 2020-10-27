@@ -8,6 +8,7 @@ use App\Models\Option;
 use App\Models\User;
 use App\Notifications\Notify;
 use Illuminate\Http\Request;
+use Validator;
 
 class SiteController extends ApiController
 {
@@ -49,6 +50,42 @@ class SiteController extends ApiController
         }
 
         return $model;
+    }
+
+    public function search(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'search' => 'required|string|max:100',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['error' => $validator->errors()], 401);
+        }
+
+        $types = ['words', 'phrases', 'verbs', 'stories', 'conversations', 'flashcards'];
+
+        $result = [];
+
+        foreach ($types as $type) {
+            $model = $this->factory($type);
+            $searchable = $model->searchable;
+
+            if (empty($searchable) || !is_array($searchable)) {
+                continue;
+            }
+
+            $model->where($searchable[0], 'like', "%$request->search%");
+
+            array_shift($searchable);
+
+            foreach ($searchable as $item) {
+                $model->orWhere($item, 'like', "%$request->search%");
+            }
+
+            $result[$type] = $model->get()->map($this->mapping());
+        }
+
+        return $result;
     }
 
     public function mail(Request $request)
