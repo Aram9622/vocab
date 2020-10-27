@@ -77,8 +77,10 @@ class SiteController extends ApiController
             $query = $model->newQuery();
 
             if (in_array('user_id', $model->getFillable())) {
-                $query = $model->where('user_id', auth()->id())->where($searchable[0], 'like', "%$request->search%");
+                $query = $model->where('user_id', auth()->id());
             }
+
+            $query = $query->where($searchable[0], 'like', "%$request->search%");
 
             array_shift($searchable);
 
