@@ -54,7 +54,8 @@ trait Categories
         $intermediate = $this->index('intermediate', $category, $sub_category);
         $advanced = $this->index('advanced', $category, $sub_category);
 
-        $all = array_merge($beginner->toArray(), $intermediate->toArray(), $advanced->toArray());
+        $all = [];
+//        $all = array_merge($beginner->toArray(), $intermediate->toArray(), $advanced->toArray());
 
         return compact('all', 'beginner', 'intermediate', 'advanced');
     }
