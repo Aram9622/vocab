@@ -51,6 +51,8 @@ class SiteController extends ApiController
             }
         }
 
+        $this->correctAttributes($model);
+
         return $model;
     }
 
