@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\CardItem;
 use App\ItemState;
 use App\Traits\ModelFactory;
 use Carbon\Carbon;
@@ -14,13 +15,23 @@ class Card
 
     protected $types = ['words', 'phrases', 'verbs'];
 
+    /**
+     * @var ItemState
+     */
     protected $model;
+
+    /**
+     * @var CardItem
+     */
+    private $cardItemModel;
 
     protected $limit;
 
     public function __construct($limit = 5)
     {
         $this->model = new ItemState();
+
+        $this->cardItemModel = new CardItem();
 
         $this->limit = $limit;
     }
@@ -67,7 +78,7 @@ class Card
 
         $items = self::filter(null, $this->state, 0, $this->limit)['items']->toArray();
 
-        // if count is not equal to the limit then pushing new items which have "default" types
+        // if count is not equal to the limit then pushing new items which have "beginner", "intermediate" or "advanced" types
         if (count($items) < $limit) {
             $limit -= count($items);
 
@@ -105,5 +116,15 @@ class Card
         }
 
         return $items;
+    }
+
+    public function setItems($array)
+    {
+        foreach ($array as $item_state_id) {
+            $model = clone $this->cardItemModel;
+            $model->item_state_id = $item_state_id;
+            $model->user_id = auth()->id();
+            $model->save();
+        }
     }
 }
