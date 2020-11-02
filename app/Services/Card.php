@@ -128,14 +128,31 @@ class Card
         return $items;
     }
 
-    public function setItems($array)
+    /**
+     * @param $array array
+     */
+    public function setItems(array $array) : void
     {
-        foreach ($array as $item_state_id) {
-            $model = clone $this->cardItemModel;
-            $model = $model->where(['item_state_id' => $item_state_id, 'user_id' => auth()->id()])->find() ?: $model;
-            $model->item_state_id = $item_state_id;
-            $model->user_id = auth()->id();
+        foreach ($array as $item) {
+            if (!in_array($item->type, ['default', 'learning', 'learned', 'in_card'])) {
+                continue;
+            }
+
+            //-- set new items with type in_card
+            $model = clone $this->model;
+            $model = $model->where(['item_id' => $item->item_id, 'user_id' => auth()->id()])->find() ?: $model;
+
+            if (!$model->id) {
+                $model->fill(['item_id' => $item->item_id, 'user_id' => auth()->id(), 'type' => $item->type, 'current_state' => 'in_card'])->save();
+            }
+            //--
+
+            //-- add mew items with type in_card to card_items table if no exists
+            $cardItemModel = $model->cardItem ?: clone $this->cardItemModel;
+            $cardItemModel->item_state_id = $model->id;
+            $cardItemModel->user_id = auth()->id();
             $model->save();
+            //--
         }
     }
 }

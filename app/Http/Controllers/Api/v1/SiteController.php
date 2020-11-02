@@ -122,4 +122,19 @@ class SiteController extends ApiController
 
         return $card->getItems();
     }
+
+    public function addToCard(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'data' => 'required|array',
+            'data.*.item_id' => 'required|numeric',
+            'data.*.type' => 'required|string|max:20',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['error' => $validator->errors()], 401);
+        }
+
+        //item_id, type
+    }
 }
