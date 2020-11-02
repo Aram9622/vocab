@@ -24,7 +24,7 @@ class CreateItemStatesTable extends Migration
 
             $table->string('type');
 
-            $table->enum('current_state', ['learning', 'learned', 'default'])->default('default');
+            $table->enum('current_state', ['learning', 'learned', 'default', 'in_card'])->default('default');
 
             $table->timestamps();
         });
