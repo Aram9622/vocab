@@ -27,6 +27,8 @@ class Card
 
     protected $limit;
 
+    public static $filterQuery;
+
     public function __construct($limit = 5)
     {
         $this->model = new ItemState();
@@ -43,6 +45,10 @@ class Card
         $query = $model->where('user_id', auth()->id())
             ->where('current_state', $current_state)
             ->where('current_state', $current_state);
+
+        if (is_callable($callableQuery = self::$filterQuery)) {
+            $query = $callableQuery($query);
+        }
 
         if (!is_null($type)) {
             $query = $query->whereHas('joinedModel', function ($query) use ($type) {
@@ -75,6 +81,10 @@ class Card
         $limit = $this->limit;
 
         $types = $this->types;
+
+        self::$filterQuery = function (\Illuminate\Database\Eloquent\Builder $query) {
+            return $query->has('notInCardItems');
+        };
 
         $items = self::filter(null, $this->state, 0, $this->limit)['items']->toArray();
 
@@ -122,6 +132,7 @@ class Card
     {
         foreach ($array as $item_state_id) {
             $model = clone $this->cardItemModel;
+            $model = $model->where(['item_state_id' => $item_state_id, 'user_id' => auth()->id()])->find() ?: $model;
             $model->item_state_id = $item_state_id;
             $model->user_id = auth()->id();
             $model->save();

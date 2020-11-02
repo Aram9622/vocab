@@ -17,4 +17,16 @@ class ItemState extends Model
 
         return $this->hasOne($className, 'id', 'item_id');
     }
+
+    public function cardItem()
+    {
+        return $this->hasOne(CardItem::class, 'id', 'item_state_id')
+            ->where('card_items.user_id', 'item_states.user_id');
+    }
+
+    public function notInCardItems()
+    {
+        return $this->hasOne(CardItem::class, 'user_id', 'user_id')
+            ->where('card_items.item_state_id', '<>', 'item_states.id');
+    }
 }
