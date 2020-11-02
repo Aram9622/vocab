@@ -125,16 +125,23 @@ class SiteController extends ApiController
 
     public function addToCard(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'data' => 'required|array',
-            'data.*.item_id' => 'required|numeric',
-            'data.*.type' => 'required|string|max:20',
-        ]);
+       try {
+           $validator = Validator::make($request->all(), [
+               'data' => 'required|array',
+               'data.*.item_id' => 'required|numeric',
+               'data.*.type' => 'required|string|max:20',
+           ]);
 
-        if ($validator->fails()) {
-            return response()->json(['error' => $validator->errors()], 401);
-        }
+           if ($validator->fails()) {
+               return response()->json(['error' => $validator->errors()], 401);
+           }
 
-        //item_id, type
+           $card = new Card();
+           $card->setItems($request->data);
+       } catch (\Exception $e) {
+           return ['success' => false, 'Check the POST data params.'];
+       }
+
+        return ['success' => true];
     }
 }
