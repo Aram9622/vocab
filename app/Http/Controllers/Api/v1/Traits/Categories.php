@@ -42,6 +42,12 @@ trait Categories
             $model->image_thumb = $model->getCategoriesImagePath(true, true);
             $model->image = $model->getCategoriesImagePath(true);
 
+            $type = $this->getFactoryType($model);
+
+            $item = \App\ItemState::where('item_id', $model->id)->where('type', $type)->find();
+
+            $model->current_state = $item->current_state ?: 'default';
+
             return $model;
         });
 
