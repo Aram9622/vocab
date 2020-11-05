@@ -46,7 +46,7 @@ trait Categories
 
             $item = ItemStateModel::where('item_id', $model->id)->where('type', $type)->first();
 
-            $model->current_state = $item->current_state ?: 'default';
+            $model->current_state = $item->current_state ?? 'default';
 
             return $model;
         });
