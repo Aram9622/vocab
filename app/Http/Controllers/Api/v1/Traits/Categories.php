@@ -42,12 +42,6 @@ trait Categories
             $model->image_thumb = $model->getCategoriesImagePath(true, true);
             $model->image = $model->getCategoriesImagePath(true);
 
-            $type = $this->getFactoryType($model);
-
-            $item = ItemStateModel::where('item_id', $model->id)->where('type', $type)->first();
-
-            $model->current_state = $item->current_state ?? 'default';
-
             return $model;
         });
 
@@ -77,6 +71,14 @@ trait Categories
     public function mapping($joined = false)
     {
         return function ($model) use ($joined) {
+            $model->current_state = 'default';
+
+            $itemState = ItemStateModel::where(['type' => $model->type, 'id' => $model->id, 'user_id' => auth()->id()])->first();
+
+            if ($itemState) {
+                $model->current_state = $itemState->current_state;
+            }
+
             if ($joined == true) {
                 $joinedModel = $model->joinedModel;
 
@@ -87,14 +89,6 @@ trait Categories
                 $this->correctAttributes($joinedModel);
 
                 return $joinedModel;
-            }
-
-            $model->current_state = 'default';
-
-            $itemState = ItemStateModel::where(['type' => $model->type, 'id' => $model->id, 'user_id' => auth()->id()])->first();
-
-            if ($itemState) {
-                $model->current_state = $itemState->current_state;
             }
 
             $this->setAssetPath($model);
