@@ -44,7 +44,7 @@ trait Categories
 
             $type = $this->getFactoryType($model);
 
-            $item = ItemStateModel::where('item_id', $model->id)->where('type', $type)->find();
+            $item = ItemStateModel::where('item_id', $model->id)->where('type', $type)->first();
 
             $model->current_state = $item->current_state ?: 'default';
 
