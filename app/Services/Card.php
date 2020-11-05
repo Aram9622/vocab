@@ -62,13 +62,17 @@ class Card
             $query = $query->limit($limit);
         }
 
-        $all = $query->get();
+        $all = $query->get()->map(function ($model) {
+            $model->type = $this->getFactoryType($model);
+        });
 
         if ($interval = intval($interval)) {
             $query = $query->whereDate('updated_at', '>=', Carbon::now()->addDays("-$interval"));
         }
 
-        $items = $query->get();
+        $items = $query->get()->map(function ($model) {
+            $model->type = $this->getFactoryType($model);
+        });;
 
         return [
             'all' => $all,
