@@ -71,14 +71,8 @@ class Card
         $items = $query->get();
 
         return [
-            'all' => $all->map(function (&$model) {
-                $model->type = $this->getFactoryType($model);
-                return $model;
-            }),
-            'items' => $items->map(function (&$model) {
-                $model->type = $this->getFactoryType($model);
-                return $model;
-            }),
+            'all' => $all,
+            'items' => $items,
         ];
     }
 
@@ -92,7 +86,12 @@ class Card
             return $query->has('notInCardItems');
         };
 
-        $items = self::filter(null, $this->state, 0, $this->limit)['items']->toArray();
+        $map = function ($model) {
+            $model->type = $this->getFactoryType($model);
+            return $model;
+        };
+
+        $items = self::filter(null, $this->state, 0, $this->limit)['items']->map($map)->toArray();
 
         // if count is not equal to the limit then pushing new items which have "beginner", "intermediate" or "advanced" types
         if (count($items) < $limit) {
@@ -107,7 +106,7 @@ class Card
 
                 $beginners = $model->newQuery()->whereHas('category', function ($query) {
                     $query->where('level', 'beginner');
-                })->limit($limit)->get()->toArray();
+                })->limit($limit)->get()->map($map)->toArray();
 
                 $intermediates = $advanced = [];
 
@@ -116,14 +115,14 @@ class Card
 
                     $intermediates = $model->newQuery()->whereHas('category', function ($query) {
                         $query->where('level', 'intermediate');
-                    })->limit($limit)->get()->toArray();
+                    })->limit($limit)->get()->map($map)->toArray();
 
                     if (count($beginners) < $limit) {
                         $limit -= count($beginners);
 
                         $advanced = $model->newQuery()->whereHas('category', function ($query) {
                             $query->where('level', 'advanced');
-                        })->limit($limit)->get()->toArray();
+                        })->limit($limit)->get()->map($map)->toArray();
                     }
                 }
 
