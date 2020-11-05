@@ -73,7 +73,7 @@ trait Categories
         return function ($model) use ($joined) {
             $model->current_state = 'default';
 
-            $itemState = ItemStateModel::where(['type' => $model->type, 'id' => $model->id, 'user_id' => auth()->id()])->first();
+            $itemState = ItemStateModel::where(['type' => $this->getFactoryType($model), 'id' => $model->id, 'user_id' => auth()->id()])->first();
 
             if ($itemState) {
                 $model->current_state = $itemState->current_state;
