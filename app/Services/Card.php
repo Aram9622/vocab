@@ -15,6 +15,8 @@ class Card
 
     protected $types = ['words', 'phrases', 'verbs'];
 
+    protected static $current_state_compare_operator = '=';
+
     /**
      * @var ItemState
      */
@@ -43,8 +45,7 @@ class Card
         $model = new \App\ItemState(['type' => $type]);
 
         $query = $model->where('user_id', auth()->id())
-            ->where('current_state', $current_state)
-            ->where('current_state', $current_state);
+            ->where('current_state', self::$current_state_compare_operator, $current_state);
 
         if (is_callable($callableQuery = self::$filterQuery)) {
             $query = $callableQuery($query);
@@ -82,8 +83,10 @@ class Card
 
         $types = $this->types;
 
+        self::$current_state_compare_operator = '<>';
+
         self::$filterQuery = function (\Illuminate\Database\Eloquent\Builder $query) {
-            return $query->has('notInCardItems')->where('current_state', '<>', 'learned');
+            return $query->has('notInCardItems');
         };
 
         $map = function ($model) {
@@ -91,7 +94,7 @@ class Card
             return $model;
         };
 
-        $items = self::filter(null, $this->state, 0, $this->limit)['items']->map($map)->toArray();
+        $items = self::filter(null, 'learned', 0, $this->limit)['items']->map($map)->toArray();
 
         // if count is not equal to the limit then pushing new items which have "beginner", "intermediate" or "advanced" types
         if (count($items) < $limit) {
@@ -129,6 +132,8 @@ class Card
                 $items = array_merge($items, $beginners, $intermediates, $advanced);
             }
         }
+
+        self::$current_state_compare_operator = '=';
 
         return $items;
     }
