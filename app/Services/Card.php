@@ -64,6 +64,7 @@ class Card
 
         $all = $query->get()->map(function ($model) {
             $model->type = $this->getFactoryType($model);
+            return $model;
         });
 
         if ($interval = intval($interval)) {
@@ -72,6 +73,7 @@ class Card
 
         $items = $query->get()->map(function ($model) {
             $model->type = $this->getFactoryType($model);
+            return $model;
         });;
 
         return [
