@@ -83,7 +83,7 @@ class Card
         $types = $this->types;
 
         self::$filterQuery = function (\Illuminate\Database\Eloquent\Builder $query) {
-            return $query->has('notInCardItems');
+            return $query->has('notInCardItems')->where('current_state', '<>', 'learned');
         };
 
         $map = function ($model) {
