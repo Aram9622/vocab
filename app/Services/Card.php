@@ -71,11 +71,11 @@ class Card
         $items = $query->get();
 
         return [
-            'all' => $all->map(function ($model) {
+            'all' => $all->map(function (&$model) {
                 $model->type = $this->getFactoryType($model);
                 return $model;
             }),
-            'items' => $items->map(function ($model) {
+            'items' => $items->map(function (&$model) {
                 $model->type = $this->getFactoryType($model);
                 return $model;
             }),
