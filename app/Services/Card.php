@@ -160,16 +160,16 @@ class Card
     public function setItems(array $array) : void
     {
         foreach ($array as $item) {
-            if (!in_array($item->type, ['default', 'learning', 'learned', 'in_card'])) {
-                continue;
-            }
+//            if (!in_array($item->type, ['default', 'learning', 'learned', 'in_card'])) {
+//                continue;
+//            }
 
             //-- set new items with type in_card
             $model = clone $this->model;
-            $model = $model->where(['item_id' => $item->item_id, 'user_id' => auth()->id()])->find() ?: $model;
+            $model = $model->where(['item_id' => $item['item_id'], 'user_id' => auth()->id()])->find() ?: $model;
 
             if (!$model->id) {
-                $model->fill(['item_id' => $item->item_id, 'user_id' => auth()->id(), 'type' => $item->type, 'current_state' => 'in_card'])->save();
+                $model->fill(['item_id' => $item['item_id'], 'user_id' => auth()->id(), 'type' => $item['type'], 'current_state' => 'in_card'])->save();
             }
             //--
 
