@@ -139,7 +139,7 @@ class SiteController extends ApiController
            $card = new Card();
            $card->setItems($request->data);
        } catch (\Exception $e) {
-           return response()->json(['error' => 'Check the POST data params. ' . $e->getMessage()], 401);
+           return response()->json(['error' => 'Check the POST data params. ' . $e->getMessage(), 'POST' => $request->all()], 401);
        }
 
         return ['success' => true];
