@@ -100,12 +100,13 @@ class Card
 
         $map = function (&$model) {
             if ($model instanceof ItemState) {
-                $model = $model->cardItem;
+                $stateModel = $model;
+                $model = $model->joinedModel;
+            } else {
+                $stateModel = ItemState::query()->where('item_id', $model->id)->where('user_id', auth()->id())->where('type', $model->type)->first();
             }
 
             $model->type = $this->getFactoryType($model);
-
-            $stateModel = ItemState::query()->where('item_id', $model->id)->where('user_id', auth()->id())->where('type', $model->type)->first();
 
             if ($stateModel && $stateModel->current_state == 'learned') {
                 unset($model);
