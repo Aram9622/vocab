@@ -167,7 +167,7 @@ class Card
 
         self::$current_state_compare_operator = '=';
 
-        return $items;
+        return array_unique($items);
     }
 
     /**
