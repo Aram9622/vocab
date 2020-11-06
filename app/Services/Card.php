@@ -99,6 +99,7 @@ class Card
         };
 
         $map = function (&$model) {
+            $stateModel = $model;
             if ($model instanceof ItemState) {
                 $type = $model->type ?? null;
                 $model = $model->joinedModel;
