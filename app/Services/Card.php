@@ -166,7 +166,7 @@ class Card
 
             //-- set new items with type in_card
             $model = clone $this->model;
-            $model = $model->where(['item_id' => $item['item_id'], 'user_id' => auth()->id()])->find() ?: $model;
+            $model = $model->where(['item_id' => $item['item_id'], 'user_id' => auth()->id()])->first() ?: $model;
 
             if (!$model->id) {
                 $model->fill(['item_id' => $item['item_id'], 'user_id' => auth()->id(), 'type' => $item['type'], 'current_state' => 'in_card'])->save();
