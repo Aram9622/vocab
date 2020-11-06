@@ -182,7 +182,7 @@ class Card
 
             //-- set new items with type in_card
             $model = clone $this->model;
-            $model = $model->with('cardItem')->where(['item_id' => $item['item_id'], 'user_id' => auth()->id()])->first() ?: $model;
+            $model = $model->where(['item_id' => $item['item_id'], 'user_id' => auth()->id()])->first() ?: $model;
 
             if (!$model->id) {
                 $model->fill(['item_id' => $item['item_id'], 'user_id' => auth()->id(), 'type' => $item['type'], 'current_state' => 'in_card'])->save();
@@ -190,7 +190,7 @@ class Card
             //--
 
             //-- add mew items with type in_card to card_items table if no exists
-            $cardItemModel = isset($model->cardItem->id) ? $model->cardItem : (clone $this->cardItemModel);
+            $cardItemModel = $this->cardItemModel->where('item_state_id', $model->id)->where('user_id', auth()->id())->first() ?: $this->cardItemModel;
             $cardItemModel->item_state_id = $model->id;
             $cardItemModel->user_id = auth()->id();
             $cardItemModel->save();
