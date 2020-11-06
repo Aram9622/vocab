@@ -89,8 +89,16 @@ class Card
             return $query->has('notInCardItems');
         };
 
-        $map = function ($model) {
+        $map = function (&$model) {
             $model->type = $this->getFactoryType($model);
+
+            $stateModel = ItemState::query()->where('item_id', $model->id)->where('user_id', auth()->id())->where('type', $model->type)->first();
+
+            if ($stateModel && $stateModel->current_state == 'learned') {
+                unset($model);
+                return;
+            }
+
             return $model;
         };
 
