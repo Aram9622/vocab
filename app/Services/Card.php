@@ -103,17 +103,16 @@ class Card
                 $stateModel = $model;
                 $model = $model->joinedModel;
             } else {
+                $model->type = $this->getFactoryType($model);
                 $stateModel = ItemState::query()->where('item_id', $model->id)->where('user_id', auth()->id())->where('type', $model->type)->first();
             }
 
-//            $model->type = $this->getFactoryType($model);
+            $this->correctAttributes($model);
 
             if ($stateModel && $stateModel->current_state == 'learned') {
                 unset($model);
                 return false;
             }
-
-            $this->correctAttributes($model);
 
             return $model;
         };
