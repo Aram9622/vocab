@@ -118,9 +118,7 @@ class Card
         };
 
         $items = self::filter(null, 'learned', 0, $this->limit)['items']->map($map)->reject(function ($value) {
-            return $value === false;
-        })->reject(function ($value) {
-            return $value === false;
+            return empty($value);
         })->toArray();
 
         // if count is not equal to the limit then pushing new items which have "beginner", "intermediate" or "advanced" types
