@@ -101,11 +101,8 @@ class Card
         $map = function (&$model) {
             $stateModel = $model;
             if ($model instanceof ItemState) {
-                $type = $model->type ?? null;
                 $model = $model->joinedModel;
-                $model->type = $type;
             } else {
-                $model->type = $this->getFactoryType($model);
                 $stateModel = ItemState::query()->where('item_id', $model->id)->where('user_id', auth()->id())->where('type', $model->type)->first();
             }
 
@@ -114,6 +111,7 @@ class Card
                 return false;
             }
 
+            $model->type = $this->getFactoryType($model);
             $this->correctAttributes($model);
 
             return $model;
