@@ -20,7 +20,7 @@ class ItemState extends Model
 
     public function cardItem()
     {
-        return $this->hasOne(CardItem::class, 'id', 'item_state_id')
+        return $this->hasOne(CardItem::class, 'item_state_id', 'id')
             ->where('card_items.user_id', 'item_states.user_id');
     }
 

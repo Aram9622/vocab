@@ -144,4 +144,9 @@ class SiteController extends ApiController
 
         return ['success' => true];
     }
+
+    public function getCardItems()
+    {
+
+    }
 }

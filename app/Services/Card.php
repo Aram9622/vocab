@@ -40,6 +40,11 @@ class Card
         $this->limit = $limit;
     }
 
+    public function all()
+    {
+        return $this->cardItemModel->where('user_id', auth()->id())->get();
+    }
+
     public static function filter($type, $current_state, $interval = 0, $limit = 0)
     {
         $model = new \App\ItemState(['type' => $type]);
