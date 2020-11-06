@@ -179,7 +179,7 @@ class Card
             $cardItemModel = $model->cardItem ?: clone $this->cardItemModel;
             $cardItemModel->item_state_id = $model->id;
             $cardItemModel->user_id = auth()->id();
-            $model->save();
+            $cardItemModel->save();
             //--
         }
     }
