@@ -147,6 +147,8 @@ class SiteController extends ApiController
 
     public function getCardItems()
     {
+        $card = new Card();
 
+        return $card->all();
     }
 }
