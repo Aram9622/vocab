@@ -53,6 +53,7 @@ Route::middleware(['auth:api'])->group(function () {
         Route::prefix('card')->group(function () {
             Route::get('collection/{limit}', 'SiteController@cardCollection');
             Route::post('add-to-card', 'SiteController@addToCard');
+            Route::post('get-card-items', 'SiteController@getCardItems');
         });
 
         Route::get('new-words/{level}/{category?}/{sub_category?}', 'NewWordsController@index')->name('new.words.index')->where('level', 'beginner|intermediate|advanced');

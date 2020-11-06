@@ -42,7 +42,9 @@ class Card
 
     public function all()
     {
-        return $this->cardItemModel->where('user_id', auth()->id())->get();
+        return $this->cardItemModel->with('itemState')->has('itemState')->where('user_id', auth()->id())->get()->map(function ($model) {
+            return $model->itemState;
+        });
     }
 
     public static function filter($type, $current_state, $interval = 0, $limit = 0)
