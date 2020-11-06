@@ -106,7 +106,7 @@ class Card
                 $stateModel = ItemState::query()->where('item_id', $model->id)->where('user_id', auth()->id())->where('type', $model->type)->first();
             }
 
-            $model->type = $this->getFactoryType($model);
+//            $model->type = $this->getFactoryType($model);
 
             if ($stateModel && $stateModel->current_state == 'learned') {
                 unset($model);
