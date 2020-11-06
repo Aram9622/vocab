@@ -170,7 +170,7 @@ class Card
 
         self::$current_state_compare_operator = '=';
 
-        return array_unique($items);
+        return $items;
     }
 
     /**
