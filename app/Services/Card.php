@@ -3,13 +3,13 @@
 namespace App\Services;
 
 use App\CardItem;
+use App\Http\Controllers\Api\v1\Traits\Actions;
 use App\ItemState;
-use App\Traits\ModelFactory;
 use Carbon\Carbon;
 
 class Card
 {
-    use ModelFactory;
+    use Actions;
 
     protected $state = 'learning';
 
@@ -99,6 +99,8 @@ class Card
                 return false;
             }
 
+            $this->correctAttributes($model);
+
             return $model;
         };
 
@@ -115,7 +117,7 @@ class Card
                     break;
                 }
 
-                $model = $this->modelFactory($type);
+                $model = $this->factory($type);
 
                 $beginners = $model->newQuery()->whereHas('category', function ($query) {
                     $query->where('level', 'beginner');

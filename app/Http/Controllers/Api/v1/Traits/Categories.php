@@ -10,13 +10,10 @@ use App\Models\Phrase;
 use App\Models\Verb;
 use App\Models\Word;
 use App\Models\Story;
-use App\Traits\ModelFactory;
 
 trait Categories
 {
-    use ItemState, ModelFactory {
-        modelFactory as public factory;
-    }
+    use Actions, ItemState;
 
     /**
      * @var Word[]|Phrase[]|Verb[]|Story[]|Conversation[]|Exercise[]|null
@@ -97,20 +94,6 @@ trait Categories
 
             return $model;
         };
-    }
-
-    public function correctAttributes(&$model)
-    {
-        try {
-            $type = $this->getFactoryType($model);
-
-            if (!in_array($type, ['words', 'flashcards', 'flashcard_groups']) && !$model->words_en && !$model->words_es) {
-                $model->word_en = $model->conversation_en ?: $model->exercise_en ?: $model->phrase_en ?: $model->story_en ?: $model->verb_en ?: null;
-                $model->word_es = $model->conversation_es ?: $model->exercise_es ?: $model->phrase_es ?: $model->story_es ?: $model->verb_es ?: null;
-            }
-        } catch (\Exception $e) {
-
-        }
     }
 
     public function setAssetPath(&$model)
