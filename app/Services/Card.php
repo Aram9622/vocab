@@ -111,6 +111,10 @@ class Card
                 return false;
             }
 
+            if (!$model) {
+                return false;
+            }
+
             $model->type = $this->getFactoryType($model);
             $this->correctAttributes($model);
 
