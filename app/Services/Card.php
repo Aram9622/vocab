@@ -96,13 +96,15 @@ class Card
 
             if ($stateModel && $stateModel->current_state == 'learned') {
                 unset($model);
-                return;
+                return false;
             }
 
             return $model;
         };
 
-        $items = self::filter(null, 'learned', 0, $this->limit)['items']->map($map)->toArray();
+        $items = self::filter(null, 'learned', 0, $this->limit)['items']->map($map)->reject(function ($value) {
+            return $value === false;
+        })->toArray();
 
         // if count is not equal to the limit then pushing new items which have "beginner", "intermediate" or "advanced" types
         if (count($items) < $limit) {
@@ -117,7 +119,9 @@ class Card
 
                 $beginners = $model->newQuery()->whereHas('category', function ($query) {
                     $query->where('level', 'beginner');
-                })->limit($limit)->get()->map($map)->toArray();
+                })->limit($limit)->get()->map($map)->reject(function ($value) {
+                    return $value === false;
+                })->toArray();
 
                 $intermediates = $advanced = [];
 
@@ -126,14 +130,18 @@ class Card
 
                     $intermediates = $model->newQuery()->whereHas('category', function ($query) {
                         $query->where('level', 'intermediate');
-                    })->limit($limit)->get()->map($map)->toArray();
+                    })->limit($limit)->get()->map($map)->reject(function ($value) {
+                        return $value === false;
+                    })->toArray();
 
                     if (count($beginners) < $limit) {
                         $limit -= count($beginners);
 
                         $advanced = $model->newQuery()->whereHas('category', function ($query) {
                             $query->where('level', 'advanced');
-                        })->limit($limit)->get()->map($map)->toArray();
+                        })->limit($limit)->get()->map($map)->reject(function ($value) {
+                            return $value === false;
+                        })->toArray();
                     }
                 }
 
