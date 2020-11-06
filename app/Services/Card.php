@@ -43,7 +43,9 @@ class Card
     public function all()
     {
         return $this->cardItemModel->with('itemState')->has('itemState')->where('user_id', auth()->id())->get()->map(function ($model) {
-            return $model->itemState;
+            $model = $model->itemState;
+            $this->correctAttributes($model);
+            return $model;
         });
     }
 
