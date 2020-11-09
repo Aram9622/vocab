@@ -207,7 +207,8 @@ class Card
             //--
 
             //-- add mew items with type in_card to card_items table if no exists
-            $cardItemModel = $this->cardItemModel->where('item_state_id', $model->id)->where('user_id', auth()->id())->first() ?: $this->cardItemModel;
+            $cardItemModel = new CardItem(); // new object for every item
+            $cardItemModel = $cardItemModel->where('item_state_id', $model->id)->where('user_id', auth()->id())->first() ?: $cardItemModel;
             $cardItemModel->item_state_id = $model->id;
             $cardItemModel->user_id = auth()->id();
             $cardItemModel->save();
