@@ -69,7 +69,8 @@ trait ItemState
 
         $model->fill($params)->save();
 
-        $model->joinedModel->map($this->mapping());
+        $this->correctAttributes($model->joinedModel);
+
         $result = $model->joinedModel;
 
         if (empty($model->joinedModel)) {
