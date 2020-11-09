@@ -120,6 +120,8 @@ class SiteController extends ApiController
     {
         $card = new Card(intval($limit));
 
+        $card->delete();
+
         return $card->getItems();
     }
 

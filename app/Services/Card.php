@@ -40,6 +40,12 @@ class Card
         $this->limit = $limit;
     }
 
+    public function delete()
+    {
+        $this->cardItemModel->newQuery()->where('user_id', auth()->id())->delete();
+        $this->model->newQuery()->where('user_id', auth()->id())->where('current_state', 'in_card')->delete();
+    }
+
     public function all()
     {
         return $this->cardItemModel->with('itemState')->has('itemState')->where('user_id', auth()->id())->get()->map(function ($model) {
