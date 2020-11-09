@@ -78,7 +78,7 @@ trait ItemState
 
         DB::commit();
 
-        $result->current_state = $model->current_state;
+        $result->current_state = $request->state;
 
         return $result;
     }
