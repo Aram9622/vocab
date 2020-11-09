@@ -108,8 +108,10 @@ class Card
             $stateModel = $model;
             if ($model instanceof ItemState) {
                 $model = $model->joinedModel;
+                $model->current_state = $stateModel->current_state;
             } else {
                 $stateModel = ItemState::query()->where('item_id', $model->id)->where('user_id', auth()->id())->where('type', $model->type)->first();
+                $model->current_state = $stateModel->current_state;
             }
 
             if ($stateModel && $stateModel->current_state == 'learned') {
