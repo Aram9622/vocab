@@ -111,8 +111,10 @@ class Card
                 if (!$model) {
                     return false;
                 }
+                $model->type = $this->getFactoryType($model);
                 $model->current_state = $stateModel->current_state;
             } elseif ($model) {
+                $model->type = $this->getFactoryType($model);
                 $stateModel = ItemState::query()->where('item_id', $model->id)->where('user_id', auth()->id())->where('type', $model->type)->first();
                 if ($stateModel) {
                     $model->current_state = $stateModel->current_state;
@@ -128,7 +130,6 @@ class Card
                 return false;
             }
 
-            $model->type = $this->getFactoryType($model);
             $this->correctAttributes($model);
 
             return $model;
