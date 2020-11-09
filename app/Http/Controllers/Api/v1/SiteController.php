@@ -125,7 +125,7 @@ class SiteController extends ApiController
         $result = [];
 
         foreach ($card->getItems() as $card_item) {
-            if (in_array($card_item->id, $allIds)) {
+            if (in_array($card_item['id'], $allIds)) {
                 continue;
             }
 
