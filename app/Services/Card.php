@@ -114,10 +114,16 @@ class Card
                 $model->current_state = $stateModel->current_state;
             } elseif ($model) {
                 $stateModel = ItemState::query()->where('item_id', $model->id)->where('user_id', auth()->id())->where('type', $model->type)->first();
-                $model->current_state = $stateModel->current_state;
+                if ($stateModel) {
+                    $model->current_state = $stateModel->current_state;
+                }
             }
 
-            if ($stateModel && $model->current_state == 'learned') {
+            if (!$model) {
+                return false;
+            }
+
+            if ($model && $model->current_state == 'learned') {
                 unset($model);
                 return false;
             }
