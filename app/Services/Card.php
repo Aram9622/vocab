@@ -117,7 +117,7 @@ class Card
                 $model->current_state = $stateModel->current_state;
             }
 
-            if ($stateModel && $stateModel->current_state == 'learned') {
+            if ($stateModel && $model->current_state == 'learned') {
                 unset($model);
                 return false;
             }
