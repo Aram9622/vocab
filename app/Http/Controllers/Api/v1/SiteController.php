@@ -120,9 +120,19 @@ class SiteController extends ApiController
     {
         $card = new Card(intval($limit));
 
-        $card->delete();
+        $allIds = $card->all()->pluck('id', 'id')->toArray();
 
-        return $card->getItems();
+        $result = [];
+
+        foreach ($card->getItems() as $card_item) {
+            if (in_array($card_item->id, $allIds)) {
+                continue;
+            }
+
+            $result[] = $card_item;
+        }
+
+        return $result;
     }
 
     public function addToCard(Request $request)
