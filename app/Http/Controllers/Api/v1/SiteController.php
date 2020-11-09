@@ -129,9 +129,6 @@ class SiteController extends ApiController
                 continue;
             }
 
-            // category relation
-            $card_item->category;
-
             $result[] = $card_item;
         }
 

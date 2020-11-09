@@ -68,7 +68,7 @@ class Card
 
         if (!is_null($type)) {
             $query = $query->whereHas('joinedModel', function ($query) use ($type) {
-                $query->whereHas('category', function ($query) use ($type) {
+                $query->with('category')->whereHas('category', function ($query) use ($type) {
                     $query->where('type', $type);
                 });
             })->where('type', $type);
