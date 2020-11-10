@@ -5,6 +5,7 @@ namespace App\Services;
 use App\CardItem;
 use App\Http\Controllers\Api\v1\Traits\Actions;
 use App\ItemState;
+use App\Models\Category;
 use Carbon\Carbon;
 
 class Card
@@ -68,7 +69,7 @@ class Card
 
         if (!is_null($type)) {
             $query = $query->whereHas('joinedModel', function ($query) use ($type) {
-                $query->with('category')->whereHas('category', function ($query) use ($type) {
+                $query->whereHas('category', function ($query) use ($type) {
                     $query->where('type', $type);
                 });
             })->where('type', $type);
@@ -129,6 +130,8 @@ class Card
                 unset($model);
                 return false;
             }
+
+            $model->category = Category::find($model->category_id);
 
             $this->correctAttributes($model);
 
