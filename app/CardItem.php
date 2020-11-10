@@ -12,7 +12,7 @@ class CardItem extends Model
     public function itemState()
     {
         return $this->hasOne(ItemState::class, 'id', 'item_state_id')
-            ->selectRaw('SELECT (item_states.type) as tbl')
+            ->selectRaw('item_states.type as tbl')
             ->leftJoin(DB::raw('tbl'), 'item_states.item_id', 'tbl.id');
     }
 }
