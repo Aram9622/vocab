@@ -13,6 +13,6 @@ class CardItem extends Model
     {
         return $this->hasOne(ItemState::class, 'id', 'item_state_id')
             ->selectRaw('item_states.type as tbl')
-            ->leftJoin(DB::raw('words'), 'item_states.item_id', 'tbl.id');
+            ->leftJoin(DB::raw('words'), 'item_states.item_id', 'words.id');
     }
 }
