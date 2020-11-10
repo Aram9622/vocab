@@ -49,7 +49,7 @@ class Card
 
     public function all()
     {
-        return $this->cardItemModel->with('itemState')->has('itemState')->where('user_id', auth()->id())->get()->map(function ($model) {
+        return $this->cardItemModel->with(['itemState', 'itemState.joinedModel.category'])->has('itemState')->get()->map(function ($model) {
             $model = $model->itemState->joinedModel;
             $this->correctAttributes($model);
             return $model;
