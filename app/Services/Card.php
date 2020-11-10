@@ -47,11 +47,16 @@ class Card
         $this->model->newQuery()->where('user_id', auth()->id())->where('current_state', 'in_card')->delete();
     }
 
-    public function all()
+    public function all($withCategories = false)
     {
-        return $this->cardItemModel->with('itemState')->has('itemState')->where('user_id', auth()->id())->get()->map(function ($model) {
+        return $this->cardItemModel->with('itemState')->has('itemState')->where('user_id', auth()->id())->get()->map(function ($model) use ($withCategories) {
             $model = $model->itemState->joinedModel;
             $this->correctAttributes($model);
+
+            if ($withCategories) {
+                $model->category = Category::find($model->category_id);
+            }
+
             return $model;
         });
     }
