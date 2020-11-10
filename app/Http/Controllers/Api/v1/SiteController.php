@@ -161,6 +161,6 @@ class SiteController extends ApiController
     {
         $card = new Card();
 
-        return $card->all();
+        return $card->all(true);
     }
 }
