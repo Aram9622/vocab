@@ -11,6 +11,6 @@ class CardItem extends Model
 
     public function itemState()
     {
-        return $this->hasOne(ItemState::class, 'id', 'item_state_id')->leftJoin(DB::raw('item_states.type as tbl'), 'item_states.item_id', 'tbl.id');
+        return $this->hasOne(ItemState::class, 'id', 'item_state_id')->leftJoin(DB::raw('SELECT (item_states.type) as tbl'), 'item_states.item_id', 'tbl.id');
     }
 }
