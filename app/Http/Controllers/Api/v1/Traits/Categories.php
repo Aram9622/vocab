@@ -63,7 +63,10 @@ trait Categories
         $this->items = $this->factory($this->type)
             ->newQuery()
             ->selectRaw("{$this->type}.*, percent")
-            ->leftJoin('studied', 'studied.studied_id', "{$this->type}.id")
+            ->leftJoin('studied', function ($join) {
+                $join->on('studied.studied_id', '=', "{$this->type}.id")
+                    ->on('studied.user_id', '=', auth()->id());
+            })
             ->groupBy('percent')
             ->orderByDesc('percent')
             ->where('studied.type', $this->type)
