@@ -26,6 +26,10 @@ class StoreStoryRequest extends FormRequest
         return [
             'story_en'  => 'required|string|max:255',
             'story_es'  => 'required|string|max:255',
+            'sub_title_en'  => 'required|string|max:255',
+            'sub_title_es'  => 'required|string|max:255',
+            'description_en'  => 'required|string',
+            'description_es'  => 'required|string',
             'record_en' =>'required|file|mimes:audio/mpeg,mpga,mp3,wav,aac',
             'record_es' =>'required|file|mimes:audio/mpeg,mpga,mp3,wav,aac',
             'eg_link'   => 'required|string|max:255',
