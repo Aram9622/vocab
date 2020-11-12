@@ -69,7 +69,7 @@ trait Categories
             (select percent from studied where type='{$this->type}' and studied_id={$this->type}.id and user_id={$user_id}) as percent
             ")
             //->groupBy('percent')
-            ->orderByDesc('percent')
+            ->orderBy('percent')
             ->where('category_id', $category_id)
             ->get()
             ->map($this->mapping());
