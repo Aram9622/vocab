@@ -66,7 +66,7 @@ trait Categories
         $this->items = $this->factory($this->type)
             ->newQuery()
             ->selectRaw("{$this->type}.*,
-            (select percent from studied where studied.type={$this->type} and studied.studied_id={$this->type}.id and studied.user_id={$user_id}) as percent
+            (select percent from studied where studied.type='{$this->type}' and studied.studied_id={$this->type}.id and studied.user_id={$user_id}) as percent
             ")
             ->groupBy('percent')
             ->orderByDesc('percent')
