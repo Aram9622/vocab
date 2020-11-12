@@ -63,7 +63,7 @@ trait Categories
         $this->items = $this->factory($this->type)
             ->newQuery()
             ->leftJoin('studied', 'studied.studied_id', "{$this->type}.id")
-            ->when('studied.type', $this->type)
+            ->where('studied.type', $this->type)
             ->where('category_id', $category_id)
             ->get()
             ->map($this->mapping());
