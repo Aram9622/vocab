@@ -68,7 +68,7 @@ trait Categories
             ->selectRaw("{$this->type}.*,
             (select percent from studied where type='{$this->type}' and studied_id={$this->type}.id and user_id={$user_id}) as percent
             ")
-            ->groupBy('percent')
+            //->groupBy('percent')
             ->orderByDesc('percent')
             ->where('category_id', $category_id)
             ->get()
