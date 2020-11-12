@@ -10,6 +10,7 @@ use App\Models\Phrase;
 use App\Models\Verb;
 use App\Models\Word;
 use App\Models\Story;
+use Illuminate\Support\Facades\DB;
 
 trait Categories
 {
@@ -65,7 +66,7 @@ trait Categories
             ->selectRaw("{$this->type}.*, percent")
             ->leftJoin('studied', function ($join) {
                 $join->on('studied.studied_id', '=', "{$this->type}.id")
-                    ->on('studied.user_id', '=', auth()->id());
+                    ->on('studied.user_id', '=', DB::raw(auth()->id()));
             })
             ->groupBy('percent')
             ->orderByDesc('percent')
