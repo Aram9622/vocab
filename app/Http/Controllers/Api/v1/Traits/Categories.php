@@ -62,6 +62,7 @@ trait Categories
     {
         $this->items = $this->factory($this->type)
             ->newQuery()
+            ->selectRaw("{$this->type}.*, percent")
             ->leftJoin('studied', 'studied.studied_id', "{$this->type}.id")
             ->where('studied.type', $this->type)
             ->where('category_id', $category_id)
