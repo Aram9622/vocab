@@ -70,7 +70,6 @@ trait Categories
             ")
             ->groupBy('percent')
             ->orderByDesc('percent')
-            ->where('studied.type', $this->type)
             ->where('category_id', $category_id)
             ->get()
             ->map($this->mapping());
