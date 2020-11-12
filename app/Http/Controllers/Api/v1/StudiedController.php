@@ -68,7 +68,7 @@ class StudiedController extends ApiController
             return ['error' => 'No data found by this id'];
         }
 
-        $model->fill($request->all())->save();
+        $model->fill(array_merge($request->all(), ['user_id' => auth()->id()]))->save();
 
         return $model;
     }
