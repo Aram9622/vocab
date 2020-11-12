@@ -64,7 +64,7 @@ trait Categories
             ->newQuery()
             ->selectRaw("{$this->type}.*, percent")
             ->leftJoin('studied', 'studied.studied_id', "{$this->type}.id")
-            ->groupBy('percent')
+            ->groupBy('percent', 'desc')
             ->where('studied.type', $this->type)
             ->where('category_id', $category_id)
             ->get()
