@@ -61,13 +61,13 @@ trait Categories
      */
     public function setItems($category_id)
     {
+        $user_id = auth()->id();
+
         $this->items = $this->factory($this->type)
             ->newQuery()
-            ->selectRaw("{$this->type}.*, percent")
-            ->leftJoin('studied', function ($join) {
-                $join->on('studied.studied_id', '=', "{$this->type}.id")
-                    ->on('studied.user_id', '=', DB::raw(auth()->id()));
-            })
+            ->selectRaw("{$this->type}.*,
+            (select percent from studied where studied.type={$this->type} and studied.studied_id={$this->type}.id and studied.user_id={$user_id}) as percent
+            ")
             ->groupBy('percent')
             ->orderByDesc('percent')
             ->where('studied.type', $this->type)
