@@ -73,7 +73,7 @@ class Card
     {
         $model = new \App\ItemState(['type' => $type]);
 
-        die($current_state);
+        echo $current_state;
 
         $query = $model->where('user_id', auth()->id())
             ->where('current_state', self::$current_state_compare_operator, $current_state);
