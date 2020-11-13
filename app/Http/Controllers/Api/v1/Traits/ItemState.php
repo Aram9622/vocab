@@ -36,12 +36,16 @@ trait ItemState
                 $array = $this->state($type, $state, $interval);
                 if ($array['all']->count()) {
                     $array['all']->map(function ($model) use (&$items, $state) {
+                        $model->current_state = $state;
+
                         $items[$state]['all'][] = $model;
                     });
                 }
 
                 if ($array['items']->count()) {
                     $array['items']->map(function ($model) use (&$items, $state) {
+                        $model->current_state = $state;
+
                         $items[$state]['items'][] = $model;
                     });
                 }
