@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Studied;
+use App\UserConversation;
 use Illuminate\Database\Eloquent\Model;
 
 class Conversation extends Model
@@ -18,6 +19,11 @@ class Conversation extends Model
     public function category()
     {
         return $this->belongsTo('App\Models\Category', 'category_id', 'id')->with('parent');
+    }
+
+    public function users_conversations()
+    {
+        return $this->hasMany(UserConversation::class, 'conversation_id', 'id');
     }
 
     protected static function boot()
