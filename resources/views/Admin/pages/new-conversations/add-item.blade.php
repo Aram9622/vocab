@@ -129,6 +129,7 @@
                                             <th scope="col">Picture</th>
                                             <th scope="col">Visible</th>
                                             <th scope="col">E.G. link</th>
+                                            <th scope="col">Conversation</th>
                                             <th scope="col"></th>
                                         </tr>
                                         </thead>
@@ -166,6 +167,13 @@
                                                 </td>
                                                 <td>
                                                     <div class="link__div"><a href="">{{$conversation->eg_link}}</a></div>
+                                                </td>
+                                                <td>
+                                                    <div class="edit__div text-center">
+                                                        <a class="btn btn-sm btn-primary" href="{{ route('admin.new.conversations.view.item-view', $conversation->id) }}">
+                                                            <i class="fa fa-eye"></i> View
+                                                        </a>
+                                                    </div>
                                                 </td>
                                                 <td>
                                                     <div class="edit__div">
@@ -213,7 +221,7 @@
                     alert('Oops..');
                 }
             }
-        }); 
+        });
     })
 </script>
 @stop

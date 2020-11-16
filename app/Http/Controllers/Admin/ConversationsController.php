@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\UserConversationRequest;
+use App\UserConversation;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreConversationRequest;
 use App\Http\Requests\UpdateConversationRequest;
@@ -136,5 +138,30 @@ class ConversationsController extends Controller
     {
         Conversation::where('id', '=', $request->item)->update(['visible' => $request->visible]);
         return response()->json(['error' => false]);
+    }
+
+    //------------------------------------------------------------------------------------
+
+    public function itemView(Conversation $conversation)
+    {
+        $userConversations = UserConversation::where('conversation_id', $conversation->id)->get();
+
+        return view('Admin.pages.new-conversations.view-conv-item', compact('conversation', 'userConversations'));
+    }
+
+    public function itemStore(UserConversationRequest $request, Conversation $conversation, $userConversationId = null)
+    {
+        $userConversation = UserConversation::find($userConversationId) ?: new UserConversation();
+
+        $userConversation->fill(array_merge($request->all(), ['conversation_id' => $conversation->id]))->save();
+
+        return back()->with('success', 'The conversation item has successfully saved!');
+    }
+
+    public function itemDelete($id)
+    {
+        UserConversation::findOrFail($id)->delete();
+
+        return back()->with('success', 'The conversation item has successfully deleted!');
     }
 }

@@ -63,8 +63,14 @@ trait Categories
     {
         $user_id = auth()->id();
 
-        $this->items = $this->factory($this->type)
-            ->newQuery()
+        $query = $this->factory($this->type)
+            ->newQuery();
+
+        if ($this->type == 'conversations') {
+            $query->with('users_conversations');
+        }
+
+        $this->items = $query
             ->selectRaw("{$this->type}.*,
             (select percent from studied where type='{$this->type}' and studied_id={$this->type}.id and user_id={$user_id}) as percent
             ")

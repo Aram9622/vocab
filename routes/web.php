@@ -110,6 +110,12 @@ Route::group(['as' => 'admin.', 'namespace' => 'Admin', 'middleware' => ['auth']
             Route::post('delete-item/{conversation}', 'ConversationsController@deleteItem')->name('new.conversations.delete.item');
 
             Route::post('item-visibility', 'ConversationsController@visibility')->name('new.conversations.visibility.item');
+
+            Route::prefix('user/item/action')->group(function () {
+                Route::get('{conversation}', 'ConversationsController@itemView')->name('new.conversations.view.item-view');
+                Route::post('store/{conversation}/{UserConversation?}', 'ConversationsController@itemStore')->name('new.conversations.view.item-store');
+                Route::get('delete/{id}', 'ConversationsController@itemDelete')->name('new.conversations.view.item-delete');
+            });
         });
 
         Route::prefix('stories')->group(function () {
