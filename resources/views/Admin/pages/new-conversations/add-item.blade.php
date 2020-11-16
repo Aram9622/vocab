@@ -19,7 +19,8 @@
                 <div class="dashboard_box">
                     <div class="row">
                         <div class="col-md-12 col-sm-12 col-xs-12">
-                            <div class="categories_top_sect">
+                            @if($conversations->count() === 0)
+                                <div class="categories_top_sect">
                                 <ul class="categ__menu">
                                     <li><a href="">Categories </a></li>
                                     <li><a href="{{ route('admin.new.conversations.index', [request()->segment(3), $category->id]) }}">&ensp;/ {{ $category->name }}</a></li>
@@ -86,6 +87,7 @@
                                      </form>
                                 </div>
                             </div>
+                            @endif
                             <div class="categories_sect">
                                 <h3>Vocabulary</h3>
                                 <div class="Vocabulary_table table-responsive">
