@@ -10,6 +10,6 @@ class UserConversation extends Model
 
     public function users_conversations()
     {
-        return $this->hasMany(UserConversation::class, 'conversations', 'id');
+        return $this->hasMany(UserConversation::class, 'conversation_id', 'id');
     }
 }
