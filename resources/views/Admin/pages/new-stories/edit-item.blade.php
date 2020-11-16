@@ -104,18 +104,40 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="col-md-2">
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <p>English Sub Title</p>
+                                                    <input value="{{ $story->sub_title_en }}" name="sub_title_en" type="text" class="form-control">
+                                                </div>
+                                                <div class="form-group">
+                                                    <p>English Description</p>
+                                                    <textarea rows="5" name="description_en" class="form-control">{{ $story->description_en }}</textarea>
+                                                </div>
                                             </div>
-                                            <ul class="bg-danger error-content">
-                                                @foreach ($errors->all() as $error)
-                                                    <li class="text-white">{{ $error }}</li>
-                                                @endforeach
-                                            </ul>
+
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <p>Spanish Sub Title</p>
+                                                    <input value="{{ $story->sub_title_es }}" name="sub_title_es" type="text" class="form-control">
+                                                </div>
+                                                <div class="form-group">
+                                                    <p>Spanish Description</p>
+                                                    <textarea rows="5" name="description_es" class="form-control">{{ $story->description_es }}</textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="categ_btns">
+                                            <button class="cancel__btn">Cancel</button>
+                                            <button class="save__btn">Save</button>
                                         </div>
                                      </form>
                                 </div>
                             </div>
-                            
+
                         </div>
                     </div>
                 </div>

@@ -12,7 +12,8 @@ class Story extends Model
     public $searchable = ['story_en', 'story_es'];
 
     protected $fillable = [
-        'category_id', 'story_en', 'record_en', 'story_es', 'record_es', 'image', 'eg_link', 'visible'
+        'category_id', 'story_en', 'record_en', 'story_es', 'record_es', 'image', 'eg_link',
+        'visible', 'sub_title_en', 'sub_title_es', 'description_en', 'description_es'
     ];
 
     public function category()
