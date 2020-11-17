@@ -68,10 +68,6 @@
                                                         <p>Edit E.G. link</p>
                                                         <input type="text" value="{{ $story->eg_link }}" name="eg_link">
                                                     </div>
-                                                    <div class="categ_btns">
-                                                        <button class="cancel__btn">Cancel</button>
-                                                        <button class="save__btn">Save</button>
-                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
