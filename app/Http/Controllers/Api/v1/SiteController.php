@@ -121,7 +121,7 @@ class SiteController extends ApiController
             }
 
             $query = ItemState::where('user_id', 7)
-                ->selectRaw('type, DATE(updated_at) as updated_at, COUNT(updated_at) as count')
+                ->selectRaw('type, DATE(updated_at1) as updated_at, COUNT(updated_at) as count')
                 ->where('current_state', 'learned')
                 ->groupBy('updated_at')
                 ->whereBetween('updated_at', [
