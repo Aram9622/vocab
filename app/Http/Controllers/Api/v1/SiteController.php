@@ -130,7 +130,7 @@ class SiteController extends ApiController
 
         $query->get()->map(function ($model) use (&$learned) {
             if (!isset($learned[$model->date])) {
-                $learned[$model->date] = ['count' => 0, 'date' => $model->date, Carbon::parse($model->date)->dayName];
+                $learned[$model->date] = ['count' => 0, 'date' => $model->date, 'day' => Carbon::parse($model->date)->dayName];
             }
             $learned[$model->date]['count'] += 1;
         });
