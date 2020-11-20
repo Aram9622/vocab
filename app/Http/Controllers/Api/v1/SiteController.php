@@ -125,13 +125,11 @@ class SiteController extends ApiController
                 ->where('current_state', 'learned')
                 ->whereBetween('updated_at', [
                     $date, Carbon::now()->toDateString()
-                ])
-                ->groupBy('date');
+                ]);
         } else {
             $query = ItemState::selectRaw('type, DATE(updated_at) as date, COUNT(DATE(updated_at)) as count')
                 ->where('user_id', 7)
-                ->where('current_state', 'learned')
-                ->groupBy('date');
+                ->where('current_state', 'learned');
         }
 
         $learned = $query->get();
