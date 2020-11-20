@@ -117,20 +117,22 @@ class SiteController extends ApiController
                 ->selectRaw('type, DATE(updated_at) as date')
                 ->where('current_state', 'learned')
                 ->whereDate('updated_at', '>=', $date)
-                ->whereDate('updated_at', '<=', Carbon::now()->toDateString());
+                ->whereDate('updated_at', '<=', Carbon::now()->toDateString())
+                ->orderByDesc('updated_at');
         } else {
             $query = ItemState::selectRaw('type, DATE(updated_at) as date')
                 ->where('user_id', auth()->id())
-                ->where('current_state', 'learned');
+                ->where('current_state', 'learned')
+                ->orderByDesc('updated_at');
         }
 
         $learned = [];
 
         $query->get()->map(function ($model) use (&$learned) {
             if (!isset($learned[$model->date])) {
-                $learned[$model->date] = 0;
+                $learned[$model->date] = ['count' => 0, 'date' => $model->date, Carbon::parse($model->date)->dayName];
             }
-            $learned[$model->date] += 1;
+            $learned[$model->date]['count'] += 1;
         });
 
         $learnedCount = $query->count();
