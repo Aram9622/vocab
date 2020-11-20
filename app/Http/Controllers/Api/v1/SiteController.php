@@ -102,13 +102,6 @@ class SiteController extends ApiController
 
     public function getStatisticsByInterval($interval = 0)
     {
-        $types = ['words', 'phrases', 'verbs'];
-
-        $count = 0;
-        foreach ($types as $type) {
-            $count += $this->factory($type)->count();
-        }
-
         if ($interval) {
             $date = Carbon::now()->addDays("-$interval")->toDateString();
 
