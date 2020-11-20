@@ -67,6 +67,7 @@ Route::middleware(['auth:api'])->group(function () {
         Route::post('mail', 'SiteController@mail');
         Route::post('general', 'SiteController@general');
         Route::post('search', 'SiteController@search');
+        Route::get('statistics', 'SiteController@statistics');
         Route::post('new-words-show/{id}', 'SiteController@categoryItem');
         //////////////////
 

@@ -3,11 +3,13 @@
 namespace App\Http\Controllers\Api\v1;
 
 use App\Http\Controllers\Api\v1\Traits\Categories;
+use App\ItemState;
 use App\Models\Faq;
 use App\Models\Option;
 use App\Models\User;
 use App\Notifications\Notify;
 use App\Services\Card;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Validator;
 
@@ -96,6 +98,35 @@ class SiteController extends ApiController
         }
 
         return $result;
+    }
+
+    public function getStatisticsByInterval($interval = 0)
+    {
+        $types = ['words', 'phrases', 'verbs'];
+
+        $count = 0;
+        foreach ($types as $type) {
+            $count += $this->factory($type)->count();
+        }
+
+        if ($interval) {
+            $learnedCount = ItemState::where('user_id', auth()->id())
+                ->where('current_state', 'learned')
+                ->whereBetween('updated_at', [
+                    Carbon::now()->addDays("-$interval")->toDateString(), Carbon::now()->toDateString()
+                ])->count();
+        } else {
+            $learnedCount = ItemState::where('user_id', auth()->id())->where('current_state', 'learned')->count();
+        }
+
+        return ['count' => $count, 'learned' => $learnedCount];
+    }
+
+    public function statistics()
+    {
+        $allTime = $this->getStatisticsByInterval();
+
+        return compact('allTime');
     }
 
     public function mail(Request $request)
