@@ -116,21 +116,22 @@ class SiteController extends ApiController
                 $date = Carbon::now()->startOfWeek()->toDateString();
             } elseif ($interval == 30) {
                 $date = Carbon::now()->startOfMonth()->toDateString();
-            }elseif ($interval == 365) {
+            } elseif ($interval == 365) {
                 $date = Carbon::now()->startOfYear()->toDateString();
             }
 
             $query = ItemState::where('user_id', 7)
-                ->selectRaw('type, DATE(updated_at1) as updated_at, COUNT(updated_at) as count')
+                ->selectRaw('type, DATE(updated_at) as updated_at, COUNT(updated_at) as count')
                 ->where('current_state', 'learned')
-                ->groupBy('updated_at')
                 ->whereBetween('updated_at', [
                     $date, Carbon::now()->toDateString()
-                ]);
+                ])
+                ->groupBy('updated_at');
         } else {
             $query = ItemState::selectRaw('type, DATE(updated_at) as updated_at, COUNT(updated_at) as count')
                 ->where('user_id', 7)
-                ->where('current_state', 'learned');
+                ->where('current_state', 'learned')
+                ->groupBy('updated_at');
         }
 
         $learned = $query->get();
@@ -188,22 +189,22 @@ class SiteController extends ApiController
 
     public function addToCard(Request $request)
     {
-       try {
-           $validator = Validator::make($request->all(), [
-               'data' => 'required|array',
-               'data.*.item_id' => 'required|numeric',
-               'data.*.type' => 'required|string|max:20',
-           ]);
+        try {
+            $validator = Validator::make($request->all(), [
+                'data' => 'required|array',
+                'data.*.item_id' => 'required|numeric',
+                'data.*.type' => 'required|string|max:20',
+            ]);
 
-           if ($validator->fails()) {
-               return response()->json(['error' => $validator->errors()], 401);
-           }
+            if ($validator->fails()) {
+                return response()->json(['error' => $validator->errors()], 401);
+            }
 
-           $card = new Card();
-           $card->setItems($request->data);
-       } catch (\Exception $e) {
-           return response()->json(['error' => 'Check the POST data params. ' . $e->getMessage(), 'POST' => $request->all()], 401);
-       }
+            $card = new Card();
+            $card->setItems($request->data);
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Check the POST data params. ' . $e->getMessage(), 'POST' => $request->all()], 401);
+        }
 
         return ['success' => true];
     }
