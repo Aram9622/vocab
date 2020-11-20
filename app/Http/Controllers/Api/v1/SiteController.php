@@ -140,7 +140,7 @@ class SiteController extends ApiController
 
     public function statistics()
     {
-        $allTime = $this->getStatisticsByInterval();
+        $allTime = $this->getStatisticsByInterval(365);
         $thisWeek = $this->getStatisticsByInterval(7);
         $thisMonth = $this->getStatisticsByInterval(30);
 
