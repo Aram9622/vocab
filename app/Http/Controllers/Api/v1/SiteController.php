@@ -119,7 +119,7 @@ class SiteController extends ApiController
             $query = ItemState::where('user_id', auth()->id())->where('current_state', 'learned');
         }
 
-        $learned = $query->selectRaw('type', 'updated_at')->get();
+        $learned = $query->selectRaw('type, updated_at')->get();
 
         $learnedCount = $query->count();
 
