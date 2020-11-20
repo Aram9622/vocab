@@ -131,11 +131,15 @@ class SiteController extends ApiController
                 ->where('current_state', 'learned');
         }
 
-        $learned = $query->get();
+        $learned = [];
+
+        $query->get()->map(function ($model) use (&$learned) {
+            $learned[$model->date] = $model->date;
+        });
 
         $learnedCount = $query->count();
 
-        return ['allTimeCount' => $count, 'learnedCount' => $learnedCount, 'learned' => $learned];
+        return ['allTimeCount' => $count, 'learnedCount' => $learnedCount, 'learned' => array_values($learned)];
     }
 
     public function statistics()
