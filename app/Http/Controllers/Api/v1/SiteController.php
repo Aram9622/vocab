@@ -118,7 +118,7 @@ class SiteController extends ApiController
                 $date = Carbon::now()->startOfMonth()->toDateString();
             }
 
-            $query = ItemState::where('user_id', 7)
+            $query = ItemState::where('user_id', auth()->id())
                 ->selectRaw('type, DATE(updated_at) as updated_at, COUNT(updated_at) as count')
                 ->where('current_state', 'learned')
                 ->groupBy('updated_at')
@@ -127,7 +127,7 @@ class SiteController extends ApiController
                 ]);
         } else {
             $query = ItemState::selectRaw('type, DATE(updated_at) as updated_at, COUNT(updated_at) as count')
-                ->where('user_id', 7)
+                ->where('user_id', auth()->id())
                 ->where('current_state', 'learned');
         }
 
