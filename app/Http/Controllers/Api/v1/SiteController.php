@@ -110,16 +110,20 @@ class SiteController extends ApiController
         }
 
         if ($interval) {
-            $learnedCount = ItemState::where('user_id', auth()->id())
+            $query = ItemState::where('user_id', auth()->id())
                 ->where('current_state', 'learned')
                 ->whereBetween('updated_at', [
                     Carbon::now()->addDays("-$interval")->toDateString(), Carbon::now()->toDateString()
-                ])->count();
+                ]);
         } else {
-            $learnedCount = ItemState::where('user_id', auth()->id())->where('current_state', 'learned')->count();
+            $query = ItemState::where('user_id', auth()->id())->where('current_state', 'learned');
         }
 
-        return ['count' => $count, 'learned' => $learnedCount];
+        $learned = $query->selectRaw('type', 'updated_at')->get();
+
+        $learnedCount = $query->count();
+
+        return ['count' => $count, 'learnedCunt' => $learnedCount, 'learned' => $learned];
     }
 
     public function statistics()
