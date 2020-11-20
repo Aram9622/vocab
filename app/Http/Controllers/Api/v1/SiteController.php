@@ -121,14 +121,14 @@ class SiteController extends ApiController
             }
 
             $query = ItemState::where('user_id', 7)
-                ->selectRaw('type, DATE(updated_at) as date, COUNT(updated_at) as count')
+                ->selectRaw('type, DATE(updated_at) as date, COUNT(date) as count')
                 ->where('current_state', 'learned')
                 ->whereBetween('updated_at', [
                     $date, Carbon::now()->toDateString()
                 ])
                 ->groupBy('updated_at');
         } else {
-            $query = ItemState::selectRaw('type, DATE(updated_at) as date, COUNT(updated_at) as count')
+            $query = ItemState::selectRaw('type, DATE(updated_at) as date, COUNT(date) as count')
                 ->where('user_id', 7)
                 ->where('current_state', 'learned')
                 ->groupBy('updated_at');
