@@ -127,7 +127,10 @@ class SiteController extends ApiController
         $learned = [];
 
         $query->get()->map(function ($model) use (&$learned) {
-            $learned[$model->date] = $model->date;
+            if (!isset($learned[$model->date])) {
+                $learned[$model->date] = 0;
+            }
+            $learned[$model->date] += 1;
         });
 
         $learnedCount = $query->count();
