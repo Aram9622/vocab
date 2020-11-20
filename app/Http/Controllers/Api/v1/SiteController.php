@@ -114,6 +114,7 @@ class SiteController extends ApiController
 
             if ($interval == 7) {
                 $date = Carbon::now()->startOfWeek()->toDateString();
+                echo $date; die;
             } elseif ($interval == 30) {
                 $date = Carbon::now()->startOfMonth()->toDateString();
             }elseif ($interval == 365) {
