@@ -10,7 +10,6 @@ use App\Models\Phrase;
 use App\Models\Verb;
 use App\Models\Word;
 use App\Models\Story;
-use Illuminate\Support\Facades\DB;
 
 trait Categories
 {

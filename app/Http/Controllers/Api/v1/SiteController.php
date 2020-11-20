@@ -110,16 +110,26 @@ class SiteController extends ApiController
         }
 
         if ($interval) {
+            $date = Carbon::now()->addDays("-$interval")->toDateString();
+
+            if ($interval == 7) {
+                $date = Carbon::now()->startOfWeek()->toDateString();
+            } elseif ($interval == 30) {
+                $date = Carbon::now()->startOfMonth()->toDateString();
+            }
+
             $query = ItemState::where('user_id', auth()->id())
+                ->selectRaw('type, DATE(updated_at) as updated_at, COUNT(updated_at) as count')
                 ->where('current_state', 'learned')
+                ->groupBy('updated_at')
                 ->whereBetween('updated_at', [
-                    Carbon::now()->addDays("-$interval")->toDateString(), Carbon::now()->toDateString()
+                    $date, Carbon::now()->toDateString()
                 ]);
         } else {
             $query = ItemState::where('user_id', auth()->id())->where('current_state', 'learned');
         }
 
-        $learned = $query->selectRaw('type, updated_at')->get();
+        $learned = $query->get();
 
         $learnedCount = $query->count();
 
