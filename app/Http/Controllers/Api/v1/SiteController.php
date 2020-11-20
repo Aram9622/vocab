@@ -116,6 +116,8 @@ class SiteController extends ApiController
                 $date = Carbon::now()->startOfWeek()->toDateString();
             } elseif ($interval == 30) {
                 $date = Carbon::now()->startOfMonth()->toDateString();
+            }elseif ($interval == 365) {
+                $date = Carbon::now()->startOfYear()->toDateString();
             }
 
             $query = ItemState::where('user_id', auth()->id())
