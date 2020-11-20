@@ -139,7 +139,7 @@ class SiteController extends ApiController
 
         $learnedCount = $query->count();
 
-        return ['allTimeCount' => $count, 'learnedCount' => $learnedCount, 'learned' => array_values($learned)];
+        return ['learnedCount' => $learnedCount, 'learned' => array_values($learned)];
     }
 
     public function statistics()
