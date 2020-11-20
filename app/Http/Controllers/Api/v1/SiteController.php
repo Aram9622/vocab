@@ -125,8 +125,10 @@ class SiteController extends ApiController
     public function statistics()
     {
         $allTime = $this->getStatisticsByInterval();
+        $thisWeek = $this->getStatisticsByInterval(7);
+        $thisMonth = $this->getStatisticsByInterval(30);
 
-        return compact('allTime');
+        return compact('allTime', 'thisWeek', 'thisMonth');
     }
 
     public function mail(Request $request)
