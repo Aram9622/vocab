@@ -120,7 +120,7 @@ class SiteController extends ApiController
                 $date = Carbon::now()->startOfYear()->toDateString();
             }
 
-            $query = ItemState::where('user_id', auth()->id())
+            $query = ItemState::where('user_id', 7)
                 ->selectRaw('type, DATE(updated_at) as updated_at, COUNT(updated_at) as count')
                 ->where('current_state', 'learned')
                 ->groupBy('updated_at')
@@ -129,7 +129,7 @@ class SiteController extends ApiController
                 ]);
         } else {
             $query = ItemState::selectRaw('type, DATE(updated_at) as updated_at, COUNT(updated_at) as count')
-                ->where('user_id', auth()->id())
+                ->where('user_id', 7)
                 ->where('current_state', 'learned');
         }
 
@@ -142,9 +142,9 @@ class SiteController extends ApiController
 
     public function statistics()
     {
-        $allTime = $this->getStatisticsByInterval(365);
         $thisWeek = $this->getStatisticsByInterval(7);
         $thisMonth = $this->getStatisticsByInterval(30);
+        $allTime = $this->getStatisticsByInterval(365);
 
         return compact('allTime', 'thisWeek', 'thisMonth');
     }
