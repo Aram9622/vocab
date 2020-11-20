@@ -118,12 +118,12 @@ class SiteController extends ApiController
                 ->where('current_state', 'learned')
                 ->whereDate('updated_at', '>=', $date)
                 ->whereDate('updated_at', '<=', Carbon::now()->toDateString())
-                ->orderByDesc('updated_at');
+                ->orderBy('updated_at');
         } else {
             $query = ItemState::selectRaw('type, DATE(updated_at) as date')
                 ->where('user_id', auth()->id())
                 ->where('current_state', 'learned')
-                ->orderByDesc('updated_at');
+                ->orderBy('updated_at');
         }
 
         $learned = [];
