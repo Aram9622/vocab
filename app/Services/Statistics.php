@@ -21,15 +21,18 @@ class Statistics
             } elseif ($interval == 365) {
                 $date = Carbon::now()->startOfYear();
 
-                $result = [];
+                $learned = [];
 
-                $result[] = $this->getStatisticsByInterval(30, $date->toDateString());
+                $learned[] = $this->getStatisticsByInterval(30, $date->toDateString());
+
+                $learnedCount = $learned[0]['learnedCount'] ?? 0;
 
                 for ($i = 1; $i <= 11; $i++) {
-                    $result[] = $this->getStatisticsByInterval(30, $date->addMonths($i + 1)->toDateString());
+                    $learned[$i] = $this->getStatisticsByInterval(30, $date->addMonths($i + 1)->toDateString());
+                    $learnedCount += $learned[$i]['learnedCount'] ?? 0;
                 }
 
-                return $result;
+                return ['learnedCount' => $learnedCount, 'learned' => $learned];
             }
 
             $query = ItemState::query()->where('user_id', 7)
