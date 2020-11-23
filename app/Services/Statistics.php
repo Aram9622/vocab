@@ -101,10 +101,10 @@ class Statistics
             }
         }
 
-        print_r($_date->toDateString());
-        print_r($start);
-        print_r($end);
-        print_r($array);
+//        print_r($_date->toDateString());
+//        print_r($start);
+//        print_r($end);
+//        print_r($array);
 
         $array['pointsByWeek'] = array_values($newArray);
     }
