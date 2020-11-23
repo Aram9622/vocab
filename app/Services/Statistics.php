@@ -16,6 +16,10 @@ class Statistics
         $_date = $_date ?: Carbon::now();
 
         $startOMonth = clone $_date->startOfMonth();
+        $endOMonth = clone $_date->endOfMonth()->addDays(1);
+
+        $startOfWeek = clone $_date->startOfWeek();
+        $endOfWeek = clone $_date->endOfWeek();
 
         $query = ItemState::query()->where('user_id', 7)
             ->selectRaw('type, DATE(updated_at) as date')
@@ -23,14 +27,13 @@ class Statistics
             ->orderBy('updated_at');
 
         if ($interval == self::INTERVAL_WEEK) {
-            echo Carbon::now()->startOfWeek()->toDateString(), ' ', Carbon::now()->endOfWeek()->toDateString(); die;
             $query = $query
-                ->whereDate('updated_at', '>=', $_date->startOfWeek()->toDateString())
-                ->whereDate('updated_at', '<=', $_date->endOfWeek()->toDateString());
+                ->whereDate('updated_at', '>=', $startOfWeek->toDateString())
+                ->whereDate('updated_at', '<=', $endOfWeek->toDateString());
         } elseif ($interval == self::INTERVAL_MONTH) {
             $query = $query
                 ->whereDate('updated_at', '>=', $startOMonth->toDateString())
-                ->whereDate('updated_at', '<', $_date->endOfMonth()->addDays(1)->toDateString());
+                ->whereDate('updated_at', '<', $endOMonth->toDateString());
         } elseif ($interval == self::INTERVAL_YEAR) {
             $year = $_date->year;
             $learned = [];
