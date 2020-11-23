@@ -115,7 +115,7 @@ class SiteController extends ApiController
                 $date = Carbon::now()->startOfYear()->toDateString();
             }
 
-            $query = ItemState::query()->where('user_id', 4)
+            $query = ItemState::query()->where('user_id', 7)
                 ->selectRaw('type, DATE(updated_at) as date')
                 ->where('current_state', 'learned')
                 ->whereDate('updated_at', '>=', $date)
