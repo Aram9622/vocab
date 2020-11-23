@@ -30,7 +30,7 @@ class Statistics
             $date = Carbon::createFromDate($_date->year, $_date->month);
 
             $query = $query
-                ->whereDate('updated_at', '>=', $date)
+                ->whereDate('updated_at', '>=', $date->toDateString())
                 ->whereDate('updated_at', '<', $_date->endOfMonth()->addDays(1)->toDateString());
         } elseif ($interval == self::INTERVAL_YEAR) {
             $year = $_date->year;
