@@ -88,6 +88,7 @@ class Statistics
             foreach ($array as $key => $value) {
                 // condition for every week
                 if (strtotime($value['date']) >= strtotime($start[$j]) && strtotime($value['date']) <= strtotime($end[$j])) {
+                    echo 777; die;
                     if (empty($newArray[$k])) {
                         $newArray[$k] = ['count' => 0, 'dates' => [], 'days' => []];
                     }
