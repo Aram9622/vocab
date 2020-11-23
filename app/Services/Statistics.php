@@ -21,7 +21,7 @@ class Statistics
         $startOfWeek = Carbon::createFromDate($_date->year, $_date->month, $_date->day)->startOfWeek();
         $endOfWeek = Carbon::createFromDate($_date->year, $_date->month, $_date->day)->endOfWeek();
 
-        $query = ItemState::query()->where('user_id', 7)
+        $query = ItemState::query()->where('user_id', auth()->id())
             ->selectRaw('type, DATE(updated_at) as date')
             ->where('current_state', 'learned')
             ->orderBy('updated_at');
