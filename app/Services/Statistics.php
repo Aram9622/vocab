@@ -23,12 +23,12 @@ class Statistics
 
                 $learned = [];
 
-                $learned[] = $this->getStatisticsByInterval(30, $date->toDateString());
+                $learned[] = $this->getStatisticsByInterval(30, $date);
 
                 $learnedCount = $learned[0]['learnedCount'] ?? 0;
 
                 for ($i = 1; $i <= 11; $i++) {
-                    $learned[$i] = $this->getStatisticsByInterval(30, $date->addMonths($i + 1)->toDateString());
+                    $learned[$i] = $this->getStatisticsByInterval(30, $date->addMonths($i + 1));
                     $learnedCount += $learned[$i]['learnedCount'] ?? 0;
                 }
 
