@@ -15,6 +15,8 @@ class Statistics
     {
         $_date = $_date ?: Carbon::now();
 
+        $startOMonth = $_date->startOfMonth();
+
         $query = ItemState::query()->where('user_id', 7)
             ->selectRaw('type, DATE(updated_at) as date')
             ->where('current_state', 'learned')
@@ -27,10 +29,8 @@ class Statistics
                 ->whereDate('updated_at', '>=', $date->toDateString())
                 ->whereDate('updated_at', '<=', $_date->toDateString());
         } elseif ($interval == self::INTERVAL_MONT) {
-            $date = $_date->startOfMonth();
-
             $query = $query
-                ->whereDate('updated_at', '>=', $date->toDateString())
+                ->whereDate('updated_at', '>=', $startOMonth->toDateString())
                 ->whereDate('updated_at', '<', $_date->endOfMonth()->addDays(1)->toDateString());
         } elseif ($interval == self::INTERVAL_YEAR) {
             $year = $_date->year;
@@ -60,8 +60,7 @@ class Statistics
         $learned = array_values($learned);
 
         if ($interval == self::INTERVAL_MONT) {
-            print_r($_date->toDateString()); die;
-            $this->sortByWeeks($learned, $_date->startOfMonth());
+            $this->sortByWeeks($learned, $startOMonth);
         }
 
         return ['learnedCount' => $learnedCount, 'learned' => $learned];
