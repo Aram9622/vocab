@@ -29,7 +29,7 @@ class Statistics
         } elseif ($interval == self::INTERVAL_MONT) {
             //$date = Carbon::createFromDate($_date->year, $_date->month);
 
-            $date = $_date->startOfWeek();
+            $date = $_date->startOfMonth();
 
             $query = $query
                 ->whereDate('updated_at', '>=', $date->toDateString())
