@@ -57,13 +57,11 @@ class Statistics
 
     public function sortByWeeks(&$array, $_date)
     {
-        $year = Carbon::parse($_date)->year;
-        $month= Carbon::parse($_date)->month;
+        $year = $_date->year;
+        $month= $_date->month;
         $date = Carbon::createFromDate($year, $month);
 
-        dump($year, $month, $date, $_date);
-
-        $numberOfWeeks = floor($date->daysInMonth / Carbon::DAYS_PER_WEEK);
+//        $numberOfWeeks = floor($date->daysInMonth / Carbon::DAYS_PER_WEEK);
 
         $newArray = $start = $end = [];
 
