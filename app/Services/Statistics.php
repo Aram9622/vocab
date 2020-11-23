@@ -16,10 +16,10 @@ class Statistics
         $_date = $_date ?: Carbon::now();
 
         $startOMonth = Carbon::createFromDate($_date->year, $_date->month, 1);
-        $endOMonth = $startOMonth->endOfMonth()->addDays(1);
+        $endOMonth = Carbon::createFromDate($_date->year, $_date->month, 1)->endOfMonth()->addDays(1);
 
         $startOfWeek = Carbon::createFromDate($_date->year, $_date->month, $_date->day)->startOfWeek();
-        $endOfWeek = $startOfWeek->endOfWeek();
+        $endOfWeek = Carbon::createFromDate($_date->year, $_date->month, $_date->day)->endOfWeek();
 
         $query = ItemState::query()->where('user_id', 7)
             ->selectRaw('type, DATE(updated_at) as date')
