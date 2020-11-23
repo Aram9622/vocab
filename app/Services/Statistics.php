@@ -72,8 +72,6 @@ class Statistics
         $month = $_date->month;
         $date = Carbon::createFromDate($year, $month);
 
-        print_r($date->toDateString());
-
 //        $numberOfWeeks = floor($date->daysInMonth / Carbon::DAYS_PER_WEEK);
 
         $newArray = $start = $end = [];
@@ -84,6 +82,8 @@ class Statistics
             Carbon::createFromDate($year, $month, $i);
             $start[$j] = Carbon::createFromDate($year, $month, $i)->startOfWeek()->toDateString();
             $end[$j] = Carbon::createFromDate($year, $month, $i)->endOfweek()->toDateString();
+
+            var_dump($start[$j], $end[$j]);
 
             //---------------
 
