@@ -72,7 +72,7 @@ class Statistics
         $month = $_date->month;
         $date = Carbon::createFromDate($year, $month);
 
-        print_r($date);
+        print_r($date->toDateString());
 
 //        $numberOfWeeks = floor($date->daysInMonth / Carbon::DAYS_PER_WEEK);
 
