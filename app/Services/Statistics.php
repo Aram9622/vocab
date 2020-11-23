@@ -24,7 +24,6 @@ class Statistics
                 $learned = [];
 
                 $learned[] = $this->getStatisticsByInterval(30, $date);
-
                 $learnedCount = $learned[0]['learnedCount'] ?? 0;
 
                 for ($i = 1; $i <= 11; $i++) {
@@ -39,7 +38,7 @@ class Statistics
                 ->selectRaw('type, DATE(updated_at) as date')
                 ->where('current_state', 'learned')
                 ->whereDate('updated_at', '>=', $date)
-                ->whereDate('updated_at', '<=', Carbon::now()->toDateString())
+                ->whereDate('updated_at', '<=', $_date->toDateString())
                 ->orderBy('updated_at');
         } else {
             $query = ItemState::selectRaw('type, DATE(updated_at) as date')
