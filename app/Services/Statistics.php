@@ -41,8 +41,8 @@ class Statistics
 
             for ($i = 1; $i <= 12; $i++) {
                 $date = Carbon::createFromDate($year, $i);
-                $learned[$i-1] = $this->getStatisticsByInterval(self::INTERVAL_MONTH, $date);
-                $learnedCount += $learned[$i-1]['learnedCount'] ?? 0;
+                $learned[$i - 1] = $this->getStatisticsByInterval(self::INTERVAL_MONTH, $date);
+                $learnedCount += $learned[$i - 1]['learnedCount'] ?? 0;
             }
 
             return ['learnedCount' => $learnedCount, 'learned' => $learned];
@@ -72,7 +72,7 @@ class Statistics
     {
         $year = $_date->year;
         $month = $_date->month;
-        // $numberOfWeeks = floor($_date->daysInMonth / Carbon::DAYS_PER_WEEK);
+        $numberOfWeeks = floor($_date->daysInMonth / Carbon::DAYS_PER_WEEK);
 
         $start = $end = [];
         $j = 1;
@@ -80,7 +80,8 @@ class Statistics
             Carbon::createFromDate($year, $month, $i);
             $start[$j] = Carbon::createFromDate($year, $month, $i)->startOfWeek()->toDateString();
             $end[$j] = Carbon::createFromDate($year, $month, $i)->endOfweek()->toDateString();
-            $i += 7; $j++;
+            $i += 7;
+            $j++;
         }
 
         $newArray = [];
@@ -100,5 +101,6 @@ class Statistics
         }
 
         $array['pointsByWeek'] = array_values($newArray);
+        $array['numberOfWeeks'] = $numberOfWeeks;
     }
 }
