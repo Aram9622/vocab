@@ -95,6 +95,6 @@ class Statistics
             $j++;
         }
 
-        $array['pointsByWeek'] = $newArray;
+        $array['pointsByWeek'] = array_values($newArray);
     }
 }
