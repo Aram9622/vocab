@@ -73,19 +73,24 @@ class Statistics
 
         // $numberOfWeeks = floor($_date->daysInMonth / Carbon::DAYS_PER_WEEK);
 
-        $newArray = $start = $end = [];
+        $start = $end = [];
 
-        $j = $k = 1;
+        $j = 1;
         for ($i = 1; $i <= $_date->daysInMonth; $i++) {
             Carbon::createFromDate($year, $month, $i);
             $start[$j] = Carbon::createFromDate($year, $month, $i)->startOfWeek()->toDateString();
             $end[$j] = Carbon::createFromDate($year, $month, $i)->endOfweek()->toDateString();
 
-            //---------------
+            $i += 7; $j++;
+        }
 
+        $newArray = [];
+
+        $k = 0;
+        foreach ($start as $_key => $_value) {
             foreach ($array as $key => $value) {
                 // condition for every week
-                if (strtotime($value['date']) >= strtotime($start[$j]) && strtotime($value['date']) <= strtotime($end[$j])) {
+                if (strtotime($value['date']) >= strtotime($start[$_key]) && strtotime($value['date']) <= strtotime($end[$_key])) {
                     if (empty($newArray[$k])) {
                         $newArray[$k] = ['count' => 0, 'dates' => [], 'days' => []];
                     }
@@ -97,16 +102,11 @@ class Statistics
                     $k++;
                 }
             }
-
-            //---------------
-
-            $i += 7;
-            $j++;
         }
 
-        print_r($_date->toDateString());
-        print_r($start);
-        print_r($end);
+//        print_r($_date->toDateString());
+//        print_r($start);
+//        print_r($end);
 
         $array['pointsByWeek'] = array_values($newArray);
     }
