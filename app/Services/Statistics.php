@@ -20,8 +20,7 @@ class Statistics
                 $date = Carbon::now()->startOfMonth()->addDays('-3')->startOfMonth()->toDateString();
             } elseif ($interval == 365) {
                 $year = $_date->year;
-                $month = $_date->month;
-                $date = Carbon::createFromDate($year, $month);
+                $date = Carbon::createFromDate($year, 1);
 
                 $learned = [];
                 $learnedCount = 0;
@@ -29,7 +28,7 @@ class Statistics
 //                $learnedCount = $learned[0]['learnedCount'] ?? 0;
 
                 for ($i = 1; $i <= 11; $i++) {
-                    $learned[$i] = $this->getStatisticsByInterval(30, $date->addMonths($i));
+                    $learned[$i] = $this->getStatisticsByInterval(30, $date->addMonths($i+1));
                     $learnedCount += $learned[$i]['learnedCount'] ?? 0;
                 }
 
