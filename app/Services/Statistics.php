@@ -19,7 +19,9 @@ class Statistics
             } elseif ($interval == 30) {
                 $date = Carbon::now()->startOfMonth()->addDays('-3')->startOfMonth()->toDateString();
             } elseif ($interval == 365) {
-                $date = Carbon::now()->startOfYear();
+                $year = $_date->year;
+                $month = $_date->month;
+                $date = Carbon::createFromDate($year, $month);
 
                 $learned = [];
                 $learnedCount = 0;
