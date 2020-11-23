@@ -106,7 +106,7 @@ class Statistics
             $j++;
         }
 
-//        dd($start, $end);
+        dd($start, $end);
 
         $array['pointsByWeek'] = array_values($newArray);
 
