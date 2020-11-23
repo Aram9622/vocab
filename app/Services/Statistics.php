@@ -68,6 +68,8 @@ class Statistics
 
     public function sortByWeeks(&$array, $_date)
     {
+        print_r($_date); die;
+
         $year = $_date->year;
         $month = $_date->month;
 
