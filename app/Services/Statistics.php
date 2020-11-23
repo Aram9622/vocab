@@ -31,6 +31,8 @@ class Statistics
 
             $date = $_date->startOfMonth();
 
+            dd($date->toDateString(), $_date->endOfMonth());
+
             $query = $query
                 ->whereDate('updated_at', '>=', $date->toDateString())
                 ->whereDate('updated_at', '<', $_date->endOfMonth()->addDays(1)->toDateString());
