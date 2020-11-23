@@ -15,41 +15,32 @@ class Statistics
     {
         $_date = $_date ?: Carbon::now();
 
-        if ($interval) {
-            $date = $_date;
+        $date = $_date;
 
-            if ($interval == 7) {
-                $date = $_date->startOfWeek()->toDateString();
-            } elseif ($interval == 30) {
-                $date = $_date->startOfMonth()->startOfMonth()->toDateString();
-            } elseif ($interval == 365) {
-                $year = $_date->year;
-                $learned = [];
-                $learnedCount = 0;
-//                $learned[] = $this->getStatisticsByInterval(30, $date);
-//                $learnedCount = $learned[0]['learnedCount'] ?? 0;
+        if ($interval == self::INTERVAL_WEEK) {
+            $date = $_date->startOfWeek()->toDateString();
+        } elseif ($interval == self::INTERVAL_MONT) {
+            $date = $_date->startOfMonth()->startOfMonth()->toDateString();
+        } elseif ($interval == self::INTERVAL_YEAR) {
+            $year = $_date->year;
+            $learned = [];
+            $learnedCount = 0;
 
-                for ($i = 1; $i <= 12; $i++) {
-                    $date = Carbon::createFromDate($year, $i);
-                    $learned[$i] = $this->getStatisticsByInterval(30, $date);
-                    $learnedCount += $learned[$i]['learnedCount'] ?? 0;
-                }
-
-                return ['learnedCount' => $learnedCount, 'learned' => $learned];
+            for ($i = 1; $i <= 12; $i++) {
+                $date = Carbon::createFromDate($year, $i);
+                $learned[$i] = $this->getStatisticsByInterval(self::INTERVAL_MONT, $date);
+                $learnedCount += $learned[$i]['learnedCount'] ?? 0;
             }
 
-            $query = ItemState::query()->where('user_id', 7)
-                ->selectRaw('type, DATE(updated_at) as date')
-                ->where('current_state', 'learned')
-                ->whereDate('updated_at', '>=', $date)
-                ->whereDate('updated_at', '<', $_date->endOfMonth()->addDays(1)->toDateString())
-                ->orderBy('updated_at');
-        } else {
-            $query = ItemState::selectRaw('type, DATE(updated_at) as date')
-                ->where('user_id', auth()->id())
-                ->where('current_state', 'learned')
-                ->orderBy('updated_at');
+            return ['learnedCount' => $learnedCount, 'learned' => $learned];
         }
+
+        $query = ItemState::query()->where('user_id', 7)
+            ->selectRaw('type, DATE(updated_at) as date')
+            ->where('current_state', 'learned')
+            ->whereDate('updated_at', '>=', $date)
+            ->whereDate('updated_at', '<', $_date->endOfMonth()->addDays(1)->toDateString())
+            ->orderBy('updated_at');
 
         $learned = [];
 
