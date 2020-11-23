@@ -83,8 +83,6 @@ class Statistics
             $start[$j] = Carbon::createFromDate($year, $month, $i)->startOfWeek()->toDateString();
             $end[$j] = Carbon::createFromDate($year, $month, $i)->endOfweek()->toDateString();
 
-            dump($start[$j]);
-
             //---------------
 
             foreach ($array as $key => $value) {
@@ -107,6 +105,8 @@ class Statistics
             $i += 7;
             $j++;
         }
+
+        dd($start, $end);
 
         $array['pointsByWeek'] = array_values($newArray);
 
