@@ -12,7 +12,7 @@ class Statistics
         $_date = $_date ?: Carbon::now();
 
         if ($interval) {
-            //$date = $_date->addDays("-$interval")->toDateString();
+            $date = $_date;
 
             if ($interval == 7) {
                 $date = $_date->startOfWeek()->toDateString();
@@ -95,6 +95,6 @@ class Statistics
             $j++;
         }
 
-        $array = $newArray;
+        $array['pointsByWeek'] = $newArray;
     }
 }
