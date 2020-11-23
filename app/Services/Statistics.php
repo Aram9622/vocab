@@ -21,17 +21,13 @@ class Statistics
             ->orderBy('updated_at');
 
         if ($interval == self::INTERVAL_WEEK) {
-            $date = $_date->startOfWeek()->toDateString();
+            $date = $_date->startOfWeek();
 
             $query = $query
-                ->whereDate('updated_at', '>=', $date)
+                ->whereDate('updated_at', '>=', $date->toDateString())
                 ->whereDate('updated_at', '<=', $_date->toDateString());
         } elseif ($interval == self::INTERVAL_MONT) {
-            //$date = Carbon::createFromDate($_date->year, $_date->month);
-
             $date = $_date->startOfMonth();
-
-            dd($date->toDateString(), $_date->endOfMonth());
 
             $query = $query
                 ->whereDate('updated_at', '>=', $date->toDateString())
@@ -64,7 +60,7 @@ class Statistics
         $learned = array_values($learned);
 
         if ($interval == self::INTERVAL_MONT) {
-            $this->sortByWeeks($learned, $_date);
+            $this->sortByWeeks($learned, $date);
         }
 
         return ['learnedCount' => $learnedCount, 'learned' => $learned];
