@@ -100,20 +100,22 @@ class SiteController extends ApiController
         return $result;
     }
 
-    public function getStatisticsByInterval($interval = 0)
+    public function getStatisticsByInterval($interval = 0, $_date = null)
     {
+        $_date = $_date ?: Carbon::now();
+
         if ($interval) {
-            $date = Carbon::now()->addDays("-$interval")->toDateString();
+            $date = $_date->addDays("-$interval")->toDateString();
 
             if ($interval == 7) {
-                $date = Carbon::now()->startOfWeek()->toDateString();
+                $date = $_date->startOfWeek()->toDateString();
             } elseif ($interval == 30) {
-                $date = Carbon::now()->startOfMonth()->toDateString();
+                $date = $_date->startOfMonth()->toDateString();
             } elseif ($interval == 365) {
                 $date = Carbon::now()->startOfYear()->toDateString();
             }
 
-            $query = ItemState::query()->where('user_id', auth()->id())
+            $query = ItemState::query()->where('user_id', 4)
                 ->selectRaw('type, DATE(updated_at) as date')
                 ->where('current_state', 'learned')
                 ->whereDate('updated_at', '>=', $date)
