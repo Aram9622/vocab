@@ -12,12 +12,12 @@ class Statistics
         $_date = $_date ?: Carbon::now();
 
         if ($interval) {
-            $date = $_date->subDays($interval)->toDateString();
+            //$date = $_date->addDays("-$interval")->toDateString();
 
             if ($interval == 7) {
                 $date = $_date->startOfWeek()->toDateString();
             } elseif ($interval == 30) {
-                $date = $_date->startOfMonth()->toDateString();
+                $date = Carbon::now()->startOfMonth()->addDays('-3')->startOfMonth()->toDateString();
             } elseif ($interval == 365) {
                 $date = Carbon::now()->startOfYear()->toDateString();
             }
