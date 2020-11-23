@@ -71,7 +71,7 @@ class Statistics
         $year = $_date->year;
         $month = $_date->month;
 
-//        $numberOfWeeks = floor($date->daysInMonth / Carbon::DAYS_PER_WEEK);
+        // $numberOfWeeks = floor($_date->daysInMonth / Carbon::DAYS_PER_WEEK);
 
         $newArray = $start = $end = [];
 
@@ -103,6 +103,10 @@ class Statistics
             $i += 7;
             $j++;
         }
+
+        print_r($_date->toDateString());
+        print_r($start);
+        print_r($end);
 
         $array['pointsByWeek'] = array_values($newArray);
     }
