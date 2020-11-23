@@ -17,7 +17,7 @@ class Statistics
 
         $startOMonth = clone $_date->startOfMonth();
 
-        $query = ItemState::query()->where('user_id', 7)
+        $query = ItemState::query()->where('user_id', auth()->id())
             ->selectRaw('type, DATE(updated_at) as date')
             ->where('current_state', 'learned')
             ->orderBy('updated_at');
@@ -70,22 +70,18 @@ class Statistics
     {
         $year = $_date->year;
         $month = $_date->month;
-
         // $numberOfWeeks = floor($_date->daysInMonth / Carbon::DAYS_PER_WEEK);
 
         $start = $end = [];
-
         $j = 1;
         for ($i = 1; $i <= $_date->daysInMonth; $i++) {
             Carbon::createFromDate($year, $month, $i);
             $start[$j] = Carbon::createFromDate($year, $month, $i)->startOfWeek()->toDateString();
             $end[$j] = Carbon::createFromDate($year, $month, $i)->endOfweek()->toDateString();
-
             $i += 7; $j++;
         }
 
         $newArray = [];
-
         foreach ($start as $_key => $_value) {
             foreach ($array as $key => $value) {
                 // condition for every week
@@ -100,11 +96,6 @@ class Statistics
                 }
             }
         }
-
-//        print_r($_date->toDateString());
-//        print_r($start);
-//        print_r($end);
-//        print_r($array);
 
         $array['pointsByWeek'] = array_values($newArray);
     }
