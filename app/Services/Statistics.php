@@ -7,7 +7,11 @@ use Carbon\Carbon;
 
 class Statistics
 {
-    public function getStatisticsByInterval($interval = 0, $_date = null)
+    public const INTERVAL_WEEK = 7;
+    public const INTERVAL_MONT = 30;
+    public const INTERVAL_YEAR = 365;
+
+    public function getStatisticsByInterval($interval, $_date = null)
     {
         $_date = $_date ?: Carbon::now();
 

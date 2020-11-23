@@ -101,9 +101,9 @@ class SiteController extends ApiController
 
     public function statistics(Statistics $statistics)
     {
-        $thisWeek = $statistics->getStatisticsByInterval(7);
-        $thisMonth = $statistics->getStatisticsByInterval(30);
-        $allTime = $statistics->getStatisticsByInterval(365);
+        $thisWeek = $statistics->getStatisticsByInterval(Statistics::INTERVAL_WEEK);
+        $thisMonth = $statistics->getStatisticsByInterval(Statistics::INTERVAL_MONT);
+        $allTime = $statistics->getStatisticsByInterval(Statistics::INTERVAL_YEAR);
 
         return compact('allTime', 'thisWeek', 'thisMonth');
     }
