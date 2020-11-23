@@ -65,7 +65,8 @@ class Statistics
 
         $newArray = $start = $end = [];
 
-        $j = $k = 1;
+        $j = 1;
+        $k = 0;
         for ($i = 1; $i <= $date->daysInMonth; $i++) {
             Carbon::createFromDate($year, $month, $i);
             $start[$j] = (array)Carbon::createFromDate($year, $month, $i)->startOfWeek()->toDateString();
@@ -94,6 +95,6 @@ class Statistics
             $j++;
         }
 
-//        $array = $newArray;
+        $array = $newArray;
     }
 }
