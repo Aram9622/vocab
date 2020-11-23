@@ -61,6 +61,8 @@ class Statistics
         $month= Carbon::parse($_date)->month;
         $date = Carbon::createFromDate($year, $month);
 
+        dump($year, $month, $date, $_date);
+
         $numberOfWeeks = floor($date->daysInMonth / Carbon::DAYS_PER_WEEK);
 
         $newArray = $start = $end = [];
@@ -76,7 +78,6 @@ class Statistics
 
             foreach ($array as $key => $value) {
                 // condition for every week
-                dump($value['date'], $start[$j], $end[$j]);
                 if ($value['date'] >= $start[$j] && $value['date'] <= $end[$j]) {
                     if (empty($newArray[$k])) {
                         $newArray[$k] = ['count' => 0, 'dates' => [], 'days' => []];
