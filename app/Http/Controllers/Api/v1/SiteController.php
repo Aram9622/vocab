@@ -3,13 +3,12 @@
 namespace App\Http\Controllers\Api\v1;
 
 use App\Http\Controllers\Api\v1\Traits\Categories;
-use App\ItemState;
 use App\Models\Faq;
 use App\Models\Option;
 use App\Models\User;
 use App\Notifications\Notify;
 use App\Services\Card;
-use Carbon\Carbon;
+use App\Services\Statistics;
 use Illuminate\Http\Request;
 use Validator;
 
@@ -100,53 +99,11 @@ class SiteController extends ApiController
         return $result;
     }
 
-    public function getStatisticsByInterval($interval = 0, $_date = null)
+    public function statistics(Statistics $statistics)
     {
-        $_date = $_date ?: Carbon::now();
-
-        if ($interval) {
-            $date = $_date->addDays("-$interval")->toDateString();
-
-            if ($interval == 7) {
-                $date = $_date->startOfWeek()->toDateString();
-            } elseif ($interval == 30) {
-                $date = $_date->startOfMonth()->toDateString();
-            } elseif ($interval == 365) {
-                $date = Carbon::now()->startOfYear()->toDateString();
-            }
-
-            $query = ItemState::query()->where('user_id', 7)
-                ->selectRaw('type, DATE(updated_at) as date')
-                ->where('current_state', 'learned')
-                ->whereDate('updated_at', '>=', $date)
-                ->whereDate('updated_at', '<=', Carbon::now()->toDateString())
-                ->orderBy('updated_at');
-        } else {
-            $query = ItemState::selectRaw('type, DATE(updated_at) as date')
-                ->where('user_id', auth()->id())
-                ->where('current_state', 'learned')
-                ->orderBy('updated_at');
-        }
-
-        $learned = [];
-
-        $query->get()->map(function ($model) use (&$learned) {
-            if (!isset($learned[$model->date])) {
-                $learned[$model->date] = ['count' => 0, 'date' => $model->date, 'day' => Carbon::parse($model->date)->dayName];
-            }
-            $learned[$model->date]['count'] += 1;
-        });
-
-        $learnedCount = $query->count();
-
-        return ['learnedCount' => $learnedCount, 'learned' => array_values($learned)];
-    }
-
-    public function statistics()
-    {
-        $thisWeek = $this->getStatisticsByInterval(7);
-        $thisMonth = $this->getStatisticsByInterval(30);
-        $allTime = $this->getStatisticsByInterval(365);
+        $thisWeek = $statistics->getStatisticsByInterval(7);
+        $thisMonth = $statistics->getStatisticsByInterval(30);
+        $allTime = $statistics->getStatisticsByInterval(365);
 
         return compact('allTime', 'thisWeek', 'thisMonth');
     }
