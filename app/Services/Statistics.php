@@ -78,7 +78,7 @@ class Statistics
                 // condition for every week
                 if (strtotime($value['date']) >= strtotime($start[$j]) && strtotime($value['date']) <= strtotime($end[$j])) {
                     if (empty($newArray[$k])) {
-                        $newArray[$k] = ['count' => 0, 'dates' => [], 'days' => []];
+                        $newArray[$k] = ['numberOfWeek' => $k, 'count' => 0, 'dates' => [], 'days' => []];
                     }
 
                     $newArray[$k]['count'] += $value['count'];
