@@ -27,7 +27,7 @@ class Statistics
                 ->whereDate('updated_at', '>=', $date)
                 ->whereDate('updated_at', '<=', $_date->toDateString());
         } elseif ($interval == self::INTERVAL_MONT) {
-            $date = $_date->startOfMonth()->startOfMonth()->toDateString();
+            $date = $_date->startOfMonth()->toDateString();
 
             $query = $query
                 ->whereDate('updated_at', '>=', $date)
@@ -106,7 +106,7 @@ class Statistics
             $j++;
         }
 
-        dd($start, $end);
+//        dd($start, $end);
 
         $array['pointsByWeek'] = array_values($newArray);
 
