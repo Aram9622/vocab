@@ -25,7 +25,7 @@ class Statistics
 
             $query = $query
                 ->whereDate('updated_at', '>=', $date)
-                ->whereDate('updated_at', '=<', $_date->toDateString());
+                ->whereDate('updated_at', '<=', $_date->toDateString());
         } elseif ($interval == self::INTERVAL_MONT) {
             $date = $_date->startOfMonth()->startOfMonth()->toDateString();
 
