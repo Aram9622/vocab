@@ -94,7 +94,6 @@ class Statistics
             $i += 7;
             $j++;
         }
-        dd($start, $end);
 
         $array = $newArray;
     }
