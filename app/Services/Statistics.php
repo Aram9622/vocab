@@ -18,8 +18,11 @@ class Statistics
         $startOMonth = clone $_date->startOfMonth();
         $endOMonth = clone $_date->endOfMonth()->addDays(1);
 
+
         $startOfWeek = clone $_date->startOfWeek();
         $endOfWeek = clone $_date->endOfWeek();
+
+        echo $_date, ' ', $startOfWeek->toDateString(), ' ', $endOfWeek->toDateString(); die;
 
         $query = ItemState::query()->where('user_id', 7)
             ->selectRaw('type, DATE(updated_at) as date')
@@ -27,7 +30,6 @@ class Statistics
             ->orderBy('updated_at');
 
         if ($interval == self::INTERVAL_WEEK) {
-            echo $startOfWeek->toDateString(), ' ', $endOfWeek->toDateString(); die;
             $query = $query
                 ->whereDate('updated_at', '>=', $startOfWeek->toDateString())
                 ->whereDate('updated_at', '<=', $endOfWeek->toDateString());
