@@ -23,10 +23,8 @@ class Statistics
             ->orderBy('updated_at');
 
         if ($interval == self::INTERVAL_WEEK) {
-            $date = $_date->startOfWeek();
-
             $query = $query
-                ->whereDate('updated_at', '>=', $date->toDateString())
+                ->whereDate('updated_at', '>=', $_date->startOfWeek()->toDateString())
                 ->whereDate('updated_at', '<=', $_date->endOfWeek()->toDateString());
         } elseif ($interval == self::INTERVAL_MONTH) {
             $query = $query
