@@ -8,7 +8,7 @@ use Carbon\Carbon;
 class Statistics
 {
     public const INTERVAL_WEEK = 7;
-    public const INTERVAL_MONT = 30;
+    public const INTERVAL_MONTH = 30;
     public const INTERVAL_YEAR = 365;
 
     public function getStatisticsByInterval($interval, $_date = null)
@@ -17,7 +17,7 @@ class Statistics
 
         $startOMonth = clone $_date->startOfMonth();
 
-        $query = ItemState::query()->where('user_id', auth()->id())
+        $query = ItemState::query()->where('user_id', 7)
             ->selectRaw('type, DATE(updated_at) as date')
             ->where('current_state', 'learned')
             ->orderBy('updated_at');
@@ -28,7 +28,7 @@ class Statistics
             $query = $query
                 ->whereDate('updated_at', '>=', $date->toDateString())
                 ->whereDate('updated_at', '<=', $_date->toDateString());
-        } elseif ($interval == self::INTERVAL_MONT) {
+        } elseif ($interval == self::INTERVAL_MONTH) {
             $query = $query
                 ->whereDate('updated_at', '>=', $startOMonth->toDateString())
                 ->whereDate('updated_at', '<', $_date->endOfMonth()->addDays(1)->toDateString());
@@ -39,7 +39,7 @@ class Statistics
 
             for ($i = 1; $i <= 12; $i++) {
                 $date = Carbon::createFromDate($year, $i);
-                $learned[$i-1] = $this->getStatisticsByInterval(self::INTERVAL_MONT, $date);
+                $learned[$i-1] = $this->getStatisticsByInterval(self::INTERVAL_MONTH, $date);
                 $learnedCount += $learned[$i-1]['learnedCount'] ?? 0;
             }
 
@@ -59,7 +59,7 @@ class Statistics
 
         $learned = array_values($learned);
 
-        if ($interval == self::INTERVAL_MONT) {
+        if ($interval == self::INTERVAL_MONTH) {
             $this->sortByWeeks($learned, $startOMonth);
         }
 
