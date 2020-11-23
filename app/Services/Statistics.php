@@ -48,6 +48,52 @@ class Statistics
 
         $learned = array_values($learned);
 
+        if ($interval == 30) {
+            $this->sortByWeeks($learned, $_date);
+        }
+
         return ['learnedCount' => $learnedCount, 'learned' => $learned];
+    }
+
+    public function sortByWeeks(&$array, $_date)
+    {
+        $year = Carbon::parse($_date)->year;
+        $month= Carbon::parse($_date)->month;
+        $date = Carbon::createFromDate($year, $month);
+
+        $numberOfWeeks = floor($date->daysInMonth / Carbon::DAYS_PER_WEEK);
+
+        $newArray = $start = $end = [];
+
+        $j = $k = 1;
+        for ($i = 1; $i <= $date->daysInMonth; $i++) {
+            Carbon::createFromDate($year, $month, $i);
+            $start[$j] = (array)Carbon::createFromDate($year, $month, $i)->startOfWeek()->toDateString();
+            $end[$j] = (array)Carbon::createFromDate($year, $month, $i)->endOfweek()->toDateString();
+
+            //---------------
+
+            foreach ($array as $key => $value) {
+                // condition for every week
+                if ($value['date'] >= $start[$j] && $value['date'] <= $end[$j]) {
+                    if (!isset($newArray[$k]['count'])) {
+                        $newArray[$k] = ['count' => 0, 'dates' => [], 'days' => []];
+                    }
+
+                    $newArray[$k]['count'] += $value['count'];
+                    $newArray[$k]['dates'][] = $value['date'];
+                    $newArray[$k]['days'][] = $value['day'];
+                } else {
+                    $k++;
+                }
+            }
+
+            //---------------
+
+            $i += 7;
+            $j++;
+        }
+
+        $array = $newArray;
     }
 }
