@@ -17,7 +17,7 @@ class Statistics
             if ($interval == 7) {
                 $date = $_date->startOfWeek()->toDateString();
             } elseif ($interval == 30) {
-                $date = Carbon::now()->startOfMonth()->addDays('-3')->startOfMonth()->toDateString();
+                $date = $_date->startOfMonth()->startOfMonth()->toDateString();
             } elseif ($interval == 365) {
                 $year = $_date->year;
                 $learned = [];
@@ -38,7 +38,7 @@ class Statistics
                 ->selectRaw('type, DATE(updated_at) as date')
                 ->where('current_state', 'learned')
                 ->whereDate('updated_at', '>=', $date)
-                ->whereDate('updated_at', '<=', $_date->toDateString())
+                ->whereDate('updated_at', '<', $_date->endOfMonth()->addDays(1)->toDateString())
                 ->orderBy('updated_at');
         } else {
             $query = ItemState::selectRaw('type, DATE(updated_at) as date')
