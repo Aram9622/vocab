@@ -101,6 +101,6 @@ class Statistics
         }
 
         $array['pointsByWeek'] = array_values($newArray);
-        $array['numberOfWeeks'] = $numberOfWeeks;
+//        $array['numberOfWeeks'] = $numberOfWeeks;
     }
 }
