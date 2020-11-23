@@ -60,7 +60,7 @@ class Statistics
         $learned = array_values($learned);
 
         if ($interval == self::INTERVAL_MONT) {
-            $this->sortByWeeks($learned, $date);
+            $this->sortByWeeks($learned, $_date->startOfMonth());
         }
 
         return ['learnedCount' => $learnedCount, 'learned' => $learned];
