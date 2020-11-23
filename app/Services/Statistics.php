@@ -15,7 +15,7 @@ class Statistics
     {
         $_date = $_date ?: Carbon::now();
 
-        $startOMonth = $_date->startOfMonth();
+        $startOMonth = clone $_date->startOfMonth();
 
         $query = ItemState::query()->where('user_id', 7)
             ->selectRaw('type, DATE(updated_at) as date')
