@@ -15,12 +15,23 @@ class Statistics
     {
         $_date = $_date ?: Carbon::now();
 
-        $date = $_date;
+        $query = ItemState::query()->where('user_id', 7)
+            ->selectRaw('type, DATE(updated_at) as date')
+            ->where('current_state', 'learned')
+            ->orderBy('updated_at');
 
         if ($interval == self::INTERVAL_WEEK) {
             $date = $_date->startOfWeek()->toDateString();
+
+            $query = $query
+                ->whereDate('updated_at', '>=', $date)
+                ->whereDate('updated_at', '=<', $_date->toDateString());
         } elseif ($interval == self::INTERVAL_MONT) {
             $date = $_date->startOfMonth()->startOfMonth()->toDateString();
+
+            $query = $query
+                ->whereDate('updated_at', '>=', $date)
+                ->whereDate('updated_at', '<', $_date->endOfMonth()->addDays(1)->toDateString());
         } elseif ($interval == self::INTERVAL_YEAR) {
             $year = $_date->year;
             $learned = [];
@@ -28,19 +39,12 @@ class Statistics
 
             for ($i = 1; $i <= 12; $i++) {
                 $date = Carbon::createFromDate($year, $i);
-                $learned[$i] = $this->getStatisticsByInterval(self::INTERVAL_MONT, $date);
-                $learnedCount += $learned[$i]['learnedCount'] ?? 0;
+                $learned[$i-1] = $this->getStatisticsByInterval(self::INTERVAL_MONT, $date);
+                $learnedCount += $learned[$i-1]['learnedCount'] ?? 0;
             }
 
             return ['learnedCount' => $learnedCount, 'learned' => $learned];
         }
-
-        $query = ItemState::query()->where('user_id', 7)
-            ->selectRaw('type, DATE(updated_at) as date')
-            ->where('current_state', 'learned')
-            ->whereDate('updated_at', '>=', $date)
-            ->whereDate('updated_at', '<', $_date->endOfMonth()->addDays(1)->toDateString())
-            ->orderBy('updated_at');
 
         $learned = [];
 
@@ -105,10 +109,5 @@ class Statistics
         $array['pointsByWeek'] = array_values($newArray);
 
         return $array;
-    }
-
-    public function sortByMonths(&$array)
-    {
-
     }
 }
