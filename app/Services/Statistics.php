@@ -22,12 +22,12 @@ class Statistics
                 $date = Carbon::now()->startOfYear();
 
                 $learned = [];
-
-                $learned[] = $this->getStatisticsByInterval(30, $date);
-                $learnedCount = $learned[0]['learnedCount'] ?? 0;
+                $learnedCount = 0;
+//                $learned[] = $this->getStatisticsByInterval(30, $date);
+//                $learnedCount = $learned[0]['learnedCount'] ?? 0;
 
                 for ($i = 1; $i <= 11; $i++) {
-                    $learned[$i] = $this->getStatisticsByInterval(30, $date->addMonths($i + 1));
+                    $learned[$i] = $this->getStatisticsByInterval(30, $date->addMonths($i));
                     $learnedCount += $learned[$i]['learnedCount'] ?? 0;
                 }
 
