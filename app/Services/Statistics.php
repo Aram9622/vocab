@@ -59,14 +59,14 @@ class Statistics
 
         $learned = array_values($learned);
 
-        if ($interval == 30) {
-            $learned = $this->sortByWeeks($learned, $_date);
+        if ($interval == self::INTERVAL_MONT) {
+            $this->sortByWeeks($learned, $_date);
         }
 
         return ['learnedCount' => $learnedCount, 'learned' => $learned];
     }
 
-    public function sortByWeeks($array, $_date)
+    public function sortByWeeks(&$array, $_date)
     {
         $year = $_date->year;
         $month = $_date->month;
@@ -107,7 +107,5 @@ class Statistics
         }
 
         $array['pointsByWeek'] = array_values($newArray);
-
-        return $array;
     }
 }
