@@ -13,14 +13,14 @@ class Statistics
 
     public function getStatisticsByInterval($interval, $_date = null)
     {
-        $_date = clone ($_date ?: (new Carbon())->now());
+        $_date = $_date ?: Carbon::now();
 
-        $startOMonth = clone $_date->startOfMonth();
-        $endOMonth = clone $_date->endOfMonth()->addDays(1);
+        $startOMonth = Carbon::createFromDate($_date->year, $_date->month, 1);
+        $endOMonth = $startOMonth->endOfMonth()->addDays(1);
 
 
-        $startOfWeek = clone $_date->startOfWeek();
-        $endOfWeek = clone $_date->endOfWeek();
+        $startOfWeek = Carbon::createFromDate($_date->year, $_date->month, $_date->day)->startOfWeek();
+        $endOfWeek = $startOfWeek->endOfWeek();
 
         echo $_date, ' ', $startOfWeek->toDateString(), ' ', $endOfWeek->toDateString(); die;
 
