@@ -86,20 +86,17 @@ class Statistics
 
         $newArray = [];
 
-        $k = 0;
         foreach ($start as $_key => $_value) {
             foreach ($array as $key => $value) {
                 // condition for every week
                 if (strtotime($value['date']) >= strtotime($_value) && strtotime($value['date']) <= strtotime($end[$_key])) {
-                    if (empty($newArray[$k])) {
-                        $newArray[$k] = ['count' => 0, 'dates' => [], 'days' => []];
+                    if (empty($newArray[$_key])) {
+                        $newArray[$_key] = ['count' => 0, 'dates' => [], 'days' => []];
                     }
 
-                    $newArray[$k]['count'] += $value['count'];
-                    $newArray[$k]['dates'][] = $value['date'];
-                    $newArray[$k]['days'][] = $value['day'];
-                } else {
-                    $k++;
+                    $newArray[$_key]['count'] += $value['count'];
+                    $newArray[$_key]['dates'][] = $value['date'];
+                    $newArray[$_key]['days'][] = $value['day'];
                 }
             }
         }
