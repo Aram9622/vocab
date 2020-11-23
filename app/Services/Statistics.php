@@ -84,6 +84,8 @@ class Statistics
                     $newArray[$k]['count'] += $value['count'];
                     $newArray[$k]['dates'][] = $value['date'];
                     $newArray[$k]['days'][] = $value['day'];
+                } else {
+                    $k++;
                 }
             }
 
@@ -93,6 +95,6 @@ class Statistics
             $j++;
         }
 
-        $array['pointsByWeek'] = $newArray;
+        $array['pointsByWeek'] = array_values($newArray);
     }
 }
