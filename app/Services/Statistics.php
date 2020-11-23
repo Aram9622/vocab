@@ -19,7 +19,15 @@ class Statistics
             } elseif ($interval == 30) {
                 $date = Carbon::now()->startOfMonth()->addDays('-3')->startOfMonth()->toDateString();
             } elseif ($interval == 365) {
-                $date = Carbon::now()->startOfYear()->toDateString();
+                $date = Carbon::now()->startOfYear();
+
+                $result = [];
+
+                $result[] = $this->getStatisticsByInterval(30, $date->toDateString());
+
+                for ($i = 1; $i <= 11; $i++) {
+                    $result[] = $this->getStatisticsByInterval(30, $date->addMonths($i + 1)->toDateString());
+                }
             }
 
             $query = ItemState::query()->where('user_id', 7)
@@ -58,7 +66,7 @@ class Statistics
     public function sortByWeeks(&$array, $_date)
     {
         $year = $_date->year;
-        $month= $_date->month;
+        $month = $_date->month;
         $date = Carbon::createFromDate($year, $month);
 
 //        $numberOfWeeks = floor($date->daysInMonth / Carbon::DAYS_PER_WEEK);
@@ -96,5 +104,10 @@ class Statistics
         }
 
         $array['pointsByWeek'] = array_values($newArray);
+    }
+
+    public function sortByMonths(&$array)
+    {
+
     }
 }
