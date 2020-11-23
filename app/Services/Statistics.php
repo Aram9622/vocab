@@ -13,7 +13,7 @@ class Statistics
 
     public function getStatisticsByInterval($interval, $_date = null)
     {
-        $_date = $_date ?: Carbon::now();
+        $_date = $_date ?: (new Carbon())->now();
 
         $startOMonth = clone $_date->startOfMonth();
         $endOMonth = clone $_date->endOfMonth()->addDays(1);
