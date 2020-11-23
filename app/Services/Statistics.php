@@ -28,6 +28,8 @@ class Statistics
                 for ($i = 1; $i <= 11; $i++) {
                     $result[] = $this->getStatisticsByInterval(30, $date->addMonths($i + 1)->toDateString());
                 }
+
+                return $result;
             }
 
             $query = ItemState::query()->where('user_id', 7)
