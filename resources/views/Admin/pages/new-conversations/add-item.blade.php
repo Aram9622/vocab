@@ -19,8 +19,7 @@
                 <div class="dashboard_box">
                     <div class="row">
                         <div class="col-md-12 col-sm-12 col-xs-12">
-                            @if($conversations->count() === 0)
-                                <div class="categories_top_sect">
+                            <div class="categories_top_sect">
                                 <ul class="categ__menu">
                                     <li><a href="">Categories </a></li>
                                     <li><a href="{{ route('admin.new.conversations.index', [request()->segment(3), $category->id]) }}">&ensp;/ {{ $category->name }}</a></li>
@@ -35,20 +34,50 @@
                                                 <div class="categ_inputs">
                                                     <div class="add__word_record">
                                                         <div class="row">
-                                                            <div class="col-md-12">
+                                                            <div class="col-md-6">
                                                                 <div>
                                                                     <p>English word</p>
-                                                                    <input style="max-width: 100%;" type="text" placeholder="Flower" name="conversation_en">
+                                                                    <input type="text" placeholder="Flower" name="conversation_en">
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <div>
+                                                                    <p>Add English record</p>
+                                                                    <div class="upload__record">
+                                                                        <div class="input-group btn-upload">
+                                                                           <span class="input-group-btn">
+                                                                              <div class="btn btn-upload-input">
+                                                                                  <span class="btn-upload-input-title">Upload record</span>
+                                                                                  <input type="file" name="record_en"/>
+                                                                               </div>
+                                                                           </span>
+                                                                        </div>
+                                                                    </div>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                     <div class="add__word_record">
                                                         <div class="row">
-                                                            <div class="col-md-12">
+                                                            <div class="col-md-6">
                                                                 <div>
                                                                     <p>Spanish word</p>
-                                                                    <input style="max-width: 100%;" type="text" placeholder="Flor" name="conversation_es">
+                                                                    <input type="text" placeholder="Flor" name="conversation_es">
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <div>
+                                                                    <p>Add Spanish record</p>
+                                                                    <div class="upload__record">
+                                                                        <div class="input-group btn-upload">
+                                                                           <span class="input-group-btn">
+                                                                              <div class="btn btn-upload-input2">
+                                                                                  <span class="btn-upload-input-title2">Upload record</span>
+                                                                                  <input type="file" name="record_es"/>
+                                                                               </div>
+                                                                           </span>
+                                                                        </div>
+                                                                    </div>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -87,7 +116,6 @@
                                      </form>
                                 </div>
                             </div>
-                            @endif
                             <div class="categories_sect">
                                 <h3>Vocabulary</h3>
                                 <div class="Vocabulary_table table-responsive">
