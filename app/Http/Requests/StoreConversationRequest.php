@@ -26,8 +26,8 @@ class StoreConversationRequest extends FormRequest
         return [
             'conversation_en'   => 'required|string|max:255',
             'conversation_es'   => 'required|string|max:255',
-//            'record_en' =>'nullable|file|mimes:audio/mpeg,mpga,mp3,wav,aac',
-//            'record_es' =>'nullable|file|mimes:audio/mpeg,mpga,mp3,wav,aac',
+            'record_en' =>'required|file|mimes:audio/mpeg,mpga,mp3,wav,aac',
+            'record_es' =>'required|file|mimes:audio/mpeg,mpga,mp3,wav,aac',
             'eg_link'   => 'required|string|max:255',
             'image'     => 'required|file|mimes:jpeg,jpg,png,gif',
         ];
