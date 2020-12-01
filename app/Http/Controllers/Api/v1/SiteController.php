@@ -39,7 +39,13 @@ class SiteController extends ApiController
             return ['error' => 'The type param mast be one of these items (words, phrases, verbs, stories, conversations, exercises)'];
         }
 
-        $model = $this->factory($request->type)->with('category')->findOrFail($id);
+        $query = $this->factory($request->type);
+
+        if ($request->type == 'conversations') {
+            $query = $query->with('users_conversations');
+        };
+
+        $model = $query->with('category')->findOrFail($id);
 
         $this->setAssetPath($model);
 
