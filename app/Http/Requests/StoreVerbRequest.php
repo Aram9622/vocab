@@ -26,8 +26,8 @@ class StoreVerbRequest extends FormRequest
         return [
             'verb_en'   => 'required|string|max:255',
             'verb_es'   => 'required|string|max:255',
-            'record_en' =>'required|file|mimes:audio/mpeg,mpga,mp3,wav,aac',
-            'record_es' =>'required|file|mimes:audio/mpeg,mpga,mp3,wav,aac',
+            'record_en' =>'required|file|mimes:audio/mpeg,mpga,mp3,m4a,wav,aac',
+            'record_es' =>'required|file|mimes:audio/mpeg,mpga,mp3,m4a,wav,aac',
             'eg_link'   => 'required|string|max:255',
             'image'     => 'required|file|mimes:jpeg,jpg,png,gif',
         ];
