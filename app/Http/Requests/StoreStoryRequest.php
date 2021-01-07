@@ -30,8 +30,8 @@ class StoreStoryRequest extends FormRequest
             'sub_title_es'  => 'required|string|max:255',
             'description_en'  => 'required|string',
             'description_es'  => 'required|string',
-            'record_en' =>'required|file|mimes:audio/mpeg,mpga,mp3,m4a,wav,aac',
-            'record_es' =>'required|file|mimes:audio/mpeg,mpga,mp3,m4a,wav,aac',
+            'record_en' =>'required|file|mimes:audio/mpeg,mpga,mp3,mp4,wav,aac',
+            'record_es' =>'required|file|mimes:audio/mpeg,mpga,mp3,mp4,wav,aac',
             'eg_link'   => 'required|string|max:255',
             'image'     => 'required|file|mimes:jpeg,jpg,png,gif',
         ];

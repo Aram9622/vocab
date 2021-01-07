@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\v1;
 use App\Http\Controllers\Api\v1\Traits\Categories;
 use App\Studied;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Date;
 
 class StudiedController extends ApiController
 {
@@ -61,7 +62,19 @@ class StudiedController extends ApiController
 
             return $response;
         }
+        if ($request->percent == 20) {
+          $request->state = 'learning';
+          $datetime = date('H');
+          $response = $this->stateChange($request->type, $request->studied_id, $request);
 
+          if (empty($response['error']) && $model->id) {
+            $model->delete();
+          }
+          if($datetime  ){
+
+          }
+          return $response;
+        }
         $studiedModel = $this->factory($request->type)->where('id', $request->studied_id)->first();
 
         if (!$studiedModel) {

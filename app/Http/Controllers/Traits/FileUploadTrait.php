@@ -23,6 +23,7 @@ trait FileUploadTrait
         }
         $newRequest = null; // Variable to hold a new request created by above array merging
         foreach ($request->all() as $key => $value) {
+            dd($request->$key->getMimeType());
             if ($request->hasFile($key) && explode('/', $request->$key->getMimeType())[0] == 'image') {
                 if ($request->has($key . '_w') && $request->has($key . '_h')) {
                     // Check file width

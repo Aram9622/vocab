@@ -91,12 +91,15 @@ Route::middleware(['auth:api'])->group(function () {
 Route::get('logout', 'Api\v1\Auth\LoginController@logout');
 
 //Authentication routes
-Route::group(['namespace' => 'Api\v1\Auth'], function () {
-    Route::post('register', 'RegisterController@register');
-    Route::post('login', 'LoginController@login');
-    Route::post('password/email', 'ForgotPasswordController@sendResetLinkEmail');
+  Route::group(['namespace' => 'Api\v1\Auth'], function () {
+      Route::post('register', 'RegisterController@register');
+      Route::post('login', 'LoginController@login');
+      Route::post('password/email', 'ForgotPasswordController@sendResetLinkEmail');
 
-    Route::post('password-reset-request', 'PasswordResetController@create');
-    Route::get('find/{token}', 'PasswordResetController@find');
-    Route::post('password-reset', 'PasswordResetController@reset');
-});
+      Route::post('password-reset-request', 'PasswordResetController@create');
+      Route::get('find/{token}', 'PasswordResetController@find');
+      Route::post('password-reset', 'PasswordResetController@reset');
+  });
+
+
+ 

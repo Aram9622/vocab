@@ -1,5 +1,6 @@
 @extends('layouts.master')
 @section('content')
+
     <main class="main-content">
         <div class="nav-btn pull-left">
             <span></span>
@@ -47,7 +48,8 @@
                                                                            <span class="input-group-btn">
                                                                               <div class="btn btn-upload-input">
                                                                                   <span class="btn-upload-input-title">Upload record</span>
-                                                                                  <input type="file" name="record_en"/>
+{{--                                                                                  <input type="file" name="record_en" />--}}
+                                                                                  <input type="file" name="record_en[]" multiple/>
                                                                                </div>
                                                                            </span>
                                                                         </div>
@@ -72,7 +74,8 @@
                                                                            <span class="input-group-btn">
                                                                               <div class="btn btn-upload-input2">
                                                                                   <span class="btn-upload-input-title2">Upload record</span>
-                                                                                  <input type="file" name="record_es"/>
+{{--                                                                                  <input type="file" name="record_es"/>--}}
+                                                                                  <input type="file" name="record_es[]" multiple/>
                                                                                </div>
                                                                            </span>
                                                                         </div>
@@ -116,6 +119,7 @@
                                 </div>
                             </div>
                             <div class="categories_sect">
+
                                 <h3>Vocabulary</h3>
                                 <div class="Vocabulary_table table-responsive">
                                     <table class="table table-bordered">
@@ -132,23 +136,29 @@
                                         </tr>
                                         </thead>
                                         <tbody>
+
                                         @foreach($phrases as $phrase)
+{{--                                            {{}}--}}
                                             <tr>
                                                 <td>{{$phrase->phrase_en}}</td>
                                                 <td>
-                                                    <audio controls>
-                                                      <source src="{{ asset('uploads/audio/'.$phrase->record_en) }}" type="audio/ogg">
-                                                      <source src="{{ asset('uploads/audio/'.$phrase->record_en) }}" type="audio/mpeg">
-                                                    Your browser does not support the audio element.
-                                                    </audio>
+                                                    @foreach(explode('/', $phrase->record_en) as $record_item)
+                                                        <audio controls>
+                                                          <source src="{{ asset('uploads/audio/'.$record_item) }}" type="audio/ogg">
+                                                          <source src="{{ asset('uploads/audio/'.$record_item) }}" type="audio/mpeg">
+                                                        Your browser does not support the audio element.
+                                                        </audio>
+                                                    @endforeach
                                                 </td>
                                                 <td>{{$phrase->phrase_es}}</td>
                                                 <td>
-                                                    <audio controls>
-                                                      <source src="{{ asset('uploads/audio/'.$phrase->record_es) }}" type="audio/ogg">
-                                                      <source src="{{ asset('uploads/audio/'.$phrase->record_es) }}" type="audio/mpeg">
-                                                    Your browser does not support the audio element.
-                                                    </audio>
+                                                    @foreach(explode('/', $phrase->record_es) as $record_item)
+                                                        <audio controls>
+                                                          <source src="{{ asset('uploads/audio/'.$record_item) }}" type="audio/ogg">
+                                                          <source src="{{ asset('uploads/audio/'.$record_item) }}" type="audio/mpeg">
+                                                        Your browser does not support the audio element.
+                                                        </audio>
+                                                    @endforeach
                                                 </td>
                                                 <td>
                                                     <div class="picture__div">

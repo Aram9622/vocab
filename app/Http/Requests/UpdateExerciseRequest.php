@@ -39,8 +39,8 @@ class UpdateExerciseRequest extends FormRequest
             'exercise_en' => 'required|string',
             'exercise_es' => 'required|string',
 
-            'record_en' =>'nullable|file|mimes:audio/mpeg,mpga,mp3,m4a,wav,aac',
-            'record_es' =>'nullable|file|mimes:audio/mpeg,mpga,mp3,m4a,wav,aac',
+            'record_en' =>'nullable|file|mimes:audio/mpeg,mpga,mp3,mp4,wav,aac',
+            'record_es' =>'nullable|file|mimes:audio/mpeg,mpga,mp3,mp4,wav,aac',
             'image' => 'nullable|file|mimes:jpeg,jpg,png,gif',
         ], $rules);
     }

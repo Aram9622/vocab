@@ -26,8 +26,8 @@ class StorePhraseRequest extends FormRequest
         return [
             'phrase_en'   => 'required|string|max:255',
             'phrase_es'   => 'required|string|max:255',
-            'record_en' =>'required|file|mimes:audio/mpeg,mpga,mp3,m4a,wav,aac',
-            'record_es' =>'required|file|mimes:audio/mpeg,mpga,mp3,m4a,wav,aac',
+            'record_en.*' =>'required|mimes:mpeg,mpga,mp3,mp4,wav,aac,mp4|max:1024',
+            'record_es.*' =>'required|mimes:mpeg,mpga,mp3,mp4,wav,aac,mp4|max:1024',
             'eg_link'   => 'required|string|max:255',
             'image'     => 'required|file|mimes:jpeg,jpg,png,gif',
         ];
